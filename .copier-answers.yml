@@ -1,0 +1,15 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v0.7.0
+_src_path: gl:climate-resource/copier-core-python-repository
+email: daniel.busch@climate-resource.com
+initial_setup: true
+name: Daniel Busch
+notebook_dependencies: false
+pandas_doctests: false
+plot_dependencies: false
+project_description_short: Download and process FAOSTAT data
+project_name_human: FAOSTAT data
+project_name_pip: faostat-data-primap
+project_name_python: faostat_data_primap
+project_url: https://github.com/primap-community/FAOSTAT_data_primap
+track_lock_file: true
