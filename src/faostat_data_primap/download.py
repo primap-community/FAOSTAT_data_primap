@@ -1,6 +1,7 @@
 """Downloads data from FAOSTAT website."""
 # links we will need:
 # download farm gate
+
 # https://bulks-faostat.fao.org/production/Emissions_crops_E_All_Data.zip
 # https://bulks-faostat.fao.org/production/Emissions_livestock_E_All_Data.zip
 # https://bulks-faostat.fao.org/production/Emissions_Agriculture_Energy_E_All_Data.zip
