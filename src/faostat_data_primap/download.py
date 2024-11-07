@@ -1,9 +1,11 @@
 """Downloads data from FAOSTAT website."""
 
+import os
+import zipfile
 from datetime import datetime
 
 import datalad.api
-from helper.definitions import downloaded_data_path
+from helper.definitions import downloaded_data_path, root_path
 
 if __name__ == "__main__":
     sources = [
@@ -61,6 +63,33 @@ if __name__ == "__main__":
             message=f"Added {ds_name}",
             path=str(local_filename),
         )
+
+        # unzip
+        if local_filename.exists():
+            print(f"Download => {local_filename.relative_to(root_path)}")
+            # unzip data (only for new downloads)
+            if local_filename.suffix == ".zip":
+                try:
+                    zipped_file = zipfile.ZipFile(str(local_filename), "r")
+                    zipped_file.extractall(str(local_filename.parent))
+                    print(f"Extracted {len(zipped_file.namelist())} files.")
+                    zipped_file.close()
+                    os.remove(local_filename)
+                # TODO Better error logging/visibilty
+                except zipfile.BadZipFile:
+                    print(
+                        f"Error while trying to extract "
+                        f"{local_filename.relative_to(root_path)}"
+                    )
+                except NotImplementedError:
+                    print(
+                        "Zip format not supported, " "please unzip on the command line."
+                    )
+            else:
+                print(
+                    f"Not attempting to extract "
+                    f"{local_filename.relative_to(root_path)}."
+                )
 
         # Questions:
         # * Push to datalad .zip and unzipped, or only unzipped?
