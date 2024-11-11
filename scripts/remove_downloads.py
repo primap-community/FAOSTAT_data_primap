@@ -18,7 +18,7 @@ from faostat_data_primap.helper.definitions import downloaded_data_path
 @click.option(
     "--date",
     help="The day on which the data to be deleted was downloaded",
-    default="2024-11-11",
+    default="2023-11-09",
 )
 def run(date: str):
     """
