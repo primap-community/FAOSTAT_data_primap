@@ -11,6 +11,8 @@ include = ["LICENCE"]  # poetry uses US English so assumes it will be spelt LICE
 [tool.poetry.dependencies]
 python = "^3.10"
 datalad = "0.19.6"
+selenium = "^4.26.1"
+webdriver-manager = "^4.0.2"
 
 
 [tool.poetry.group.tests.dependencies]
