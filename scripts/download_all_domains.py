@@ -1,12 +1,12 @@
 """Downloads all domain data sets from FAOSTAT website."""
 
-from faostat_data_primap.helper.definitions import downloaded_data_path, sources
-from src.faostat_data_primap.download import (
+from faostat_data_primap.download import (
     download_file,
     get_html_content,
     get_last_updated_date,
     unzip_file,
 )
+from faostat_data_primap.helper.definitions import downloaded_data_path, sources
 
 
 def download_all_domains(sources: list[tuple[str]]) -> list[str]:
