@@ -1,50 +1,30 @@
 """Downloads all domain data sets from FAOSTAT website."""
 
-import zipfile
+from src.faostat_data_primap.download import (
+    download_file,
+    get_html_content,
+    get_last_updated_date,
+    unzip_file,
+)
+from src.faostat_data_primap.helper.definitions import downloaded_data_path, sources
 
-import requests
 
-from src.faostat_data_primap.download import get_html_content, get_last_updated_date
-from src.faostat_data_primap.helper.definitions import downloaded_data_path, root_path
+def download_all_domains(sources: list[tuple[str]]):
+    """
+    Download input files from a remote location
 
-if __name__ == "__main__":
-    sources = [
-        (
-            "farm_gate_emissions_crops",
-            "https://www.fao.org/faostat/en/#data/GCE",
-            "https://bulks-faostat.fao.org/production/Emissions_crops_E_All_Data.zip",
-        ),
-        (
-            "farm_gate_livestock",
-            "https://www.fao.org/faostat/en/#data/GLE",
-            "https://bulks-faostat.fao.org/production/Emissions_livestock_E_All_Data.zip",
-        ),
-        (
-            "farm_gate_agriculture_energy",
-            "https://www.fao.org/faostat/en/#data/GN",
-            "https://bulks-faostat.fao.org/production/Emissions_Agriculture_Energy_E_All_Data.zip",
-        ),
-        (
-            "land_use_forests",
-            "https://www.fao.org/faostat/en/#data/GF",
-            "https://bulks-faostat.fao.org/production/Emissions_Land_Use_Forests_E_All_Data.zip",
-        ),
-        (
-            "land_use_fires",
-            "https://www.fao.org/faostat/en/#data/GI",
-            "https://bulks-faostat.fao.org/production/Emissions_Land_Use_Fires_E_All_Data.zip",
-        ),
-        (
-            "land_use_drained_organic_soils",
-            "https://www.fao.org/faostat/en/#data/GV",
-            "https://bulks-faostat.fao.org/production/Emissions_Drained_Organic_Soils_E_All_Data.zip",
-        ),
-        (
-            "pre_post_agricultural_production",
-            "https://www.fao.org/faostat/en/#data/GPP",
-            "https://bulks-faostat.fao.org/production/Emissions_Pre_Post_Production_E_All_Data.zip",
-        ),
-    ]
+    Parameters
+    ----------
+    download_path
+        Name of data set, url to domain overview,
+        and download url
+
+    Returns
+    -------
+        List of input files that have been fetched or found locally.
+
+    """
+    downloaded_files = []
     for (
         ds_name,
         url,
@@ -52,6 +32,7 @@ if __name__ == "__main__":
     ) in sources:
         soup = get_html_content(url)
 
+        # todo Remove url input
         last_updated = get_last_updated_date(soup, url)
 
         if not downloaded_data_path.exists():
@@ -68,35 +49,14 @@ if __name__ == "__main__":
 
         local_filename = local_data_dir / f"{ds_name}.zip"
 
-        response = requests.get(url_download, timeout=20)
-        response.raise_for_status()
+        download_file(url_download=url_download, save_path=local_filename)
 
-        # will overwrite existing file
-        with open(local_filename, mode="wb") as file:
-            file.write(response.content)
+        downloaded_files.append(str(local_filename))
 
-        if local_filename.exists():
-            print(f"Download => {local_filename.relative_to(root_path)}")
-            # unzip data (only for new downloads)
-            if local_filename.suffix == ".zip":
-                try:
-                    zipped_file = zipfile.ZipFile(str(local_filename), "r")
-                    zipped_file.extractall(str(local_filename.parent))
-                    print(f"Extracted {len(zipped_file.namelist())} files.")
-                    zipped_file.close()
-                    # os.remove(local_filename)
-                # TODO Better error logging/visibilty
-                except zipfile.BadZipFile:
-                    print(
-                        f"Error while trying to extract "
-                        f"{local_filename.relative_to(root_path)}"
-                    )
-                except NotImplementedError:
-                    print(
-                        "Zip format not supported, " "please unzip on the command line."
-                    )
-            else:
-                print(
-                    f"Not attempting to extract "
-                    f"{local_filename.relative_to(root_path)}."
-                )
+        unzip_file(local_filename)
+
+    return downloaded_files
+
+
+if __name__ == "__main__":
+    download_all_domains(sources)

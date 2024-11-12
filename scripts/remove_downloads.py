@@ -9,30 +9,41 @@ structure or maybe can be deleted altogether later.
 
 import os
 
-import click
-
+# import click
 from faostat_data_primap.helper.definitions import downloaded_data_path
 
 
-@click.command()
-@click.option(
-    "--date",
-    help="The day on which the data to be deleted was downloaded",
-    default="2023-11-09",
-)
-def run(date: str):
+# @click.command()
+# @click.option(
+#     "--level",
+#     help="Delete all files on domain or release level",
+#     default="domain",
+# )
+def run():
     """
-    Delete all downloaded files for one day.
+    Delete all downloaded files for all domains and all releases
     """
-    domains = os.listdir(downloaded_data_path)
+    domains = [
+        d
+        for d in os.listdir(downloaded_data_path)
+        if os.path.isdir(downloaded_data_path / d)
+    ]
 
     for domain in domains:
-        path_to_files = downloaded_data_path / domain / date
-        files_to_delete = os.listdir(path_to_files)
+        path_to_releases = downloaded_data_path / domain
+        releases = [
+            d
+            for d in os.listdir(path_to_releases)
+            if os.path.isdir(path_to_releases / d)
+        ]
 
-        for file in files_to_delete:
-            path_to_file = path_to_files / file
-            os.remove(path_to_file)
+        for release in releases:
+            path_to_files = downloaded_data_path / domain / release
+            files_to_delete = os.listdir(path_to_files)
+
+            for file in files_to_delete:
+                path_to_file = path_to_files / file
+                os.remove(path_to_file)
 
 
 if __name__ == "__main__":

@@ -1,8 +1,10 @@
 """Downloads data from FAOSTAT website."""
 
 import time
+import zipfile
 from datetime import datetime
 
+import requests
 from bs4 import BeautifulSoup
 
 # from helper.definitions import downloaded_data_path, root_path
@@ -63,3 +65,58 @@ def get_last_updated_date(soup, url):
     last_updated = date_tag.get_text()
     last_updated = datetime.strptime(last_updated, "%B %d, %Y").strftime("%Y-%m-%d")
     return last_updated
+
+
+def download_file(url_download, save_path):
+    """
+    todo
+
+    Parameters
+    ----------
+    url_download
+    save_path
+
+    Returns
+    -------
+        True if the file was downloaded, False if a cached file was found
+    """
+    if not save_path.exists():
+        response = requests.get(url_download, timeout=20)
+        response.raise_for_status()
+
+        # will overwrite existing file
+        with open(save_path, mode="wb") as file:
+            file.write(response.content)
+        return True
+    else:
+        print(f"Skipping {save_path}" " because it already exists.")
+    return False
+
+
+def unzip_file(local_filename):
+    """
+    todo
+
+    Parameters
+    ----------
+    local_filename
+
+    Returns
+    -------
+        List of unzipped files
+    """
+    # unzip data (only for new downloads)
+    if local_filename.suffix == ".zip":
+        try:
+            # TODO check if unzipped files already there
+            zipped_file = zipfile.ZipFile(str(local_filename), "r")
+            zipped_file.extractall(str(local_filename.parent))
+            print(f"Extracted {len(zipped_file.namelist())} files.")
+            zipped_file.close()
+        # TODO Better error logging/visibilty
+        except zipfile.BadZipFile:
+            print(f"Error while trying to extract " f"{local_filename}")
+        except NotImplementedError:
+            print("Zip format not supported, " "please unzip on the command line.")
+    else:
+        print(f"Not attempting to extract " f"{local_filename}.")
