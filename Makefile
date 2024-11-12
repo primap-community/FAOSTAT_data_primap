@@ -81,4 +81,4 @@ virtual-environment:  ## update virtual environment, create a new one if it does
 .PHONY: download_all_domains-environment
 download_all_domains:
 	# downloads and stages (datalad save) all available data
-	datalad run poetry run python3 src/faostat_data_primap/download.py
+	datalad run poetry run python3 scripts/download_all_domains.py
