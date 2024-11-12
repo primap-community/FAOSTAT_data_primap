@@ -9,13 +9,18 @@ from src.faostat_data_primap.download import (
 from src.faostat_data_primap.helper.definitions import downloaded_data_path, sources
 
 
-def download_all_domains(sources: list[tuple[str]]):
+def download_all_domains(sources: list[tuple[str]]) -> list[str]:
     """
-    Download input files from a remote location
+    Download and unpack all climate-related domains from the FAO stat website.
+
+    Extract the date when the data set was last updated and create a directory
+    with the same name. Download the zip files for each domain if
+    it does not already exist. Unpack the zip file and save in
+    the same directory.
 
     Parameters
     ----------
-    download_path
+    sources
         Name of data set, url to domain overview,
         and download url
 
@@ -32,7 +37,6 @@ def download_all_domains(sources: list[tuple[str]]):
     ) in sources:
         soup = get_html_content(url)
 
-        # todo Remove url input
         last_updated = get_last_updated_date(soup, url)
 
         if not downloaded_data_path.exists():
@@ -43,7 +47,6 @@ def download_all_domains(sources: list[tuple[str]]):
             ds_path.mkdir()
 
         local_data_dir = ds_path / last_updated
-
         if not local_data_dir.exists():
             local_data_dir.mkdir()
 
