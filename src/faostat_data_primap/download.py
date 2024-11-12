@@ -1,5 +1,7 @@
 """Downloads data from FAOSTAT website."""
 
+import hashlib
+import os
 import pathlib
 import time
 import zipfile
@@ -12,6 +14,81 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
 from faostat_data_primap.exceptions import DateTagNotFoundError
+
+
+def find_previous_release_path(current_relase_path: pathlib.PosixPath):
+    # find the directory of the previous release
+    domain_path = current_relase_path.parent
+    releases = [
+        release
+        for release in os.listdir(domain_path)
+        if (
+            os.path.isdir(domain_path / release)
+            and (domain_path / release != current_relase_path)
+        )
+    ]
+    if not releases:
+        return None
+    previous_release = sorted(releases)[-1]
+    previous_release_path = domain_path / previous_release
+    return previous_release_path
+
+
+def calculate_checksum(file_path):
+    sha256 = hashlib.sha256()
+    with open(file_path, "rb") as f:
+        for chunk in iter(lambda: f.read(4096), b""):
+            sha256.update(chunk)
+    return sha256.hexdigest()
+
+
+def download_methodology(url_download: str, save_path: pathlib.PosixPath):
+    filename = str(url_download).split("/")[-1]
+    download_path = save_path / filename
+    # find file to compare with
+    previous_release = find_previous_release_path(save_path)
+    # check if the file already exists in current release and there are
+    # files in previous release to compare with
+    if not download_path.exists() and previous_release:
+        file_to_compare = previous_release / filename
+        # Check if the file exists in the comparison directory
+        if file_to_compare.exists():
+            # Download the file temporarily to calculate its checksum
+            response = requests.get(url_download, stream=True)
+            response.raise_for_status()  # Check for successful request
+            file_to_download = response.content
+            file_to_download_checksum = hashlib.sha256(file_to_download).hexdigest()
+
+            # If the file exists, compare checksums
+            file_to_compare_checksum = calculate_checksum(file_to_compare)
+
+            if file_to_compare_checksum == file_to_download_checksum:
+                # Files are the same, create a symlink
+                print(
+                    f"File '{filename}' exists in the comparison directory and "
+                    f"is identical. Creating symlink."
+                )
+                os.symlink(file_to_compare, download_path)
+            else:
+                # Files are different, proceed to download
+                print(
+                    f"File '{filename}' exists in the comparison directory but differs. "
+                    f"Downloading file."
+                )
+                with open(download_path, "wb") as f:
+                    f.write(file_to_download)
+        else:
+            print(
+                f"File '{filename}' does not exist in previous release. Downloading file."
+            )
+            response = requests.get(url_download, stream=True)
+            response.raise_for_status()  # Check for successful request
+            with open(download_path, "wb") as f:
+                f.write(response.content)
+
+    # file already exists in current release
+    else:
+        print(f"Skipping download of {download_path}" " because it already exists.")
 
 
 def get_html_content(url: str) -> bs4.BeautifulSoup:

@@ -2,11 +2,12 @@
 
 from faostat_data_primap.download import (
     download_file,
+    download_methodology,
     get_html_content,
     get_last_updated_date,
     unzip_file,
 )
-from faostat_data_primap.helper.definitions import downloaded_data_path, sources
+from faostat_data_primap.helper.definitions import domains, downloaded_data_path
 
 
 def download_all_domains(sources: list[tuple[str]]) -> list[str]:
@@ -30,11 +31,11 @@ def download_all_domains(sources: list[tuple[str]]) -> list[str]:
 
     """
     downloaded_files = []
-    for (
-        ds_name,
-        url,
-        url_download,
-    ) in sources:
+    for ds_name, urls in domains.items():
+        url = urls["url_domain"]
+        url_download = urls["url_download"]
+        url_methodology = urls["url_methodology"]
+
         soup = get_html_content(url)
 
         last_updated = get_last_updated_date(soup, url)
@@ -50,6 +51,8 @@ def download_all_domains(sources: list[tuple[str]]) -> list[str]:
         if not local_data_dir.exists():
             local_data_dir.mkdir()
 
+        download_methodology(save_path=local_data_dir, url_download=url_methodology)
+
         local_filename = local_data_dir / f"{ds_name}.zip"
 
         download_file(url_download=url_download, save_path=local_filename)
@@ -62,4 +65,4 @@ def download_all_domains(sources: list[tuple[str]]) -> list[str]:
 
 
 if __name__ == "__main__":
-    download_all_domains(sources)
+    download_all_domains(domains)
