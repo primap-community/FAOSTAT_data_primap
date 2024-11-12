@@ -1,9 +1,7 @@
-"""Remove downloads for a particular date.
+"""Remove all downloads.
 
-Files are saved in a folder named after the current date,
-for example downloaded_data/farm_gate_agriculture_energy/2024-11-07
-This script deletes all files in such a folder. It is
-useful when testing downloads. Needs to be updated with the directory
+This script deletes all downloaded and unzipped files. It is
+useful for testing purposes. Needs to be updated with the directory
 structure or maybe can be deleted altogether later.
 """
 
@@ -13,12 +11,6 @@ import os
 from faostat_data_primap.helper.definitions import downloaded_data_path
 
 
-# @click.command()
-# @click.option(
-#     "--level",
-#     help="Delete all files on domain or release level",
-#     default="domain",
-# )
 def run():
     """
     Delete all downloaded files for all domains and all releases

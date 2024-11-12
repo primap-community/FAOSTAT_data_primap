@@ -26,8 +26,6 @@ def get_html_content(url: str) -> bs4.BeautifulSoup:
     Returns
     -------
         html content
-    -------
-
     """
     # If the chrome driver isn't found on your system PATH, Selenium
     # will automatically download it for you. Make sure there is no
@@ -49,6 +47,11 @@ def get_last_updated_date(soup: bs4.BeautifulSoup, url: str) -> str:
     """
     Get the date when data set way last updated from html text
 
+    The FAO stat domain overview page includes a date when
+    the data set was last updated. We need it to label our downloaded
+    data sets. This function searches and extracts the date
+    from the html code.
+
     Parameters
     ----------
     soup
@@ -60,6 +63,11 @@ def get_last_updated_date(soup: bs4.BeautifulSoup, url: str) -> str:
     Returns
     -------
         date when data set was last updated
+
+    Raises
+    ------
+    DateTagNotFoundError
+        If the tag for the date is not found in the html code
     """
     date_tag = soup.find("p", {"data-role": "date"})
 
