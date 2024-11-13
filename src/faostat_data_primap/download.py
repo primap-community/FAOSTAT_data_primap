@@ -48,7 +48,7 @@ def find_previous_release_path(
             datetime.strptime(release, "%Y-%m-%d") for release in all_releases
         ]
     except ValueError as e:
-        msg = "All release folders must be in YYYY-MM-DD format"
+        msg = f"All release folders must be in YYYY-MM-DD format, got {all_releases=}"
         raise ValueError(msg) from e
 
     all_releases_datetime = sorted(all_releases_datetime)
