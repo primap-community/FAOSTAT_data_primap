@@ -39,7 +39,9 @@ def find_previous_release_path(
     """
     domain_path = current_release_path.parent
     all_releases = [
-        release_name for release_name in os.listdir(current_release_path.parent)
+        release_name
+        for release_name in os.listdir(current_release_path.parent)
+        if (domain_path / release_name).is_dir()
     ]
 
     # make sure all directories follow the naming convention
@@ -48,7 +50,10 @@ def find_previous_release_path(
             datetime.strptime(release, "%Y-%m-%d") for release in all_releases
         ]
     except ValueError as e:
-        msg = f"All release folders must be in YYYY-MM-DD format, got {all_releases=}"
+        msg = (
+            "All release folders must be in YYYY-MM-DD format, "
+            f"got {sorted(all_releases)}"
+        )
         raise ValueError(msg) from e
 
     all_releases_datetime = sorted(all_releases_datetime)

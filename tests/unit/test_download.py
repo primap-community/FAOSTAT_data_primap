@@ -119,22 +119,30 @@ def test_find_previous_release_path_that_does_not_exists(
 
 
 @pytest.mark.parametrize(
-    "releases,current_release_date",
+    "releases,current_release_date, error_msg",
     [
         pytest.param(
             ["2023-12-13", "2022-03-18", "2024-11-29", "20240-11-09"],
             "2022-03-18",
+            (
+                "All release folders must be in YYYY-MM-DD format, got "
+                "['2022-03-18', '2023-12-13', '2024-11-29', '20240-11-09']"
+            ),
             id="typo",
         ),
         pytest.param(
             ["20231213", "2022-03-18", "2024-11-29", "2024-11-09"],
             "2022-03-18",
+            (
+                "All release folders must be in YYYY-MM-DD format, got "
+                "['2022-03-18', '20231213', '2024-11-09', '2024-11-29']"
+            ),
             id="missing hyphen",
         ),
     ],
 )
 def test_find_previous_release_path_wrong_dir_format(
-    temp_domain_directories, releases, current_release_date
+    temp_domain_directories, releases, current_release_date, error_msg
 ):
     domain_path = temp_domain_directories["domain_paths"][
         0
@@ -150,7 +158,7 @@ def test_find_previous_release_path_wrong_dir_format(
     with pytest.raises(ValueError) as excinfo:
         result = find_previous_release_path(current_release_path)  # noqa: F841
 
-    assert str(excinfo.value) == "All release folders must be in YYYY-MM-DD format"
+    assert str(excinfo.value) == error_msg
 
 
 def test_calculate_checksum(tmp_path):
