@@ -16,25 +16,55 @@ from selenium.webdriver.chrome.service import Service
 from faostat_data_primap.exceptions import DateTagNotFoundError
 
 
-def find_previous_release_path(current_relase_path: pathlib.PosixPath):
-    # find the directory of the previous release
-    domain_path = current_relase_path.parent
+def find_previous_release_path(
+    current_release_path: pathlib.PosixPath,
+) -> pathlib.PosixPath | None:
+    """
+    Find the most recent previous release directory within same domain
+
+    Release directories are assumed to be subdirectories within the same parent
+    directory as `current_release_path`. The Sorting is done alphabetically,
+    so directory names should follow the naming convention YYYY-MM-DD
+
+    Parameters
+    ----------
+    current_release_path : pathlib.PosixPath
+        The path of the current release directory.
+
+    Returns
+    -------
+    pathlib.PosixPath or None
+        Returns the path of the most recent previous release directory if one exists,
+        otherwise returns None.
+    """
+    domain_path = current_release_path.parent
+
+    # list all releases for the same domain
     releases = [
-        release
-        for release in os.listdir(domain_path)
-        if (
-            os.path.isdir(domain_path / release)
-            and (domain_path / release != current_relase_path)
+        release_path
+        for release_path in (
+            domain_path / release for release in os.listdir(domain_path)
         )
+        if release_path.is_dir() and release_path != current_release_path
     ]
-    if not releases:
-        return None
-    previous_release = sorted(releases)[-1]
-    previous_release_path = domain_path / previous_release
-    return previous_release_path
+
+    return sorted(releases)[-1] if releases else None
 
 
-def calculate_checksum(file_path):
+def calculate_checksum(file_path) -> str:
+    """
+    Calculate the SHA-256 checksum of a file.
+
+    Parameters
+    ----------
+    file_path : pathlib.PosixPath
+        The path to the file for which the checksum is calculated.
+
+    Returns
+    -------
+    str
+        The SHA-256 checksum of the file as a hexadecimal string.
+    """
     sha256 = hashlib.sha256()
     with open(file_path, "rb") as f:
         for chunk in iter(lambda: f.read(4096), b""):
@@ -43,52 +73,70 @@ def calculate_checksum(file_path):
 
 
 def download_methodology(url_download: str, save_path: pathlib.PosixPath):
-    filename = str(url_download).split("/")[-1]
-    download_path = save_path / filename
-    # find file to compare with
-    previous_release = find_previous_release_path(save_path)
-    # check if the file already exists in current release and there are
-    # files in previous release to compare with
-    if not download_path.exists() and previous_release:
-        file_to_compare = previous_release / filename
-        # Check if the file exists in the comparison directory
-        if file_to_compare.exists():
-            # Download the file temporarily to calculate its checksum
-            response = requests.get(url_download, stream=True)
-            response.raise_for_status()  # Check for successful request
-            file_to_download = response.content
-            file_to_download_checksum = hashlib.sha256(file_to_download).hexdigest()
+    """
+    Download methodology file.
 
-            # If the file exists, compare checksums
+    Download the methodology PDF-file from a specified URL and save to a
+    target directory. If the file already exists in `save_path`,
+    the download is skipped. If a previous release directory exists,
+    the function attempts to locate the file there and compares checksums
+    to avoid downloading an identical file. If it exists in the previous release,
+    but it's not identical it is downloaded. If the file exists in the previous
+    release directory and is identical, a symlink will be created instead of downloading
+    to avoid duplicate downloads. If the file does not exist in a previous release,
+    it will be downloaded.
+
+    Parameters
+    ----------
+    url_download : str
+        The URL from which to download the file.
+    save_path : pathlib.PosixPath
+        The path to the directory where the file should be saved.
+    """
+    filename = url_download.split("/")[-1]
+    download_path = save_path / filename
+
+    if download_path.exists():
+        print(f"Skipping download of {download_path} because it already exists.")
+        return
+
+    previous_release = find_previous_release_path(save_path)
+    # Attempt to find a file to compare in the previous release
+    if previous_release:
+        file_to_compare = previous_release / filename
+        if file_to_compare.exists():
+            response = requests.get(url_download, stream=True, timeout=30)
+            response.raise_for_status()
+            file_to_download_checksum = hashlib.sha256(response.content).hexdigest()
             file_to_compare_checksum = calculate_checksum(file_to_compare)
 
-            if file_to_compare_checksum == file_to_download_checksum:
-                # Files are the same, create a symlink
+            if file_to_download_checksum == file_to_compare_checksum:
                 print(
-                    f"File '{filename}' exists in the comparison directory and "
-                    f"is identical. Creating symlink."
+                    f"File '{filename}' is identical in the previous release. "
+                    f"Creating symlink."
                 )
                 os.symlink(file_to_compare, download_path)
+                return
             else:
-                # Files are different, proceed to download
                 print(
-                    f"File '{filename}' exists in the comparison directory but differs. "
+                    f"File '{filename}' differs from previous release. "
                     f"Downloading file."
                 )
-                with open(download_path, "wb") as f:
-                    f.write(file_to_download)
         else:
-            print(
-                f"File '{filename}' does not exist in previous release. Downloading file."
-            )
-            response = requests.get(url_download, stream=True)
-            response.raise_for_status()  # Check for successful request
-            with open(download_path, "wb") as f:
-                f.write(response.content)
+            print(f"File '{filename}' not found in previous release. Downloading file.")
+            response = requests.get(url_download, stream=True, timeout=30)
+            response.raise_for_status()
 
-    # file already exists in current release
+        # Save downloaded file to current release
+        with open(download_path, "wb") as f:
+            f.write(response.content)
+
     else:
-        print(f"Skipping download of {download_path}" " because it already exists.")
+        print(f"No previous release found. Downloading file '{filename}'.")
+        response = requests.get(url_download, stream=True, timeout=30)
+        response.raise_for_status()
+        with open(download_path, "wb") as f:
+            f.write(response.content)
 
 
 def get_html_content(url: str) -> bs4.BeautifulSoup:

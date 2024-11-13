@@ -10,7 +10,9 @@ from faostat_data_primap.download import (
 from faostat_data_primap.helper.definitions import domains, downloaded_data_path
 
 
-def download_all_domains(sources: list[tuple[str]]) -> list[str]:
+def download_all_domains(
+    domains: list[tuple[str]], downloaded_data_path: str = downloaded_data_path
+) -> list[str]:
     """
     Download and unpack all climate-related domains from the FAO stat website.
 
