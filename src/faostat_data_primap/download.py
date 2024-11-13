@@ -38,17 +38,28 @@ def find_previous_release_path(
         otherwise returns None.
     """
     domain_path = current_release_path.parent
-
-    # list all releases for the same domain
-    releases = [
-        release_path
-        for release_path in (
-            domain_path / release for release in os.listdir(domain_path)
-        )
-        if release_path.is_dir() and release_path != current_release_path
+    all_releases = [
+        release_name for release_name in os.listdir(current_release_path.parent)
     ]
 
-    return sorted(releases)[-1] if releases else None
+    # make sure all directories follow the naming convention
+    try:
+        all_releases_datetime = [
+            datetime.strptime(release, "%Y-%m-%d") for release in all_releases
+        ]
+    except ValueError as e:
+        msg = "All release folders must be in YYYY-MM-DD format"
+        raise ValueError(msg) from e
+
+    all_releases_datetime = sorted(all_releases_datetime)
+    current_release_datetime = datetime.strptime(current_release_path.name, "%Y-%m-%d")
+    index = all_releases_datetime.index(current_release_datetime)
+
+    # if the current release is the latest or the only one
+    if index == 0:
+        return None
+
+    return domain_path / all_releases_datetime[index - 1].strftime("%Y-%m-%d")
 
 
 def calculate_checksum(file_path) -> str:
