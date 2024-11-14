@@ -21,7 +21,7 @@ jobs:
           poetry-dependency-install-flags: "--all-extras --only 'main,dev'"
       - name: mypy
         run: |
-          mypy --install-types
+          poetry run mypy --install-types
           MYPYPATH=stubs poetry run mypy src
 
   docs:
