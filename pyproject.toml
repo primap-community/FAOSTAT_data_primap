@@ -194,6 +194,8 @@ authorized_licenses = [
     "LGPLv2+",
     "GNU Lesser General Public License v2 (LGPLv2)",
     "GNU Lesser General Public License v2 or later (LGPLv2+)",
+    'GNU General Public License v3 (GPLv3)',
+    'GNU Lesser General Public License v3 (LGPLv3)',
     "mit",
     "mit license",
     "Mozilla Public License 2.0 (MPL 2.0)",

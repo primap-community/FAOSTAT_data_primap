@@ -18,8 +18,8 @@ from faostat_data_primap.helper.definitions import domains, downloaded_data_path
 
 
 def find_previous_release_path(
-    current_release_path: pathlib.PosixPath,
-) -> pathlib.PosixPath | None:
+    current_release_path: pathlib.Path,
+) -> pathlib.Path | None:
     """
     Find the most recent previous release directory within same domain
 
@@ -29,12 +29,12 @@ def find_previous_release_path(
 
     Parameters
     ----------
-    current_release_path : pathlib.PosixPath
+    current_release_path : pathlib.Path
         The path of the current release directory.
 
     Returns
     -------
-    pathlib.PosixPath or None
+    pathlib.Path or None
         Returns the path of the most recent previous release directory if one exists,
         otherwise returns None.
     """
@@ -68,13 +68,13 @@ def find_previous_release_path(
     return domain_path / all_releases_datetime[index - 1].strftime("%Y-%m-%d")
 
 
-def calculate_checksum(file_path: pathlib.PosixPath) -> str:
+def calculate_checksum(file_path: pathlib.Path) -> str:
     """
     Calculate the SHA-256 checksum of a file.
 
     Parameters
     ----------
-    file_path : pathlib.PosixPath
+    file_path : pathlib.Path
         The path to the file for which the checksum is calculated.
 
     Returns
@@ -89,7 +89,7 @@ def calculate_checksum(file_path: pathlib.PosixPath) -> str:
     return sha256.hexdigest()
 
 
-def download_methodology(url_download: str, save_path: pathlib.PosixPath) -> None:
+def download_methodology(url_download: str, save_path: pathlib.Path) -> None:
     """
     Download methodology file.
 
@@ -107,7 +107,7 @@ def download_methodology(url_download: str, save_path: pathlib.PosixPath) -> Non
     ----------
     url_download : str
         The URL from which to download the file.
-    save_path : pathlib.PosixPath
+    save_path : pathlib.Path
         The path to the directory where the file should be saved.
     """
     filename = url_download.split("/")[-1]
@@ -223,7 +223,7 @@ def get_last_updated_date(soup: BeautifulSoup, url: str) -> str:
     return last_updated
 
 
-def download_file(url_download: str, save_path: pathlib.PosixPath) -> bool:
+def download_file(url_download: str, save_path: pathlib.Path) -> bool:
     """
     Download file.
 
@@ -253,7 +253,7 @@ def download_file(url_download: str, save_path: pathlib.PosixPath) -> bool:
     return False
 
 
-def unzip_file(local_filename: pathlib.PosixPath) -> list[str]:
+def unzip_file(local_filename: pathlib.Path) -> list[str]:
     """
     Unzip files in same directory. Skip if files are already there
 
@@ -295,7 +295,7 @@ def unzip_file(local_filename: pathlib.PosixPath) -> list[str]:
 
 def download_all_domains(
     domains: dict[str, dict[str, str]] = domains,
-    downloaded_data_path: pathlib.PosixPath = downloaded_data_path,
+    downloaded_data_path: pathlib.Path = downloaded_data_path,
 ) -> list[str]:
     """
     Download and unpack all climate-related domains from the FAO stat website.
