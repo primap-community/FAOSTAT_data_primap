@@ -7,7 +7,6 @@ import time
 import zipfile
 from datetime import datetime
 
-import bs4
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -69,7 +68,7 @@ def find_previous_release_path(
     return domain_path / all_releases_datetime[index - 1].strftime("%Y-%m-%d")
 
 
-def calculate_checksum(file_path) -> str:
+def calculate_checksum(file_path: pathlib.PosixPath) -> str:
     """
     Calculate the SHA-256 checksum of a file.
 
@@ -90,7 +89,7 @@ def calculate_checksum(file_path) -> str:
     return sha256.hexdigest()
 
 
-def download_methodology(url_download: str, save_path: pathlib.PosixPath):
+def download_methodology(url_download: str, save_path: pathlib.PosixPath) -> None:
     """
     Download methodology file.
 
@@ -157,7 +156,7 @@ def download_methodology(url_download: str, save_path: pathlib.PosixPath):
             f.write(response.content)
 
 
-def get_html_content(url: str) -> bs4.BeautifulSoup:
+def get_html_content(url: str) -> BeautifulSoup:
     """
     Get html from url.
 
@@ -188,7 +187,7 @@ def get_html_content(url: str) -> bs4.BeautifulSoup:
     return BeautifulSoup(html_content, "html.parser")
 
 
-def get_last_updated_date(soup: bs4.BeautifulSoup, url: str) -> str:
+def get_last_updated_date(soup: BeautifulSoup, url: str) -> str:
     """
     Get the date when data set way last updated from html text
 
@@ -224,7 +223,7 @@ def get_last_updated_date(soup: bs4.BeautifulSoup, url: str) -> str:
     return last_updated
 
 
-def download_file(url_download: str, save_path: pathlib.PosixPath):
+def download_file(url_download: str, save_path: pathlib.PosixPath) -> bool:
     """
     Download file.
 
@@ -254,7 +253,7 @@ def download_file(url_download: str, save_path: pathlib.PosixPath):
     return False
 
 
-def unzip_file(local_filename: pathlib.PosixPath):
+def unzip_file(local_filename: pathlib.PosixPath) -> bool:
     """
     Unzip files in same directory. Skip if files are already there
 
@@ -295,7 +294,7 @@ def unzip_file(local_filename: pathlib.PosixPath):
 
 
 def download_all_domains(
-    domains: list[tuple[str]] = domains,
+    domains: dict[str, dict[str, str]] = domains,
     downloaded_data_path: str = downloaded_data_path,
 ) -> list[str]:
     """

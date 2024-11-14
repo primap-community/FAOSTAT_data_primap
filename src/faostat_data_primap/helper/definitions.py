@@ -1,5 +1,5 @@
 """definitions like folders, mappings etc."""
-
+import pathlib
 from pathlib import Path
 
 domains = {
@@ -41,7 +41,7 @@ domains = {
 }
 
 
-def get_root_path(root_indicator: str = ".git"):
+def get_root_path(root_indicator: str = ".git") -> pathlib.PosixPath:
     """
     Traverse up from the current script location to find the repository root.
 
