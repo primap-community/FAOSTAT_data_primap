@@ -1,5 +1,4 @@
 """definitions like folders, mappings etc."""
-import pathlib
 from pathlib import Path
 
 domains = {
@@ -41,7 +40,7 @@ domains = {
 }
 
 
-def get_root_path(root_indicator: str = ".git") -> pathlib.PosixPath:
+def get_root_path(root_indicator: str = ".git") -> Path:
     """
     Traverse up from the current script location to find the repository root.
 
@@ -63,7 +62,7 @@ def get_root_path(root_indicator: str = ".git") -> pathlib.PosixPath:
         RuntimeError: If the repository root cannot be found.
     """
     current_dir = Path(__file__).resolve().parent
-    while current_dir != current_dir.root:
+    while current_dir != Path(current_dir.root):
         if (current_dir / root_indicator).exists():
             return current_dir
         current_dir = current_dir.parent
