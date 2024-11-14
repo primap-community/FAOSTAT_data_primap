@@ -7,8 +7,8 @@ import time
 import zipfile
 from datetime import datetime
 
-import requests  # type: ignore
-from bs4 import BeautifulSoup  # type: ignore
+import requests
+from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
@@ -253,7 +253,7 @@ def download_file(url_download: str, save_path: pathlib.PosixPath) -> bool:
     return False
 
 
-def unzip_file(local_filename: pathlib.PosixPath) -> bool:
+def unzip_file(local_filename: pathlib.PosixPath) -> list[str]:
     """
     Unzip files in same directory. Skip if files are already there
 
@@ -281,7 +281,7 @@ def unzip_file(local_filename: pathlib.PosixPath) -> bool:
                     else:
                         print(f"Extracting '{file_info.filename}'...")
                         zip_file.extract(file_info, local_filename.parent)
-                        unzipped_files.append(local_filename)
+                        unzipped_files.append(local_filename.name)
 
         # TODO Better error logging/visibilty
         except zipfile.BadZipFile:
@@ -295,7 +295,7 @@ def unzip_file(local_filename: pathlib.PosixPath) -> bool:
 
 def download_all_domains(
     domains: dict[str, dict[str, str]] = domains,
-    downloaded_data_path: str = downloaded_data_path,
+    downloaded_data_path: pathlib.PosixPath = downloaded_data_path,
 ) -> list[str]:
     """
     Download and unpack all climate-related domains from the FAO stat website.
