@@ -20,9 +20,7 @@ jobs:
           venv-id: "docs"
           poetry-dependency-install-flags: "--all-extras --only 'main,dev'"
       - name: mypy
-        run: |
-          poetry run mypy --install-types
-          MYPYPATH=stubs poetry run mypy src
+        run: MYPYPATH=stubs poetry run mypy src
 
   docs:
     if: ${{ !github.event.pull_request.draft }}
