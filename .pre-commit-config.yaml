@@ -14,7 +14,7 @@ repos:
       - id: check-case-conflict
       - id: check-json
       - id: check-merge-conflict
-      - id: check-symlinks
+#      - id: check-symlinks - DATALAD
       - id: check-yaml
       - id: debug-statements
       - id: detect-private-key
@@ -40,8 +40,8 @@ repos:
     rev: '1.8.3'
     hooks:
       - id: poetry-check
-      - id: poetry-lock
-        args: [--no-update]
+#      - id: poetry-lock
+#        args: [--no-update]
   - repo: https://github.com/python-poetry/poetry-plugin-export
     rev: '1.8.0'
     hooks:
