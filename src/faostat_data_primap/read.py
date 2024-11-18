@@ -1,16 +1,18 @@
 """read data set"""
 
-
 import pandas as pd
 import primap2 as pm2
 import pycountry
 
-from src.faostat_data_primap.helper.definitions import downloaded_data_path
+from src.faostat_data_primap.helper.definitions import (
+    downloaded_data_path,
+    read_config_all,
+)
 
 custom_country_mapping_code = {}
 
 custom_country_mapping_name = {
-    # FAO
+    # farm gate agricultur energy
     "Bolivia (Plurinational State of)": "BOL",
     "China, Hong Kong SAR": "HKG",
     "China, Macao SAR": "MAC",
@@ -28,17 +30,19 @@ custom_country_mapping_name = {
     "Yugoslav SFR": "YUG",
     "World": "EARTH",
     # Andrew cement (probably not needed)
-    "Bonaire, Saint Eustatius and Saba": "BES",
-    "Cape Verde": "CPV",
+    # "Bonaire, Saint Eustatius and Saba": "BES",
+    # "Cape Verde": "CPV",
     "Democratic Republic of the Congo": "COD",
-    "Faeroe Islands": "FRO",
+    # "Faeroe Islands": "FRO",
     "Micronesia (Federated States of)": "FSM",
-    "Iran": "IRN",
-    "Laos": "LAO",
-    "Occupied Palestinian Territory": "PSE",
-    "Swaziland": "SWZ",
-    "Taiwan": "TWN",
+    # "Iran": "IRN",
+    # "Laos": "LAO",
+    # "Occupied Palestinian Territory": "PSE",
+    # "Swaziland": "SWZ",
+    # "Taiwan": "TWN",
     "Wallis and Futuna Islands": "WLF",
+    # farm gate emissions crops
+    "United States Virgin Islands": "VIR",
 }
 
 
@@ -109,75 +113,67 @@ files_to_read = (
     ),
 )
 
+df_all = None
 for domain, release, filename in files_to_read:
     dataset_path = downloaded_data_path / domain / release / filename
-    data_pd = pd.read_csv(dataset_path)
+    read_config = read_config_all[domain][release]
 
-    # remove in entries with unit TJ
-    data_pd = data_pd[data_pd["Unit"] != "TJ"]
+    df_domain = pd.read_csv(dataset_path)
 
-    # remove the country aggegrates
-    areas_to_remove = [
-        "World",
-        "Africa",
-        "Eastern Africa",
-        "Middle Africa",
-        "Northern Africa",
-        "Southern Africa",
-        "Western Africa",
-        "Americas",
-        "Northern America",
-        "Central America",
-        "Caribbean",
-        "South America",
-        "Asia",
-        "Central Asia",
-        "Eastern Asia",
-        "Southern Asia",
-        "South-eastern Asia",
-        "Western Asia",
-        "Europe",
-        "Eastern Europe",
-        "Northern Europe",
-        "Southern Europe",
-        "Western Europe",
-        "Oceania",
-        "Australia and New Zealand",
-        "Melanesia",
-        "Micronesia",
-        "Polynesia",
-        "Least Developed Countries",
-        "Land Locked Developing Countries",
-        "Small Island Developing States",
-        "Low Income Food Deficit Countries",
-        "Net Food Importing Developing Countries",
-        "Annex I countries",
-        "Non-Annex I countries",
-        "OECD",
-    ]
+    # remove rows by unit
+    # todo align pattern with below
+    # df_domain = df_domain[df_domain["Unit"] != "TJ"]
+    if "units_to_remove" in read_config.keys():
+        df_domain = df_domain[~df_domain["Unit"].isin(read_config["units_to_remove"])]
 
-    data_pd = data_pd[~data_pd["Area"].isin(areas_to_remove)]
-    country_mapping = {c: get_country_code(c) for c in data_pd["Area"].unique()}
+    # remove rows by element
+    if "elements_to_remove" in read_config.keys():
+        df_domain = df_domain[
+            ~df_domain["Element"].isin(read_config["elements_to_remove"])
+        ]
 
-    data_pd["country (ISO3)"] = data_pd["Area"].map(country_mapping)
+    # remove rows by area
+    if "areas_to_remove" in read_config.keys():
+        df_domain = df_domain[~df_domain["Area"].isin(read_config["areas_to_remove"])]
 
-    entity_mapping = {
-        "Emissions (CO2)": "CO2",
-        "Emissions (CH4)": "CH4",
-        "Emissions (N2O)": "N2O",
-    }
+    # todo we shouldn't re-compute this everytime
+    country_mapping = {c: get_country_code(c) for c in df_domain["Area"].unique()}
 
-    data_pd["entity"] = data_pd["Element"].map(entity_mapping)
+    # create country columns
+    df_domain["country (ISO3)"] = df_domain["Area"].map(country_mapping)
 
-    # todo can we do this in primap2 function?
-    data_pd = data_pd.drop(
-        ["Element", "Element Code", "Item Code", "Area Code (M49)", "Area Code"], axis=1
+    # create entity column
+    df_domain["entity"] = df_domain["Element"].map(read_config["entity_mapping"])
+
+    # create category column (combination of Item and Element works best)
+    df_domain["category"] = df_domain["Item"] + " " + df_domain["Element"]
+
+    # drop columns we don't need
+    df_domain = df_domain.drop(
+        read_config["columns_to_drop"],
+        axis=1,
     )
 
+    if df_all is None:
+        df_all = df_domain
+    else:
+        # makes sure there are no duplicate category names
+        if any(
+            [
+                category in df_all["category"].unique()
+                for category in df_domain["category"].unique()
+            ]
+        ):
+            msg = f"Duplicate category names for {domain}"
+            raise ValueError(msg)
+        df_all = pd.concat(
+            [df_all, df_domain],
+            axis=0,
+            join="outer",
+        ).reset_index(drop=True)
 
 coords_cols = {
     "area": "country (ISO3)",
-    "category": "Item",
     "unit": "Unit",
     "entity": "entity",
 }
@@ -202,7 +198,7 @@ meta_data = {
 }
 
 data_if = pm2.pm2io.convert_wide_dataframe_if(
-    data_pd,
+    df_all,
     coords_cols=coords_cols,
     coords_defaults=coords_defaults,
     coords_terminologies=coords_terminologies,
