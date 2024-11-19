@@ -8,9 +8,7 @@ from src.faostat_data_primap.helper.definitions import (
     downloaded_data_path,
     read_config_all,
 )
-
 custom_country_mapping_code = {}
-
 custom_country_mapping_name = {
     # farm gate agricultur energy
     "Bolivia (Plurinational State of)": "BOL",
@@ -29,7 +27,7 @@ custom_country_mapping_name = {
     "Venezuela (Bolivarian Republic of)": "VEN",
     "Yugoslav SFR": "YUG",
     "World": "EARTH",
-    # Andrew cement (probably not needed)
+    # todo Andrews cement list below (deleted commented lines)
     # "Bonaire, Saint Eustatius and Saba": "BES",
     # "Cape Verde": "CPV",
     "Democratic Republic of the Congo": "COD",
@@ -43,6 +41,14 @@ custom_country_mapping_name = {
     "Wallis and Futuna Islands": "WLF",
     # farm gate emissions crops
     "United States Virgin Islands": "VIR",
+    # todo is this relevant to us?
+    'Pacific Islands Trust Territory' : 'PIC',
+    'Svalbard and Jan Mayen Islands' : "SJM",  # Norwy
+    # something goes wrong with french characters in land_use_forest
+    "CÃ´te d'Ivoire" : "CIV",
+'CuraÃ§ao' : "CUW",
+   "RÃ©union" : "REU",
+'TÃ¼rkiye' : "TUR",
 }
 
 
@@ -104,25 +110,42 @@ files_to_read = (
     (
         "farm_gate_agriculture_energy",
         "2024-11-14",
-        "Emissions_Agriculture_Energy_E_All_Data_NOFLAG.csv",
     ),
     (
         "farm_gate_emissions_crops",
         "2024-11-14",
-        "Emissions_crops_E_All_Data_NOFLAG.csv",
     ),
+    (
+        "farm_gate_livestock",
+        "2024-11-14",
+    ),
+    (
+        "land_use_drained_organic_soils",
+        "2023-11-09",
+    ),
+    (
+        "land_use_fires",
+        "2023-11-09",
+    ),
+    (
+    "land_use_forests",
+        "2024-11-14",
+    )
 )
 
 df_all = None
-for domain, release, filename in files_to_read:
-    dataset_path = downloaded_data_path / domain / release / filename
+country_mapping = {}
+# todo remove reversed, I'm using it to get the new domain first in the debugger
+for domain, release in reversed(files_to_read):
     read_config = read_config_all[domain][release]
 
-    df_domain = pd.read_csv(dataset_path)
+    print(f"Read {read_config["filename"]}")
+    dataset_path = downloaded_data_path / domain / release / read_config["filename"]
+    # There are some non-utf8 characters in Emissions_Drained_Organic_Soils_E_All_Data_NOFLAG.csv
+    df_domain = pd.read_csv(dataset_path, encoding = "ISO-8859-1")
 
     # remove rows by unit
-    # todo align pattern with below
-    # df_domain = df_domain[df_domain["Unit"] != "TJ"]
+    # todo this is maybe not a good idea as it hides the elements to be removed
     if "units_to_remove" in read_config.keys():
         df_domain = df_domain[~df_domain["Unit"].isin(read_config["units_to_remove"])]
 
@@ -136,8 +159,10 @@ for domain, release, filename in files_to_read:
     if "areas_to_remove" in read_config.keys():
         df_domain = df_domain[~df_domain["Area"].isin(read_config["areas_to_remove"])]
 
-    # todo we shouldn't re-compute this everytime
-    country_mapping = {c: get_country_code(c) for c in df_domain["Area"].unique()}
+    # country name to ISO3 country code mapping
+    countries_to_map = [c for c in df_domain["Area"].unique() if c not in country_mapping.keys()]
+    for country_to_map in countries_to_map:
+        country_mapping[country_to_map] = get_country_code(country_to_map)
 
     # create country columns
     df_domain["country (ISO3)"] = df_domain["Area"].map(country_mapping)
@@ -156,6 +181,7 @@ for domain, release, filename in files_to_read:
 
     if df_all is None:
         df_all = df_domain
+        break
     else:
         # makes sure there are no duplicate category names
         if any(
@@ -176,12 +202,13 @@ coords_cols = {
     "area": "country (ISO3)",
     "unit": "Unit",
     "entity": "entity",
+    "source" : "Source"
 }
 
 coords_terminologies = {"area": "ISO3", "category": "FAOSTAT"}
 
 coords_defaults = {
-    "source": "FAO",
+    # "source": "FAO",
     "scenario": release,
 }
 
@@ -208,6 +235,7 @@ data_if = pm2.pm2io.convert_wide_dataframe_if(
     meta_data=meta_data,
 )
 
+pass
 # steps:
 # convert to primap2 format
 # save raw data set

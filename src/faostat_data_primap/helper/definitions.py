@@ -78,6 +78,7 @@ downloaded_data_path = root_path / "downloaded_data"
 
 # data reading
 areas_to_remove_base = [
+    # We can aggregate these country groups ourselves if we need to
     "World",
     "Africa",
     "Eastern Africa",
@@ -119,7 +120,11 @@ areas_to_remove_base = [
 read_config_all = {
     "farm_gate_agriculture_energy": {
         "2024-11-14": {
-            "units_to_remove" : ["TJ"],
+            # todo is NOFLAG the right choice?
+            "filename": "Emissions_Agriculture_Energy_E_All_Data_NOFLAG.csv",
+            # we don't need energy in Joule
+            # todo maybe explicitly deleting elements is better
+            "units_to_remove": ["TJ"],
             "areas_to_remove": [
                 *areas_to_remove_base,
             ],
@@ -128,21 +133,31 @@ read_config_all = {
                 "Emissions (CH4)": "CH4",
                 "Emissions (N2O)": "N2O",
             },
-            "columns_to_drop" : ["Element", "Element Code", "Item", "Item Code", "Area Code (M49)", "Area", "Area Code"],
+            "columns_to_drop": [
+                "Element",
+                "Element Code",
+                "Item",
+                "Item Code",
+                "Area Code (M49)",
+                "Area",
+                "Area Code",
+            ],
         }
     },
     "farm_gate_emissions_crops": {
         "2024-11-14": {
+            "filename": "Emissions_crops_E_All_Data_NOFLAG.csv",
             "areas_to_remove": [
                 *areas_to_remove_base,
                 "European Union (27)",
                 # This seems to be data for a Belgian province,
                 # I don't think we need it
                 "Belgium-Luxembourg",
-                # We cannot split combined country data
+                # I'm not sure if we can downscale these two
                 "Serbia and Montenegro",
             ],
             "elements_to_remove": [
+                # all these elements are not emissions
                 "Crop residues (N content)",
                 "Burning crop residues (Biomass burned, dry matter)",
                 "Area harvested",
@@ -164,9 +179,155 @@ read_config_all = {
                 "Indirect emissions (N2O that leaches) (Synthetic fertilizers)": "N2O",
                 "Indirect emissions (N2O that volatilises) (Synthetic fertilizers)": "N2O",
             },
-            "columns_to_drop" : ["Element", "Element Code", "Item", "Item Code", "Area Code (M49)", "Area",
-                                 "Area Code", 'Item Code (CPC)', 'Source Code'],
-
+            "columns_to_drop": [
+                "Element",
+                "Element Code",
+                "Item",
+                "Item Code",
+                "Area Code (M49)",
+                "Area",
+                "Area Code",
+                "Item Code (CPC)",
+                "Source Code",
+            ],
+        }
+    },
+    "farm_gate_livestock": {
+        "2024-11-14": {
+            "filename": "Emissions_livestock_E_All_Data_NOFLAG.csv",
+            "areas_to_remove": [
+                *areas_to_remove_base,
+                "Belgium-Luxembourg",
+                "Serbia and Montenegro",
+                "European Union (27)",
+            ],
+            "elements_to_remove": [
+                "Stocks",  # number of animals
+                "Manure management (manure treated, N content)",
+                "Manure left on pasture (N content)",
+                "Manure left on pasture that leaches (N content)",
+                "Manure left on pasture that volatilises (N content)",
+                "Manure applied to soils (N content)",
+                "Manure applied to soils that leaches (N content)",
+                "Manure applied to soils that volatilises (N content)",
+            ],
+            "entity_mapping": {
+                # todo we could make this smarter and get the entity from the string
+                "Livestock total (Emissions N2O)": "N2O",
+                "Livestock total (Emissions CH4)": "CH4",
+                "Enteric fermentation (Emissions CH4)": "CH4",
+                "Manure management (Emissions CH4)": "CH4",
+                "Manure management (Emissions N2O)": "N2O",
+                "Manure management (Direct emissions N2O)": "N2O",
+                "Manure management (Indirect emissions N2O)": "N2O",
+                "Manure left on pasture (Emissions N2O)": "N2O",
+                "Manure left on pasture (Direct emissions N2O)": "N2O",
+                "Indirect emissions (N2O that leaches) (Manure on pasture)": "N2O",
+                "Indirect emissions (N2O that volatilises) (Manure on pasture)": "N2O",
+                "Manure left on pasture (Indirect emissions N2O)": "N2O",
+                "Emissions (N2O) (Manure applied)": "N2O",
+                "Manure applied to soils (Direct emissions N2O)": "N2O",
+                "Indirect emissions (N2O that leaches) (Manure applied)": "N2O",
+                "Indirect emissions (N2O that volatilises) (Manure applied)": "N2O",
+                "Manure applied to soils (Indirect emissions N2O)": "N2O",
+            },
+            "columns_to_drop": [
+                "Element",
+                "Element Code",
+                "Item",
+                "Item Code",
+                "Area Code (M49)",
+                "Area",
+                "Area Code",
+                "Item Code (CPC)",
+                "Source Code",
+            ],
+        }
+    },
+    "land_use_drained_organic_soils": {
+        "2023-11-09": {
+            "filename": "Emissions_Drained_Organic_Soils_E_All_Data_NOFLAG.csv",
+            "areas_to_remove": [
+                *areas_to_remove_base,
+                "Belgium-Luxembourg",
+                "Serbia and Montenegro",
+                "European Union (27)",
+                # check todo channel islands belong to UK
+                "Channel Islands",
+            ],
+            "elements_to_remove": [
+                "Area",
+                # todo can we convert this into emissions?
+                "Net stock change (C)",
+            ],
+            "entity_mapping": {
+                "Emissions (N2O)": "N2O",
+                "Emissions (CO2)": "CO2",
+            },
+            "columns_to_drop": [
+                "Element",
+                "Element Code",
+                "Item",
+                "Item Code",
+                "Area Code (M49)",
+                "Area",
+                "Area Code",
+                "Source Code",
+            ],
+        }
+    },
+    "land_use_fires": {
+        "2023-11-09": {
+            "filename": "Emissions_Land_Use_Fires_E_All_Data_NOFLAG.csv",
+            "areas_to_remove": [
+                *areas_to_remove_base,
+                "Belgium-Luxembourg",
+                "Serbia and Montenegro",
+                "European Union (27)",
+                # check todo channel islands belong to UK
+                "Channel Islands",
+            ],
+            "elements_to_remove": ["Biomass burned (dry matter)", "Burned Area"],
+            "entity_mapping": {
+                "Emissions (CH4)": "CH4",
+                "Emissions (N2O)": "N2O",
+                "Emissions (CO2)": "CO2",
+            },
+            "columns_to_drop": [
+                "Element",
+                "Element Code",
+                "Item",
+                "Item Code",
+                "Area Code (M49)",
+                "Area",
+                "Area Code",
+                "Source Code",
+            ],
+        }
+    },
+    "land_use_forests": {
+        "2024-11-14": {
+            "filename": "Emissions_Land_Use_Forests_E_All_Data_NOFLAG.csv",
+            "areas_to_remove": [
+                *areas_to_remove_base,
+                "Belgium-Luxembourg",
+                "Serbia and Montenegro",
+                "European Union (27)",
+            ],
+            "elements_to_remove": [
+                "Area",
+            ],
+            "entity_mapping": {"Net emissions/removals (CO2) (Forest land)": "CO2"},
+            "columns_to_drop": [
+                "Element",
+                "Element Code",
+                "Item",
+                "Item Code",
+                "Area Code (M49)",
+                "Area",
+                "Area Code",
+                "Source Code",
+            ],
         }
     },
 }
