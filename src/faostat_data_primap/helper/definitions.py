@@ -717,7 +717,7 @@ country_to_iso3_mapping = {
     "Yugoslav SFR": "F248",
     "Zambia": "ZMB",
     "Zimbabwe": "ZWE",
-    # reading the csv correctly doesn't work for some domains
+    # reading the special characters (é, ô, ü etc.) fails for some domains
     # todo there is probably a better way to solve this
     "CÃ´te d'Ivoire" : "CIV",
     "CuraÃ§ao" : "CUW",
