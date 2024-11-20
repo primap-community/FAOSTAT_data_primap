@@ -167,7 +167,7 @@ def read_latest_data() -> None:
     data_if = data_pm2.pr.to_interchange_format()
 
     # save raw data
-    output_filename = f"FAOSTAT_Agrifood_system_emissions_v{release_name}"
+    output_filename = f"FAOSTAT_Agrifood_system_emissions_{release_name}"
 
     if not extracted_data_path.exists():
         extracted_data_path.mkdir()
