@@ -6,12 +6,12 @@ import pathlib
 import pandas as pd
 import primap2 as pm2
 
-from src.faostat_data_primap.helper.country_mapping import country_to_iso3_mapping
-from src.faostat_data_primap.helper.definitions import (
+from faostat_data_primap.helper.country_mapping import country_to_iso3_mapping
+from faostat_data_primap.helper.definitions import (
     config_to_if,
     read_config_all,
 )
-from src.faostat_data_primap.helper.paths import (
+from faostat_data_primap.helper.paths import (
     downloaded_data_path,
     extracted_data_path,
 )
