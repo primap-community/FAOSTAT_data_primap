@@ -79,7 +79,7 @@ def read_latest_data() -> None:
     for domain, release in files_to_read:
         read_config = read_config_all[domain][release]
 
-        print(f"Read {read_config["filename"]}")
+        print(f"Read {read_config['filename']}")
         dataset_path = downloaded_data_path / domain / release / read_config["filename"]
 
         # There are some non-utf8 characters
@@ -135,9 +135,10 @@ def read_latest_data() -> None:
                 join="outer",
             ).reset_index(drop=True)
 
+    # sometimes Source is empty
     df_all["Source"] = df_all["Source"].fillna("unknown")
 
-    # Rename columns to remove the "Y" prefix
+    # Remove the "Y" prefix for the years columns
     df_all = df_all.rename(columns=lambda x: x.lstrip("Y") if x.startswith("Y") else x)
 
     # Make sure the units are correct

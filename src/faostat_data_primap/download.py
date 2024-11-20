@@ -14,7 +14,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 
 from faostat_data_primap.exceptions import DateTagNotFoundError
-from faostat_data_primap.helper.definitions import domains, downloaded_data_path
+from faostat_data_primap.helper.definitions import domains
+from faostat_data_primap.helper.paths import downloaded_data_path
 
 
 def find_previous_release_path(
