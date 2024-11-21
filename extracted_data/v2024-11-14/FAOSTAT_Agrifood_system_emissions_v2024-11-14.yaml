@@ -13,10 +13,10 @@ time_format: '%Y'
 dimensions:
   '*':
   - time
-  - area (ISO3)
-  - scenario (FAO)
-  - source
   - category (FAOSTAT)
+  - source
+  - scenario (FAO)
+  - area (ISO3)
   - entity
   - unit
 data_file: FAOSTAT_Agrifood_system_emissions_v2024-11-14.csv

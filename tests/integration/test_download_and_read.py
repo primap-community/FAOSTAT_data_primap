@@ -4,7 +4,7 @@ from src.faostat_data_primap.download import download_all_domains
 from src.faostat_data_primap.read import read_latest_data
 
 
-# test the whole download script run
+# test the complete download and read process
 def test_download_all_domains(tmp_path):
     downloaded_data_path = tmp_path / "downloaded_data"
     download_all_domains(downloaded_data_path=downloaded_data_path)

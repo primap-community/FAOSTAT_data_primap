@@ -169,8 +169,8 @@ def read_latest_data(
     # save raw data
     output_filename = f"FAOSTAT_Agrifood_system_emissions_{release_name}"
 
-    if not extracted_data_path.exists():
-        extracted_data_path.mkdir()
+    if not save_path.exists():
+        save_path.mkdir()
 
     output_folder = save_path / release_name
     if not output_folder.exists():
