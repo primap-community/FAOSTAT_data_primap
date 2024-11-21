@@ -105,11 +105,16 @@ def read_latest_data(
 
         # check all countries are converted into iso3 codes
         if any(df_domain["country (ISO3)"].isna()):
-            msg = "Not all countries are converted into ISO3 codes"
+            msg = f"Not all countries are converted into ISO3 codes for {domain}"
             raise ValueError(msg)
 
         # create entity column
         df_domain["entity"] = df_domain["Element"].map(read_config["entity_mapping"])
+
+        # check all entities are mapped
+        if any(df_domain["entity"].isna()):
+            msg = f"Not all entities are mapped for {domain}"
+            raise ValueError(msg)
 
         # create category column (combination of Item and Element works best)
         df_domain["category"] = df_domain["Item"] + "-" + df_domain["Element"]
@@ -172,7 +177,8 @@ def read_latest_data(
         output_folder.mkdir()
 
     pm2.pm2io.write_interchange_format(
-        output_folder / (output_filename + ".csv"), data_if
+        output_folder / (output_filename + ".csv"),
+        data_if,
     )
 
     compression = dict(zlib=True, complevel=9)

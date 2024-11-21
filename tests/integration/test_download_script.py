@@ -1,6 +1,7 @@
 import os
 
 from src.faostat_data_primap.download import download_all_domains
+from src.faostat_data_primap.read import read_latest_data
 
 
 # test the whole download script run
@@ -30,3 +31,26 @@ def test_download_all_domains(tmp_path):
             assert [f for f in downloaded_data if f.endswith(".zip")]
 
     assert sorted(expected_downloaded_domains) == sorted(domains)
+
+    extracted_data_path = tmp_path / "extracted_data"
+
+    # read and save latest data
+    read_latest_data(
+        downloaded_data_path=downloaded_data_path, save_path=extracted_data_path
+    )
+
+    release_folder = os.listdir(extracted_data_path)
+
+    # there should be one directory created
+    assert len(release_folder) == 1
+    # and it starts with "v" (the date changes with each release)
+    assert release_folder[0].startswith("v")
+
+    output_files = os.listdir(extracted_data_path / release_folder[0])
+    # in the folder there should be three files
+    assert len(output_files) == 3
+
+    # a .yaml, .csv, and .nc file
+    required_extensions = {"nc", "csv", "yaml"}
+    file_extensions = {file.split(".")[-1] for file in output_files}
+    assert required_extensions == file_extensions

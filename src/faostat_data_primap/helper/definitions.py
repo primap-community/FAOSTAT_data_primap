@@ -225,7 +225,34 @@ read_config_all = {
                 "Area Code",
                 "Source Code",
             ],
-        }
+        },
+        "2024-11-14": {
+            "filename": "Emissions_Drained_Organic_Soils_E_All_Data_NOFLAG.csv",
+            "areas_to_remove": [
+                *areas_to_remove_base,
+                "Belgium-Luxembourg",
+                "Serbia and Montenegro",
+                "European Union (27)",
+            ],
+            "elements_to_remove": [
+                "Area",
+                "Net stock change (C)",
+            ],
+            "entity_mapping": {
+                "Emissions (N2O)": "N2O",
+                "Emissions (CO2)": "CO2",
+            },
+            "columns_to_drop": [
+                "Element",
+                "Element Code",
+                "Item",
+                "Item Code",
+                "Area Code (M49)",
+                "Area",
+                "Area Code",
+                "Source Code",
+            ],
+        },
     },
     "land_use_fires": {
         "2023-11-09": {
@@ -250,18 +277,40 @@ read_config_all = {
                 "Area Code",
                 "Source Code",
             ],
-        }
+        },
+        "2024-11-14": {
+            "filename": "Emissions_Land_Use_Fires_E_All_Data_NOFLAG.csv",
+            "areas_to_remove": [
+                *areas_to_remove_base,
+                "European Union (27)",
+            ],
+            "elements_to_remove": [
+                "Burning crop residues (Biomass burned, dry matter)",
+                "Burned Area",
+            ],
+            "entity_mapping": {
+                "Emissions (CH4)": "CH4",
+                "Emissions (N2O)": "N2O",
+                "Emissions (CO2)": "CO2",
+            },
+            "columns_to_drop": [
+                "Element",
+                "Element Code",
+                "Item",
+                "Item Code",
+                "Area Code (M49)",
+                "Area",
+                "Area Code",
+                "Source Code",
+            ],
+        },
     },
     "land_use_forests": {
         "2024-11-14": {
             "filename": "Emissions_Land_Use_Forests_E_All_Data_NOFLAG.csv",
             "areas_to_remove": [
                 *areas_to_remove_base,
-                # "Belgium-Luxembourg",
-                # "Serbia and Montenegro",
                 "European Union (27)",
-                # "China" and "China, mainland" included with identical data
-                # "China, mainland",
             ],
             "elements_to_remove": [
                 "Area",
@@ -284,10 +333,7 @@ read_config_all = {
             "filename": "Emissions_Pre_Post_Production_E_All_Data_NOFLAG.csv",
             "areas_to_remove": [
                 *areas_to_remove_base,
-                # "Belgium-Luxembourg",
-                # "Serbia and Montenegro",
                 "European Union (27)",
-                # "Channel Islands",
             ],
             "elements_to_remove": [
                 "Energy Use (Total)",
@@ -312,7 +358,37 @@ read_config_all = {
                 "Area",
                 "Area Code",
             ],
-        }
+        },
+        "2024-11-14": {
+            "filename": "Emissions_Pre_Post_Production_E_All_Data_NOFLAG.csv",
+            "areas_to_remove": [
+                *areas_to_remove_base,
+                "European Union (27)",
+            ],
+            "elements_to_remove": [
+                "Energy Use (Total)",
+                "Energy Use (Electricity)",
+                "Energy Use (Natural Gas, including LNG)",
+                "Energy Use (Heat)",
+                "Energy Use (Coal)",
+            ],
+            "entity_mapping": {
+                "Emissions (CO2)": "CO2",
+                "Emissions (CO2eq) (AR5)": "KYOTOGHG (AR5GWP100)",
+                "Emissions (CH4)": "CH4",
+                "Emissions (N2O)": "N2O",
+                "Emissions (CO2eq) from F-gases (AR5)": "FGASES (AR5GWP100)",
+            },
+            "columns_to_drop": [
+                "Element",
+                "Element Code",
+                "Item",
+                "Item Code",
+                "Area Code (M49)",
+                "Area",
+                "Area Code",
+            ],
+        },
     },
     "replace_units": {
         "KYOTOGHG (AR5GWP100) * kt/ year": "CO2 * kt / year",

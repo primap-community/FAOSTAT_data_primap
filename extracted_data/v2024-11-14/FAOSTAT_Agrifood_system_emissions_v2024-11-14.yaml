@@ -13,9 +13,9 @@ time_format: '%Y'
 dimensions:
   '*':
   - time
-  - source
   - area (ISO3)
   - scenario (FAO)
+  - source
   - category (FAOSTAT)
   - entity
   - unit

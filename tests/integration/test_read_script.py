@@ -3,6 +3,8 @@ import os
 from src.faostat_data_primap.helper.paths import root_path
 from src.faostat_data_primap.read import read_latest_data
 
+example_csv_content = ()
+
 
 def test_read_latest_data(tmp_path):
     # get the downloaded data from here
