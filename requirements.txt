@@ -664,6 +664,9 @@ outcome==1.3.0.post0 ; python_version >= "3.10" and python_version < "3.13" \
 packaging==24.2 ; python_version >= "3.10" and python_version < "3.13" \
     --hash=sha256:09abb1bccd265c01f4a3aa3f7a7db064b36514d2cba19a2f694fe6150451a759 \
     --hash=sha256:c228a6dc5e932d346bc5739379109d49e8853dd8223571c7c5b55260edc0b97f
+pandas-stubs==2.2.3.241009 ; python_version >= "3.10" and python_version < "3.13" \
+    --hash=sha256:3a6f8f142105a42550be677ba741ba532621f4e0acad2155c0e7b2450f114cfa \
+    --hash=sha256:d4ab618253f0acf78a5d0d2bfd6dffdd92d91a56a69bdc8144e5a5c6d25be3b5
 pandas==2.2.3 ; python_version >= "3.10" and python_version < "3.13" \
     --hash=sha256:062309c1b9ea12a50e8ce661145c6aab431b1e99530d3cd60640e255778bd43a \
     --hash=sha256:15c0e1e02e93116177d29ff83e8b1619c93ddc9c49083f237d4312337a61165d \
@@ -932,6 +935,9 @@ types-beautifulsoup4==4.12.0.20241020 ; python_version >= "3.10" and python_vers
 types-html5lib==1.1.11.20241018 ; python_version >= "3.10" and python_version < "3.13" \
     --hash=sha256:3f1e064d9ed2c289001ae6392c84c93833abb0816165c6ff0abfc304a779f403 \
     --hash=sha256:98042555ff78d9e3a51c77c918b1041acbb7eb6c405408d8a9e150ff5beccafa
+types-pytz==2024.2.0.20241003 ; python_version >= "3.10" and python_version < "3.13" \
+    --hash=sha256:3e22df1336c0c6ad1d29163c8fda82736909eb977281cb823c57f8bae07118b7 \
+    --hash=sha256:575dc38f385a922a212bac00a7d6d2e16e141132a3c955078f4a4fd13ed6cb44
 types-requests==2.32.0.20241016 ; python_version >= "3.10" and python_version < "3.13" \
     --hash=sha256:0d9cad2f27515d0e3e3da7134a1b6f28fb97129d86b867f24d9c726452634d95 \
     --hash=sha256:4195d62d6d3e043a4eaaf08ff8a62184584d2e8684e9d2aa178c7915a7da3747

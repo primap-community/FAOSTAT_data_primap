@@ -38,7 +38,7 @@ def get_all_domains(downloaded_data_path: pathlib.Path) -> list[str]:
     ]
 
 
-def get_latest_release(domain_path) -> str:
+def get_latest_release(domain_path: pathlib.Path) -> str:
     """
     Get the latest release in a domain directory.
 
@@ -60,7 +60,10 @@ def get_latest_release(domain_path) -> str:
     return sorted(all_releases, reverse=True)[0]
 
 
-def read_latest_data() -> None:
+def read_latest_data(
+    downloaded_data_path: pathlib.Path = downloaded_data_path,
+    save_path: pathlib.Path = extracted_data_path,
+) -> None:
     """
     Read and save the latest data
 
@@ -120,15 +123,6 @@ def read_latest_data() -> None:
         if df_all is None:
             df_all = df_domain
         else:
-            # makes sure there are no duplicate category names
-            if any(
-                [
-                    category in df_all["category"].unique()
-                    for category in df_domain["category"].unique()
-                ]
-            ):
-                msg = f"Duplicate category names for {domain}"
-                raise ValueError(msg)
             df_all = pd.concat(
                 [df_all, df_domain],
                 axis=0,
@@ -173,7 +167,7 @@ def read_latest_data() -> None:
     if not extracted_data_path.exists():
         extracted_data_path.mkdir()
 
-    output_folder = extracted_data_path / release_name
+    output_folder = save_path / release_name
     if not output_folder.exists():
         output_folder.mkdir()
 
@@ -184,3 +178,7 @@ def read_latest_data() -> None:
     compression = dict(zlib=True, complevel=9)
     encoding = {var: compression for var in data_pm2.data_vars}
     data_pm2.pr.to_netcdf(output_folder / (output_filename + ".nc"), encoding=encoding)
+
+    # next steps
+    # convert to IPCC2006_PRIMAP categories
+    # save final version
