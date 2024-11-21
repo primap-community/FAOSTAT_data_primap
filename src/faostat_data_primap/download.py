@@ -181,7 +181,7 @@ def get_html_content(url: str) -> BeautifulSoup:
     driver.get(url)
 
     # give time to load javascript
-    time.sleep(3)
+    time.sleep(5)
 
     html_content = driver.page_source
 
