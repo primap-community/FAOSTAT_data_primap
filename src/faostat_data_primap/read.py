@@ -4,7 +4,7 @@ import os
 import pathlib
 
 import pandas as pd
-import primap2 as pm2
+import primap2 as pm2  # type: ignore
 
 from faostat_data_primap.helper.country_mapping import country_to_iso3_mapping
 from faostat_data_primap.helper.definitions import (
@@ -78,7 +78,8 @@ def read_latest_data(
         domain_path = downloaded_data_path / domain
         files_to_read.append((domain, get_latest_release(domain_path)))
 
-    df_all = None
+    # df_all = None
+    df_list = []
     for domain, release in files_to_read:
         read_config = read_config_all[domain][release]
 
@@ -125,14 +126,17 @@ def read_latest_data(
             axis=1,
         )
 
-        if df_all is None:
-            df_all = df_domain
-        else:
-            df_all = pd.concat(
-                [df_all, df_domain],
-                axis=0,
-                join="outer",
-            ).reset_index(drop=True)
+        df_list.append(df_domain)
+        # if df_all is None:
+        #     df_all = df_domain
+        # else:
+        #     df_all = pd.concat(
+        #         [df_all, df_domain],
+        #         axis=0,
+        #         join="outer",
+        #     ).reset_index(drop=True)
+
+    df_all = pd.concat(df_list, axis=0, join="outer", ignore_index=True)
 
     # sometimes Source is empty
     df_all["Source"] = df_all["Source"].fillna("unknown")

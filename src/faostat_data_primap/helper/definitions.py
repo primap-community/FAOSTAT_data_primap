@@ -1,5 +1,7 @@
 """definitions like folders, mappings etc."""
 
+from typing import Any
+
 domains = {
     "farm_gate_emissions_crops": {
         "url_domain": "https://www.fao.org/faostat/en/#data/GCE",
@@ -78,7 +80,8 @@ areas_to_remove_base = [
     "Europe, Northern America, Australia and New Zealand",
 ]
 
-read_config_all = {
+# TODO would be a nice to have a type hint here
+read_config_all: Any = {
     "farm_gate_agriculture_energy": {
         "2024-11-14": {
             "filename": "Emissions_Agriculture_Energy_E_All_Data_NOFLAG.csv",
