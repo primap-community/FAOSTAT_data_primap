@@ -12,8 +12,8 @@ jobs:
     steps:
 #      - name: set download date
 #        run: echo "DOWNLOAD_DATE=$(date +"%Y-%m-%d")" >> $GITHUB_ENV
-      - name: Check out repository
-        uses: actions/checkout@v4
+#      - name: Check out repository
+#        uses: actions/checkout@v4
       - uses: ./.github/actions/setup
         with:
           os: "ubuntu-latest"
