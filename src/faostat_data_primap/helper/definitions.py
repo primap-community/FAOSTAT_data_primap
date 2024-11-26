@@ -206,8 +206,6 @@ read_config_all: Any = {
             "filename": "Emissions_Drained_Organic_Soils_E_All_Data_NOFLAG.csv",
             "areas_to_remove": [
                 *areas_to_remove_base,
-                "Belgium-Luxembourg",
-                "Serbia and Montenegro",
                 "European Union (27)",
             ],
             "elements_to_remove": [
@@ -233,8 +231,8 @@ read_config_all: Any = {
             "filename": "Emissions_Drained_Organic_Soils_E_All_Data_NOFLAG.csv",
             "areas_to_remove": [
                 *areas_to_remove_base,
-                "Belgium-Luxembourg",
-                "Serbia and Montenegro",
+                # "Belgium-Luxembourg",
+                # "Serbia and Montenegro",
                 "European Union (27)",
             ],
             "elements_to_remove": [
