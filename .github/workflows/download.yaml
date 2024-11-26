@@ -31,7 +31,7 @@ jobs:
           key: ${{ secrets.GIN_HEMIO_SSH_KEY }}
           name: id_ginhemio
           known_hosts: |
-            gin.hemio.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPA+r/S2vn2JmN9z62e/vla/pDgaEfFUmghlOP7idyP9
+            gin.hemio.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPCoq8/G7C+fdFODXWdzWxyvLfVMEUyWJh7j01XuA/OV
           config: |
             Host gin.hemio.de
               User git
