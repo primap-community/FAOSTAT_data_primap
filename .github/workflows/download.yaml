@@ -26,12 +26,7 @@ jobs:
       - name: configure git user
         run: git config --global user.name "Daniel Busch (via github actions)"
       - name: clone repo
-        run: datalad -l debug clone https://github.com/primap-community/FAOSTAT_data_primap.git
-#      - name: configure push access to gin.hemio.de
-#        run: |
-#          cd FAOSTAT_data_primap/
-#          datalad siblings add -s ginhemio --url https://https://gin.hemio.de/crdanielbusch/FAOSTAT_data_primap --pushurl gin.hemio.de:/crdanielbusch/FAOSTAT_data_primap
-#          git config remote.ginhemio.annex-ignore false
+        run: datalad fix-datalad-set-up clone https://github.com/primap-community/FAOSTAT_data_primap.git
       - name: setup Python
         uses: actions/setup-python@v5
         with:
