@@ -43,7 +43,7 @@ jobs:
           cd FAOSTAT_data_primap/
           datalad siblings add -s gin --url https://gin.hemio.de/CR/unfcc_di_data
           git config remote.gin.annex-ignore false
-          datalad -C FAOSTAT_data_primap/ update -s gin --how merge
+          datalad update -s gin --how merge
       - name: Set Poetry environment
         shell: bash
         run: |
@@ -52,7 +52,7 @@ jobs:
          poetry install --no-interaction --all-extras --only 'main,dev'
          poetry run python --version  # Check python version just in case
       - name: download data
-        run: datalad run poetry run python3 scripts/download_all_domains.py -o downloaded_data
+        run: datalad run -o downloaded_data poetry run python3 scripts/download_all_domains.py
 #        run: datalad -C unfccc_di_data/ run -o data/annexI/*.csv.gz -o data/non-annexI/*.csv.gz -o data/all.parquet python download.py
 #      - name: publish newly downloaded data
 #        run: |
