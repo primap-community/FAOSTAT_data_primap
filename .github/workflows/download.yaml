@@ -47,6 +47,7 @@ jobs:
       - name: Set Poetry environment
         shell: bash
         run: |
+         cd FAOSTAT_data_primap/
          poetry config virtualenvs.create true
          poetry config virtualenvs.in-project true
          poetry install --no-interaction --all-extras --only 'main,dev'
