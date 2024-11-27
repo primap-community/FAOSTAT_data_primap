@@ -42,7 +42,7 @@ jobs:
         run: |
           datalad siblings add -s gin --url https://gin.hemio.de/CR/unfcc_di_data
           git config remote.gin.annex-ignore false
-          datalad -C FAOSTAT_data_primap/ update -d FAOSTAT_data_primap -s gin-src --how merge
+          datalad -C FAOSTAT_data_primap/ update -s gin --how merge
       - name: Set Poetry environment
         shell: bash
         run: |
