@@ -53,7 +53,9 @@ jobs:
          poetry install --no-interaction --all-extras --only 'main,dev'
          poetry run python --version  # Check python version just in case
       - name: download data
-        run: datalad run -o downloaded_data poetry run python3 scripts/download_all_domains.py
+        run: |
+         cd FAOSTAT_data_primap/
+         datalad run -o downloaded_data poetry run python3 scripts/download_all_domains.py
 #        run: datalad -C unfccc_di_data/ run -o data/annexI/*.csv.gz -o data/non-annexI/*.csv.gz -o data/all.parquet python download.py
 #      - name: publish newly downloaded data
 #        run: |
