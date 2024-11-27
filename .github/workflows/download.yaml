@@ -40,6 +40,7 @@ jobs:
 #        run: pip install -r FAOSTAT_data_primap/requirements.txt
       - name: update to latest data from gin.hemio.de
         run: |
+          cd FAOSTAT_data_primap/
           datalad siblings add -s gin --url https://gin.hemio.de/CR/unfcc_di_data
           git config remote.gin.annex-ignore false
           datalad -C FAOSTAT_data_primap/ update -s gin --how merge
