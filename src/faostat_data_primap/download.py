@@ -113,6 +113,9 @@ def download_methodology(url_download: str, save_path: pathlib.Path) -> None:
     filename = url_download.split("/")[-1]
     download_path = save_path / filename
 
+    if not save_path.exists():
+        save_path.mkdir()
+
     if download_path.exists():
         print(f"Skipping download of {download_path} because it already exists.")
         return
@@ -152,6 +155,7 @@ def download_methodology(url_download: str, save_path: pathlib.Path) -> None:
         print(f"No previous release found. Downloading file '{filename}'.")
         response = requests.get(url_download, stream=True, timeout=30)
         response.raise_for_status()
+        print(download_path)
         with open(download_path, "wb") as f:
             f.write(response.content)
 
