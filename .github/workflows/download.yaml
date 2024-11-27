@@ -42,7 +42,7 @@ jobs:
       - name: configure git email
         run: git config --global user.name "Daniel Busch (via github actions)"
       - name: clone repo
-        run: datalad clone https://github.com/primap-community/FAOSTAT_data_primap.git
+        run: datalad clone https://gin.hemio.de/crdanielbusch/FAOSTAT_data_primap.git
 #      - name: configure push access to gin.hemio.de
 #        run: |
 #          cd FAOSTAT_data_primap/
