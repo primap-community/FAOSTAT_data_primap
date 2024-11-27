@@ -15,24 +15,24 @@ jobs:
         with:
           packages: datalad
           version: 1.0
-      - name: install ssh key for gin.hemio.de access
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.GIN_HEMIO_SSH_KEY }}
-          name: id_ginhemio
-          known_hosts: |
-            gin.hemio.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPCoq8/G7C+fdFODXWdzWxyvLfVMEUyWJh7j01XuA/OV
-          config: |
-            Host gin.hemio.de
-              User git
-              IdentityFile ~/.ssh/id_ginhemio
-              IdentitiesOnly yes
+#      - name: install ssh key for gin.hemio.de access
+#        uses: shimataro/ssh-key-action@v2
+#        with:
+#          key: ${{ secrets.GIN_HEMIO_SSH_KEY }}
+#          name: id_ginhemio
+#          known_hosts: |
+#            gin.hemio.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPCoq8/G7C+fdFODXWdzWxyvLfVMEUyWJh7j01XuA/OV
+#          config: |
+#            Host gin.hemio.de
+#              User git
+#              IdentityFile ~/.ssh/id_ginhemio
+#              IdentitiesOnly yes
       - name: configure git email
         run: git config --global user.email "daniel.busch@climate-resource.com"
       - name: configure git user
         run: git config --global user.name "Daniel Busch (via github actions)"
       - name: clone repo
-        run: datalad -l debug clone git@gin.hemio.de:/crdanielbusch/FAOSTAT_data_primap.git
+        run: datalad -l debug clone https://github.com/primap-community/FAOSTAT_data_primap.git
 #      - name: configure push access to gin.hemio.de
 #        run: |
 #          cd FAOSTAT_data_primap/
