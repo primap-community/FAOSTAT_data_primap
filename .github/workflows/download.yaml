@@ -34,7 +34,6 @@ jobs:
       - name: update to latest data from gin.hemio.de
         run: |
          cd FAOSTAT_data_primap/
-         datalad siblings add -s gin --url https://gin.hemio.de/crdanielbusch/FAOSTAT_data_primap
          git config remote.gin-src.annex-ignore false
          datalad update -s gin-src --how merge
       - name: Set Poetry environment
