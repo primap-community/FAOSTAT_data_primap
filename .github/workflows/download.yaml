@@ -10,31 +10,23 @@ jobs:
   download:
     runs-on: ubuntu-22.04
     steps:
-#      - name: Check out repository
-#        uses: actions/checkout@v4
-#      - uses: ./.github/actions/setup
-#        with:
-#          os: "ubuntu-latest"
-#          python-version: "3.9"
-#          venv-id: "docs"
-#          poetry-dependency-install-flags: "--all-extras --only 'main,dev'"
       - name: install datalad
         uses: awalsh128/cache-apt-pkgs-action@v1.4.2
         with:
           packages: datalad
           version: 1.0
-#      - name: install ssh key for gin.hemio.de access
-#        uses: shimataro/ssh-key-action@v2
-#        with:
-#          key: ${{ secrets.GIN_HEMIO_SSH_KEY }}
-#          name: id_ginhemio
-#          known_hosts: |
-#            gin.hemio.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPCoq8/G7C+fdFODXWdzWxyvLfVMEUyWJh7j01XuA/OV
-#          config: |
-#            Host gin.hemio.de
-#              User git
-#              IdentityFile ~/.ssh/id_ginhemio
-#              IdentitiesOnly yes
+      - name: install ssh key for gin.hemio.de access
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.GIN_HEMIO_SSH_KEY }}
+          name: id_ginhemio
+          known_hosts: |
+            gin.hemio.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPCoq8/G7C+fdFODXWdzWxyvLfVMEUyWJh7j01XuA/OV
+          config: |
+            Host gin.hemio.de
+              User git
+              IdentityFile ~/.ssh/id_ginhemio
+              IdentitiesOnly yes
       - name: configure git email
         run: git config --global user.email "daniel.busch@climate-resource.com"
       - name: configure git user
