@@ -47,7 +47,8 @@ jobs:
       - name: download data
         run: |
          cd FAOSTAT_data_primap/
-         datalad run -o 'downloaded_data/farm_gate_emissions_crops/2024-11-14/GCE_e.pdf' poetry run python3 scripts/download_all_domains.py
+         datalad unlock 'downloaded_data/**'
+         datalad run -o 'downloaded_data/**' poetry run python3 scripts/download_all_domains.py
 #        run: datalad -C unfccc_di_data/ run -o data/annexI/*.csv.gz -o data/non-annexI/*.csv.gz -o data/all.parquet python download.py
 #      - name: publish newly downloaded data
 #        run: |
