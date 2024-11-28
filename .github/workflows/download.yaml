@@ -42,4 +42,4 @@ jobs:
       - name: download data
         run: |
          cd FAOSTAT_data_primap/
-         datalad run -o 'downloaded_data/farm_gate_emissions_crops/2024-11-14/GCE_e.pdf' poetry run python3 scripts/download_all_domains.py
+         datalad run -o 'downloaded_data/farm_gate_emissions_crops/2024-11-14/**' poetry run python3 scripts/download_all_domains.py
