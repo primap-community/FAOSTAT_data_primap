@@ -47,11 +47,5 @@ jobs:
       - name: download data
         run: |
          cd FAOSTAT_data_primap/
-         datalad unlock 'downloaded_data/**'
+         pwd
          datalad run -o 'downloaded_data/**' poetry run python3 scripts/download_all_domains.py
-#        run: datalad -C unfccc_di_data/ run -o data/annexI/*.csv.gz -o data/non-annexI/*.csv.gz -o data/all.parquet python download.py
-#      - name: publish newly downloaded data
-#        run: |
-#          cd FAOSTAT_data_primap/
-#          datalad update -s ginhemio --how merge
-#          datalad push --to ginhemio --data anything
