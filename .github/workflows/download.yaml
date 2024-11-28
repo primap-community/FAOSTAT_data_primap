@@ -47,5 +47,4 @@ jobs:
       - name: download data
         run: |
          cd FAOSTAT_data_primap/
-         pwd
          datalad run -o 'downloaded_data/**' poetry run python3 scripts/download_all_domains.py
