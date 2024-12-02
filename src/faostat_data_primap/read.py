@@ -60,26 +60,18 @@ def get_latest_release(domain_path: pathlib.Path) -> str:
     return sorted(all_releases, reverse=True)[0]
 
 
-def read_latest_data(
-    downloaded_data_path: pathlib.Path = downloaded_data_path,
-    save_path: pathlib.Path = extracted_data_path,
-) -> None:
+def read_data(domains_and_releases_to_read, save_path) -> None:
     """
-    Read and save the latest data
+    Read specified domains and releases.
 
-    Converts downloaded data into interchange format and primap2 native format
-    and saves the files in the extracted_data directory.
+    Parameters
+    ----------
+    domains_and_releases_to_read
+    save_path
 
     """
-    domains = get_all_domains(downloaded_data_path)
-
-    files_to_read = []
-    for domain in domains:
-        domain_path = downloaded_data_path / domain
-        files_to_read.append((domain, get_latest_release(domain_path)))
-
     df_list = []
-    for domain, release in files_to_read:
+    for domain, release in domains_and_releases_to_read:
         read_config = read_config_all[domain][release]
 
         print(f"Read {read_config['filename']}")
@@ -129,8 +121,11 @@ def read_latest_data(
 
     df_all = pd.concat(df_list, axis=0, join="outer", ignore_index=True)
 
-    # sometimes Source is empty
-    df_all["Source"] = df_all["Source"].fillna("unknown")
+    # some domains don't have Source column or values are empty
+    if "Source" not in df_all.columns:
+        df_all["Source"] = "unknown"
+    else:
+        df_all["Source"] = df_all["Source"].fillna("unknown")
 
     # Remove the "Y" prefix for the years columns
     df_all = df_all.rename(columns=lambda x: x.lstrip("Y") if x.startswith("Y") else x)
@@ -139,7 +134,9 @@ def read_latest_data(
     df_all["Unit"] = df_all["entity"] + " * " + df_all["Unit"] + "/ year"
     df_all["Unit"] = df_all["Unit"].replace(read_config_all["replace_units"])
 
-    date_last_updated = sorted([i[1] for i in files_to_read], reverse=True)[0]
+    date_last_updated = sorted(
+        [i[1] for i in domains_and_releases_to_read], reverse=True
+    )[0]
     release_name = f"v{date_last_updated}"
 
     data_if = pm2.pm2io.convert_wide_dataframe_if(
@@ -171,6 +168,7 @@ def read_latest_data(
     if not output_folder.exists():
         output_folder.mkdir()
 
+    print(f"Writing primap2 file to {output_folder / (output_filename + ".csv")}")
     pm2.pm2io.write_interchange_format(
         output_folder / (output_filename + ".csv"),
         data_if,
@@ -178,8 +176,32 @@ def read_latest_data(
 
     compression = dict(zlib=True, complevel=9)
     encoding = {var: compression for var in data_pm2.data_vars}
+    print(f"Writing netcdf file to {output_folder / (output_filename + ".nc")}")
     data_pm2.pr.to_netcdf(output_folder / (output_filename + ".nc"), encoding=encoding)
 
     # next steps
     # convert to IPCC2006_PRIMAP categories
     # save final version
+
+
+def read_latest_data(
+    downloaded_data_path: pathlib.Path = downloaded_data_path,
+    save_path: pathlib.Path = extracted_data_path,
+) -> None:
+    """
+    Read and save the latest data
+
+    Converts downloaded data into interchange format and primap2 native format
+    and saves the files in the extracted_data directory.
+
+    """
+    domains = get_all_domains(downloaded_data_path)
+
+    domains_and_releases_to_read = []
+    for domain in domains:
+        domain_path = downloaded_data_path / domain
+        domains_and_releases_to_read.append((domain, get_latest_release(domain_path)))
+
+    read_data(
+        domains_and_releases_to_read=domains_and_releases_to_read, save_path=save_path
+    )
