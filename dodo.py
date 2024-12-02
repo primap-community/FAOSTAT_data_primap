@@ -43,11 +43,16 @@ def task_read_data():
     read data set
     """
 
-    def read_dataset():
+    def read_dataset(save_path, run_id):
         output_folders = get_output_folders(domains_and_releases_to_read)
 
+        cmd = (
+            f"python3 scripts/read_data_set.py "
+            f"--save_path {save_path} --run_id {run_id}"
+        )
+
         datalad.api.run(
-            cmd="python3 scripts/read_data_set.py",
+            cmd=cmd,
             message="Read data set",
             outputs=output_folders,
         )
@@ -55,7 +60,18 @@ def task_read_data():
     return {
         "actions": [read_dataset],
         "params": [
-            {"name": "run_id", "long": "run_id", "type": str, "default": "2024"}
+            {
+                "name": "save_path",
+                "short": "s",
+                "default": "/extracted_data",
+                "help": "Path to save the data.",
+            },
+            {
+                "name": "run_id",
+                "short": "r",
+                "default": "2024",
+                "help": "Run identifier.",
+            },
         ],
         "verbosity": 2,
     }
