@@ -3,27 +3,6 @@ Define tasks to download and read the FAO data set.
 """
 import datalad.api
 
-# we need this for the download script
-# def get_output_folders(domains_and_releases_to_read):
-#     """Get the paths of folders where output files will be saved"""
-#     output_folders = []
-#     # todo remove hard coded key
-#     for domain, release in domains_and_releases_to_read["2024"]:
-#         # todo pathlib Path
-#         output_folders.append(f"downloaded_data/{domain}/{release}")
-#     return output_folders
-
-
-def task_test_basic_target():
-    """
-    test
-    """
-
-    def do_nothing():
-        pass
-
-    return {"actions": [do_nothing]}
-
 
 def task_download():
     """
@@ -32,7 +11,8 @@ def task_download():
 
     def datalad_run_download():
         datalad.api.run(
-            cmd="python3 scripts/download_all_domains.py", outputs="downloaded_data"
+            cmd="python3 scripts/download_all_domains.py",
+            outputs="downloaded_data",
         )
 
     return {"actions": [datalad_run_download]}
