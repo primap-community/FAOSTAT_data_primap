@@ -46,6 +46,7 @@ def task_read_data():
     def read_dataset(save_path, run_id):
         output_folders = get_output_folders(domains_and_releases_to_read)
 
+        print(f"Reading dataset for {save_path=} and {run_id=}")
         cmd = (
             f"python3 scripts/read_data_set.py "
             f"--save_path {save_path} --run_id {run_id}"
