@@ -17,7 +17,7 @@ def test_doit_command(change_to_project_root, tmp_path):
     # save_path.mkdir()
 
     # Command-line arguments for the doit task
-    cmd_args = ["run", "read_data", f"save_path={tmp_path!s}", "run_id=2024"]
+    cmd_args = ["run", "read_data", f"save_path={tmp_path!s}", "run_id=2025"]
 
     # Run the doit command programmatically
     result = DoitMain().run(cmd_args)
