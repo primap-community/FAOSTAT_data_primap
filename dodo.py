@@ -63,7 +63,7 @@ def task_read_data():
             {
                 "name": "save_path",
                 "short": "s",
-                "default": "/extracted_data",
+                "default": "extracted_data",
                 "help": "Path to save the data.",
             },
             {
