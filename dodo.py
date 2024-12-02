@@ -64,11 +64,13 @@ def task_read_data():
             {
                 "name": "save_path",
                 "short": "s",
+                "long": "save_path",
                 "default": "extracted_data",
                 "help": "Path to save the data.",
             },
             {
                 "name": "run_id",
+                "long": "run_id",
                 "short": "r",
                 "default": "2024",
                 "help": "Run identifier.",
