@@ -21,6 +21,6 @@ def task_test_download_target():
     """
 
     def datalad_run_download():
-        datalad.api.run(cmd="python3 src/scripts/download_all_domains.py")
+        datalad.api.run(cmd="python3 scripts/download_all_domains.py")
 
     return {"actions": [datalad_run_download]}
