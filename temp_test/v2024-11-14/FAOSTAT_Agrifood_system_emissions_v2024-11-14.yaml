@@ -1,0 +1,22 @@
+attrs:
+  references: https://www.fao.org/faostat
+  rights: Creative Commons Attribution-4.0 International licence (CC BY 4.0)
+  contact: daniel.busch@climate-resource.com
+  title: Agrifood systems emissions
+  comment: Published by Food and Agriculture Organization of the United Nations (FAO),
+    converted to PRIMAP2 format by Daniel Busch
+  institution: Food and Agriculture Organization of the United Nations
+  area: area (ISO3)
+  cat: category (FAOSTAT)
+  scen: scenario (FAO)
+time_format: '%Y'
+dimensions:
+  '*':
+  - time
+  - scenario (FAO)
+  - area (ISO3)
+  - source
+  - category (FAOSTAT)
+  - entity
+  - unit
+data_file: FAOSTAT_Agrifood_system_emissions_v2024-11-14.csv
