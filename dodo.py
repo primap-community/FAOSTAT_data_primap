@@ -3,8 +3,6 @@ Define tasks to download and read the FAO data set.
 """
 import datalad.api
 
-from src.faostat_data_primap.helper.definitions import domains_and_releases_to_read
-
 
 def get_output_folders(domains_and_releases_to_read):
     """Get the paths of folders where output files will be saved"""
@@ -44,7 +42,7 @@ def task_read_data():
     """
 
     def read_dataset(save_path, run_id):
-        output_folders = get_output_folders(domains_and_releases_to_read)
+        # output_folders = get_output_folders(domains_and_releases_to_read)
 
         print(f"Reading dataset for {save_path=} and {run_id=}")
         cmd = (
@@ -55,7 +53,7 @@ def task_read_data():
         datalad.api.run(
             cmd=cmd,
             message="Read data set",
-            outputs=output_folders,
+            outputs=f"{save_path}",
         )
 
     return {
