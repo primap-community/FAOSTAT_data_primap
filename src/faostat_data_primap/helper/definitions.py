@@ -426,7 +426,7 @@ config_to_if = {
 # TODO maybe this should live somewhere else?
 # Definition of the domains and releases to be read
 domains_and_releases_to_read = {
-    "2024": (
+    "2024": [
         # ("farm_gate_agriculture_energy", "2024-11-14"),
         # ("farm_gate_emissions_crops", "2024-11-14"),
         # ("farm_gate_livestock", "2024-11-14"),
@@ -434,5 +434,5 @@ domains_and_releases_to_read = {
         # ("land_use_fires", "2024-11-14"),
         # ("land_use_forests", "2024-11-14"),
         ("pre_post_agricultural_production", "2024-11-14"),
-    )
+    ]
 }
