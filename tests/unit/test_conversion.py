@@ -3,6 +3,11 @@ import primap2 as pm2
 import pytest
 
 
+def test_yaml_to_python():
+    cat = cc.from_yaml("FAO.yaml")
+    cat.to_python("FAO.py")
+
+
 @pytest.mark.xfail
 def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
     # make categorisation A from yaml

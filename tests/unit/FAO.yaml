@@ -4,7 +4,7 @@ comment: Needed to add FAOSTAT data to PRIMAP-hist
 references: ''
 institution: FAO
 hierarchical: true
-last_update: '2024-15-10'
+last_update: '2024-12-10'
 version: '2024'
 total_sum: true
 canonical_top_level_category: '0'
@@ -72,18 +72,146 @@ categories:
         - CH4
         - N2O
     children:
-      - - 1.A.1
-        - 1.A.2
-        - 1.A.3
-        - 1.A.4
-        - 1.A.5
-        - 1.A.6
-        - 1.A.7
-        - 1.A.8
-        - 1.A.9
-        - 1.A.10
-        - 1.A.11
-        - 1.A.12
+      - - 1.A.1.a.i
+        - 1.A.1.a.ii
+  '1.A.1.a.i':
+    title: Wheat crop residues
+    comment: Wheat crop residues
+    alternative_codes:
+      - 1A1ai
+    info:
+      gases:
+        - CH4
+        - N2O
+    children:
+      - - 1.A.1.a.i.1
+        - 1.A.1.a.i.2
+  '1.A.1.a.i.1':
+    title: Wheat crop residues direct emissions
+    comment: Wheat crop residues direct emissions
+    alternative_codes:
+      - 1A1ai
+    info:
+      gases:
+        - CH4
+        - N2O
+  '1.A.1.a.i.2':
+    title: Wheat crop residues indirect emissions
+    comment: Wheat crop residues indirect emissions
+    alternative_codes:
+      - 1A1ai
+    info:
+      gases:
+        - CH4
+        - N2O
+  '1.A.1.a.ii':
+    title: Wheat burning crop residues
+    comment: Wheat burning crop residues
+    alternative_codes:
+      - 1A1aii
+    info:
+      gases:
+        - CH4
+        - N2O
+  '1.A.1.b':
+    title: Rice
+    comment: Rice
+    alternative_codes:
+      - 1A1b
+    info:
+      gases:
+        - CH4
+        - N2O
+  '1.A.1.c':
+    title: Potatoes
+    comment: Potatoes
+    alternative_codes:
+      - 1A1c
+    info:
+      gases:
+        - CH4
+        - N2O
+  '1.A.1.d':
+    title: Millet
+    comment: Millet
+    alternative_codes:
+      - 1A1d
+    info:
+      gases:
+        - CH4
+        - N2O
+  '1.A.1.e':
+    title: Barley
+    comment: Barley
+    alternative_codes:
+      - 1A1e
+    info:
+      gases:
+        - CH4
+        - N2O
+  '1.A.1.f':
+    title: Maize (corn)
+    comment: Maize (corn)
+    alternative_codes:
+      - 1A1f
+    info:
+      gases:
+        - CH4
+        - N2O
+  '1.A.1.g':
+    title: Sugar cane
+    comment: Sugar cane
+    alternative_codes:
+      - 1A1g
+    info:
+      gases:
+        - CH4
+        - N2O
+  '1.A.1.h':
+    title: Beans, dry
+    comment: Beans, dry
+    alternative_codes:
+      - 1A1h
+    info:
+      gases:
+        - CH4
+        - N2O
+  '1.A.1.i':
+    title: Oats
+    comment: Oats
+    alternative_codes:
+      - 1A1i
+    info:
+      gases:
+        - CH4
+        - N2O
+  '1.A.1.j':
+    title: Rye
+    comment: Rye
+    alternative_codes:
+      - 1A1j
+    info:
+      gases:
+        - CH4
+        - N2O
+  '1.A.1.k':
+    title: Sorghum
+    comment: Sorghum
+    alternative_codes:
+      - 1A1k
+    info:
+      gases:
+        - CH4
+        - N2O
+  '1.A.1.l':
+    title: Soya beans
+    comment: Soya beans
+    alternative_codes:
+      - 1A1l
+    info:
+      gases:
+        - CH4
+        - N2O
   '1.A.2':
     title: Synthetic fertilisers
     comment: Synthetic fertilisers
@@ -91,11 +219,7 @@ categories:
       - 1A2
     info:
       gases:
-        - CH4
         - N2O
-    children:
-      - - 1.A.2.a
-        - 1.A.2.b
   '1.B':
     title: Livestock
     comment: Livestock
@@ -106,8 +230,6 @@ categories:
         - CO2
         - CH4
         - N2O
-    children:
-      - - 1.B.1
   '1.C':
     title: Energy use in agriculture
     comment: Energy use in agriculture
@@ -118,8 +240,6 @@ categories:
         - CO2
         - CH4
         - N2O
-    children:
-      - - 1.C.1
   '2':
     title: Land use and change
     comment: Land use and change
@@ -128,10 +248,6 @@ categories:
         - CO2
         - CH4
         - N2O
-    children:
-      - - 2.A
-        - 2.B
-        - 2.C
   '3':
     title: Pre and post agricultural production
     comment: Pre and post agricultural production
@@ -140,5 +256,3 @@ categories:
         - CO2
         - CH4
         - N2O
-    children:
-      - - 3.A
