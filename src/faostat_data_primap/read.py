@@ -61,13 +61,17 @@ def get_latest_release(domain_path: pathlib.Path) -> str:
 
 
 def read_data(
-    domains_and_releases_to_read: list[tuple[str, str]], save_path: pathlib.Path
+    read_path: pathlib.Path,
+    domains_and_releases_to_read: list[tuple[str, str]],
+    save_path: pathlib.Path,
 ) -> None:
     """
     Read specified domains and releases and save output files.
 
     Parameters
     ----------
+    read_path
+        Where to look for the downloaded data
     domains_and_releases_to_read
         The domains and releases to use
     save_path
@@ -79,7 +83,7 @@ def read_data(
         read_config = read_config_all[domain][release]
 
         print(f"Read {read_config['filename']}")
-        dataset_path = downloaded_data_path / domain / release / read_config["filename"]
+        dataset_path = read_path / domain / release / read_config["filename"]
 
         # There are some non-utf8 characters
         df_domain = pd.read_csv(dataset_path, encoding="ISO-8859-1")
@@ -209,5 +213,7 @@ def read_latest_data(
         domains_and_releases_to_read.append((domain, get_latest_release(domain_path)))
 
     read_data(
-        domains_and_releases_to_read=domains_and_releases_to_read, save_path=save_path
+        read_path=downloaded_data_path_custom,
+        domains_and_releases_to_read=domains_and_releases_to_read,
+        save_path=save_path,
     )
