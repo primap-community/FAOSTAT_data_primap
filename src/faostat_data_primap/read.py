@@ -61,7 +61,7 @@ def get_latest_release(domain_path: pathlib.Path) -> str:
 
 
 def read_data(
-    domains_and_releases_to_read: tuple[tuple[str, str]], save_path: pathlib.Path
+    domains_and_releases_to_read: list[tuple[str, str]], save_path: pathlib.Path
 ) -> None:
     """
     Read specified domains and releases and save output files.
