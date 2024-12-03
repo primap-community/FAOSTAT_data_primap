@@ -191,7 +191,7 @@ def read_data(
 
 
 def read_latest_data(
-    downloaded_data_path: pathlib.Path = downloaded_data_path,
+    downloaded_data_path_custom: pathlib.Path = downloaded_data_path,
     save_path: pathlib.Path = extracted_data_path,
 ) -> None:
     """
@@ -201,11 +201,11 @@ def read_latest_data(
     and saves the files in the extracted_data directory.
 
     """
-    domains = get_all_domains(downloaded_data_path)
+    domains = get_all_domains(downloaded_data_path_custom)
 
     domains_and_releases_to_read = []
     for domain in domains:
-        domain_path = downloaded_data_path / domain
+        domain_path = downloaded_data_path_custom / domain
         domains_and_releases_to_read.append((domain, get_latest_release(domain_path)))
 
     read_data(

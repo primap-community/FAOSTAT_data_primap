@@ -36,7 +36,7 @@ def test_download_all_domains(tmp_path):
 
     # read and save latest data
     read_latest_data(
-        downloaded_data_path=downloaded_data_path, save_path=extracted_data_path
+        downloaded_data_path_custom=downloaded_data_path, save_path=extracted_data_path
     )
 
     release_folder = os.listdir(extracted_data_path)
