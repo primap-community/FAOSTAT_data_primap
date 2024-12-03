@@ -5,7 +5,7 @@ from src.faostat_data_primap.read import read_data
 
 def test_read_data_one_domain(tmp_path):
     # read only one domain for the test
-    domains_and_releases_to_read = (("farm_gate_agriculture_energy", "2024-11-14"),)
+    domains_and_releases_to_read = (("land_use_fires", "2024-11-14"),)
 
     read_data(
         domains_and_releases_to_read=domains_and_releases_to_read, save_path=tmp_path

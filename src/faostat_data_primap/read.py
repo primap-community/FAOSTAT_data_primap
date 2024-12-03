@@ -60,14 +60,18 @@ def get_latest_release(domain_path: pathlib.Path) -> str:
     return sorted(all_releases, reverse=True)[0]
 
 
-def read_data(domains_and_releases_to_read, save_path) -> None:
+def read_data(
+    domains_and_releases_to_read: tuple[tuple[str, str]], save_path: pathlib.Path
+) -> None:
     """
-    Read specified domains and releases.
+    Read specified domains and releases and save output files.
 
     Parameters
     ----------
     domains_and_releases_to_read
+        The domains and releases to use
     save_path
+        The path to save the data to
 
     """
     df_list = []
@@ -168,16 +172,18 @@ def read_data(domains_and_releases_to_read, save_path) -> None:
     if not output_folder.exists():
         output_folder.mkdir()
 
-    print(f"Writing primap2 file to {output_folder / (output_filename + ".csv")}")
+    filepath = output_folder / (output_filename + ".csv")
+    print(f"Writing primap2 file to {filepath}")
     pm2.pm2io.write_interchange_format(
-        output_folder / (output_filename + ".csv"),
+        filepath,
         data_if,
     )
 
     compression = dict(zlib=True, complevel=9)
     encoding = {var: compression for var in data_pm2.data_vars}
-    print(f"Writing netcdf file to {output_folder / (output_filename + ".nc")}")
-    data_pm2.pr.to_netcdf(output_folder / (output_filename + ".nc"), encoding=encoding)
+    filepath = output_folder / (output_filename + ".nc")
+    print(f"Writing netcdf file to {filepath}")
+    data_pm2.pr.to_netcdf(filepath, encoding=encoding)
 
     # next steps
     # convert to IPCC2006_PRIMAP categories
