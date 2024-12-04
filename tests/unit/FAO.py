@@ -9,7 +9,7 @@ spec = {
     "comment": "Needed to add FAOSTAT data to PRIMAP-hist",
     "references": "",
     "institution": "FAO",
-    "hierarchical": False,
+    "hierarchical": True,
     "last_update": "2024-12-10",
     "version": "2024",
     "total_sum": True,
@@ -153,7 +153,7 @@ spec = {
             "title": "Millet",
             "comment": "Millet",
             "alternative_codes": "1A1d",
-            "children": ["1.A.1.d.i"],
+            "children": [["1.A.1.d.i"]],
             "info": {"gases": ["CH4", "N2O"]},
         },
         "1.A.1.d.i.1": {
@@ -179,7 +179,7 @@ spec = {
             "title": "Barley",
             "comment": "Barley",
             "alternative_codes": "1A1e",
-            "children": ["1.A.1.e.i"],
+            "children": [["1.A.1.e.i"]],
             "info": {"gases": ["CH4", "N2O"]},
         },
         "1.A.1.e.i.1": {
@@ -205,7 +205,7 @@ spec = {
             "title": "Maize (corn)",
             "comment": "Maize (corn)",
             "alternative_codes": "1A1f",
-            "children": ["1.A.1.f.i"],
+            "children": [["1.A.1.f.i"]],
             "info": {"gases": ["CH4", "N2O"]},
         },
         "1.A.1.f.i.1": {
@@ -237,7 +237,7 @@ spec = {
             "title": "Sugar cane",
             "comment": "Sugar cane",
             "alternative_codes": "1A1g",
-            "children": ["1.A.1.g.i"],
+            "children": [["1.A.1.g.i"]],
             "info": {"gases": ["CH4", "N2O"]},
         },
         "1.A.1.g.i.1": {
@@ -269,7 +269,7 @@ spec = {
             "title": "Beans, dry",
             "comment": "Beans, dry",
             "alternative_codes": "1A1h",
-            "children": ["1.A.1.h.i"],
+            "children": [["1.A.1.h.i"]],
             "info": {"gases": ["CH4", "N2O"]},
         },
         "1.A.1.h.i.1": {
@@ -295,7 +295,7 @@ spec = {
             "title": "Oats",
             "comment": "Oats",
             "alternative_codes": "1A1i",
-            "children": ["1.A.1.i.i"],
+            "children": [["1.A.1.i.i"]],
             "info": {"gases": ["CH4", "N2O"]},
         },
         "1.A.1.i.i.1": {
@@ -321,7 +321,7 @@ spec = {
             "title": "Rye",
             "comment": "Rye",
             "alternative_codes": "1A1j",
-            "children": ["1.A.1.j.i"],
+            "children": [["1.A.1.j.i"]],
             "info": {"gases": ["CH4", "N2O"]},
         },
         "1.A.1.j.i.1": {
@@ -347,7 +347,7 @@ spec = {
             "title": "Sorghum",
             "comment": "Sorghum",
             "alternative_codes": "1A1k",
-            "children": ["1.A.1.k.i"],
+            "children": [["1.A.1.k.i"]],
             "info": {"gases": ["CH4", "N2O"]},
         },
         "1.A.1.k.i.1": {
@@ -373,7 +373,7 @@ spec = {
             "title": "Soya beans",
             "comment": "Soya beans",
             "alternative_codes": "1A1l",
-            "children": ["1.A.1.l.i"],
+            "children": [["1.A.1.l.i"]],
             "info": {"gases": ["CH4", "N2O"]},
         },
         "1.A.1.l.i.1": {
@@ -426,15 +426,46 @@ spec = {
             "info": {"gases": ["N2O"]},
         },
         "1.B": {
-            "title": "Livestock",
-            "comment": "Livestock",
-            "alternative_codes": ["1B"],
-            "info": {"gases": ["CO2", "CH4", "N2O"]},
-        },
-        "1.C": {
             "title": "Energy use in agriculture",
             "comment": "Energy use in agriculture",
             "alternative_codes": ["1C"],
+            "info": {"gases": ["CO2", "CH4", "N2O"]},
+            "children": [["1.B.1", "1.B.2", "1.B.3", "1.B.4", "1.B.5"]],
+        },
+        "1.B.1": {
+            "title": "Natural gas",
+            "comment": "Natural gas",
+            "alternative_codes": ["1B1"],
+            "info": {"gases": ["CO2", "CH4", "N2O"]},
+        },
+        "1.B.2": {
+            "title": "Electricity",
+            "comment": "Electricity",
+            "alternative_codes": ["1B2"],
+            "info": {"gases": ["CO2", "CH4", "N2O"]},
+        },
+        "1.B.3": {
+            "title": "Coal",
+            "comment": "Coal",
+            "alternative_codes": ["1B3"],
+            "info": {"gases": ["CO2", "CH4", "N2O"]},
+        },
+        "1.B.4": {
+            "title": "Heat",
+            "comment": "Heat",
+            "alternative_codes": ["1B4"],
+            "info": {"gases": ["CO2", "CH4", "N2O"]},
+        },
+        "1.B.5": {
+            "title": "Petroleum",
+            "comment": "Petroleum",
+            "alternative_codes": ["1B5"],
+            "info": {"gases": ["CO2", "CH4", "N2O"]},
+        },
+        "1.C": {
+            "title": "Livestock",
+            "comment": "Livestock",
+            "alternative_codes": ["1B"],
             "info": {"gases": ["CO2", "CH4", "N2O"]},
         },
         "2": {
