@@ -64,7 +64,7 @@ def get_latest_release(domain_path: pathlib.Path) -> str:
 
 
 # TODO split out functions to avoid PLR0915
-def read_data(  # noqa: PLR0915
+def read_data(  # noqa: PLR0915 PLR0912
     read_path: pathlib.Path,
     domains_and_releases_to_read: list[tuple[str, str]],
     save_path: pathlib.Path,
@@ -91,6 +91,11 @@ def read_data(  # noqa: PLR0915
 
         # There are some non-utf8 characters
         df_domain = pd.read_csv(dataset_path, encoding="ISO-8859-1")
+
+        if "items_to_remove" in read_config.keys():
+            df_domain = df_domain[
+                ~df_domain["Item"].isin(read_config["items_to_remove"])
+            ]
 
         # remove rows by element
         if "elements_to_remove" in read_config.keys():
@@ -122,9 +127,31 @@ def read_data(  # noqa: PLR0915
 
         # create category column (combination of Item and Element works best)
         df_domain["Item - Element"] = df_domain["Item"] + " - " + df_domain["Element"]
-        df_domain["category"] = df_domain["Item - Element"].map(
-            read_config["category_mapping"]
-        )
+
+        if "category_mapping_item_element" in read_config.keys():
+            df_domain["category"] = df_domain["Item - Element"].map(
+                read_config["category_mapping"]
+            )
+        # sometimes there are too many categories per domain to write
+        # everything in the config file
+        # TODO we could do this for crops as well, but it's not necessary
+        elif ("category_mapping_element" in read_config.keys()) and (
+            "category_mapping_item" in read_config.keys()
+        ):
+            # split steps for easier debugging
+            df_domain["mapped_item"] = df_domain["Item"].map(
+                read_config["category_mapping_item"]
+            )
+            df_domain["mapped_element"] = df_domain["Element"].map(
+                read_config["category_mapping_element"]
+            )
+            df_domain["category"] = (
+                df_domain["mapped_item"] + df_domain["mapped_element"]
+            )
+        else:
+            msg = f"Could not find mapping for {domain=}."
+            raise ValueError(msg)
+
         # some rows can only be removed by Item - Element column
         if "items-elements_to_remove" in read_config.keys():
             df_domain = df_domain[
@@ -132,7 +159,8 @@ def read_data(  # noqa: PLR0915
                     read_config["items-elements_to_remove"]
                 )
             ]
-        # check if all Item-Element combinations are now be converted to category codes
+
+        # check if all Item-Element combinations are now converted to category codes
         fao_categories = list(spec["categories"].keys())
         unknown_categories = [
             i for i in df_domain.category.unique() if i not in fao_categories

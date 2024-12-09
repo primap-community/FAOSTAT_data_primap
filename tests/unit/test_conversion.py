@@ -9,8 +9,8 @@ from src.faostat_data_primap.read import read_data
 def test_read(tmp_path):
     domains_and_releases_to_read = [
         # ("farm_gate_agriculture_energy", "2024-11-14"),
-        ("farm_gate_emissions_crops", "2024-11-14"),
-        # ("farm_gate_livestock", "2024-11-14"),
+        # ("farm_gate_emissions_crops", "2024-11-14"),
+        ("farm_gate_livestock", "2024-11-14"),
         # ("land_use_drained_organic_soils", "2024-11-14"),
         # ("land_use_fires", "2024-11-14"),
         # ("land_use_forests", "2024-11-14"),
@@ -259,7 +259,7 @@ def test_make_dict_comprehension_for_faster_typing():  # noqa: PLR0912 PLR0915
             "info": {"gases": ["CH4", "N2O", "CO2"]},
         }
 
-    # livestock
+    # 3 livestock
     animals = [
         "Asses",
         "Camels",
@@ -301,13 +301,74 @@ def test_make_dict_comprehension_for_faster_typing():  # noqa: PLR0912 PLR0915
     for animal, code in zip(animals, codes_animals):
         if animal in enteric_fermentation:
             gases = ["CH4", "N2O"]
+            animal_children = [f"{code}.{i}" for i in "1234"]
+            categories[f"{code}.4"] = {
+                "title": f"{animal} enteric fermentation",
+                "comment": f"{animal} enteric fermentation",
+                # "alternative_codes" : code.replace(".", ""),
+                "info": {"gases": gases},
+            }
         else:
             gases = ["N2O"]
+            animal_children = [f"{code}.{i}" for i in "123"]
+
         categories[code] = {
             "title": animal,
             "comment": animal,
             # "alternative_codes" : code.replace(".", ""),
             "info": {"gases": gases},
+            "children": [animal_children],
+        }
+
+        # manure management branch
+        manure_management_children = [f"{code}.1.{i}" for i in "abc"]
+        categories[f"{code}.1"] = {
+            "title": f"{animal} manure management",
+            "comment": f"{animal} manure management",
+            # "alternative_codes" : code.replace(".", ""),
+            "info": {"gases": gases},
+            "children": [manure_management_children],
+        }
+
+        categories[f"{code}.1.a"] = {
+            "title": f"{animal} decomposition of organic matter",
+            "comment": f"{animal} decomposition of organic matter",
+            # "alternative_codes" : code.replace(".", ""),
+            "info": {"gases": "CH4"},
+        }
+
+        categories[f"{code}.1.b"] = {
+            "title": f"{animal} manure management (Direct emissions N2O)",
+            "comment": f"{animal} manure management (Direct emissions N2O)",
+            # "alternative_codes" : code.replace(".", ""),
+            "info": {"gases": "N2O"},
+        }
+
+        categories[f"{code}.1.c"] = {
+            "title": f"{animal} manure management (Indirect emissions N2O)",
+            "comment": f"{animal} manure management (Indirect emissions N2O)",
+            # "alternative_codes" : code.replace(".", ""),
+            "info": {"gases": "N2O"},
+        }
+
+        # manure left on pasture
+        # manure_left_on_pasture_children = [f"{code}.2.{i}" for i in "ab"]
+        categories[f"{code}.2"] = {
+            "title": f"{animal} manure left on pasture",
+            "comment": f"{animal} manure left on pasture",
+            # "alternative_codes" : code.replace(".", ""),
+            "info": {"gases": "N2O"},
+            # "children" : [manure_left_on_pasture_children],
+        }
+
+        # manure left on pasture
+        # manure_applied_children = [f"{code}.3.{i}" for i in "ab"]
+        categories[f"{code}.3"] = {
+            "title": f"{animal} manure applied",
+            "comment": f"{animal} manure applied",
+            # "alternative_codes" : code.replace(".", ""),
+            "info": {"gases": "N2O"},
+            # "children" : [manure_applied_children],
         }
 
     # forests
@@ -467,10 +528,10 @@ def test_make_dict_comprehension_for_faster_typing():  # noqa: PLR0912 PLR0915
     }
 
     spec["categories"] = categories
-    cat = cc.HierarchicalCategorization.from_spec(spec.copy())
+    fao_cats = cc.HierarchicalCategorization.from_spec(spec.copy())
     # run print(cat.show_as_tree())
-    cat.to_python("FAO.py")
-    cat.to_yaml("FAO.yaml")
+    fao_cats.to_python("FAO.py")
+    fao_cats.to_yaml("FAO.yaml")
     pass
 
 
