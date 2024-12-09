@@ -282,10 +282,11 @@ read_config_all: Any = {
                 "Manure applied to soils (N content)",
                 "Manure applied to soils that leaches (N content)",
                 "Manure applied to soils that volatilises (N content)",
+                # TODO ?
                 # sum of direct and direct manure management emissions
                 # would add another level in the category tree, but
                 # is not needed (see miro)
-                "Manure management (Emissions N2O)",
+                # "Manure management (Emissions N2O)",
             ],
             "entity_mapping": {
                 "Livestock total (Emissions N2O)": "N2O",
@@ -307,6 +308,7 @@ read_config_all: Any = {
                 "Manure applied to soils (Indirect emissions N2O)": "N2O",
             },
             "category_mapping_item": {
+                "All Animals": "3",
                 "Asses": "3.A",
                 "Camels": "3.B",
                 "Cattle, dairy": "3.C",
@@ -329,23 +331,24 @@ read_config_all: Any = {
             "category_mapping_element": {
                 "Livestock total (Emissions N2O)": "",
                 "Livestock total (Emissions CH4)": "",
-                "Enteric fermentation (Emissions CH4)": ".1",
-                "Manure management (Emissions CH4)": ".2.a",
-                # "Manure management (Emissions N2O)": ".2.b",
-                "Manure management (Direct emissions N2O)": ".2.b",
-                "Manure management (Indirect emissions N2O)": ".2.c",
-                "Manure left on pasture (Emissions N2O)": ".3",
-                "Manure left on pasture (Direct emissions N2O)": ".3.a",
-                "Indirect emissions (N2O that leaches) (Manure on pasture)": ".3.b.i",
+                "Enteric fermentation (Emissions CH4)": ".4",
+                "Manure management (Emissions CH4)": ".1.a",
+                # TODO we need to aggregate 3.X.1 for CH4
+                "Manure management (Emissions N2O)": ".1",
+                "Manure management (Direct emissions N2O)": ".1.b",
+                "Manure management (Indirect emissions N2O)": ".1.c",
+                "Manure left on pasture (Emissions N2O)": ".2",
+                "Manure left on pasture (Direct emissions N2O)": ".2.a",
+                "Indirect emissions (N2O that leaches) (Manure on pasture)": ".2.b.i",
                 (
                     "Indirect emissions (N2O that volatilises) " "(Manure on pasture)"
-                ): ".3.b.ii",
-                "Manure left on pasture (Indirect emissions N2O)": ".3.b",
-                "Emissions (N2O) (Manure applied)": ".4",
-                "Manure applied to soils (Direct emissions N2O)": ".4.a",
-                ("Indirect emissions (N2O that leaches) " "(Manure applied)"): ".4.b.i",
-                "Indirect emissions (N2O that volatilises) (Manure applied)": ".4.b.ii",
-                "Manure applied to soils (Indirect emissions N2O)": ".4.b",
+                ): ".2.b.ii",
+                "Manure left on pasture (Indirect emissions N2O)": ".2.b",
+                "Emissions (N2O) (Manure applied)": ".3",
+                "Manure applied to soils (Direct emissions N2O)": ".3.a",
+                ("Indirect emissions (N2O that leaches) " "(Manure applied)"): ".3.b.i",
+                "Indirect emissions (N2O that volatilises) (Manure applied)": ".3.b.ii",
+                "Manure applied to soils (Indirect emissions N2O)": ".3.b",
             },
             "items-elements_to_remove": [
                 # we only keep All animals total CH4 and total N2O
@@ -372,6 +375,7 @@ read_config_all: Any = {
                     "(Manure applied)"
                 ),
                 "All Animals - Manure applied to soils (Indirect emissions N2O)",
+                "All Animals - Manure management (Emissions N2O)",
             ],
             "columns_to_drop": [
                 "Element",

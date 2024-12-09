@@ -596,9 +596,61 @@ categories:
     comment: Asses manure left on pasture
     info:
       gases: N2O
+    children:
+    - - 3.A.2.a
+      - 3.A.2.b
+  3.A.2.a:
+    title: Asses manure left on pasture (direct emissions N2O)
+    comment: Asses manure left on pasture (direct emissions N2O)
+    info:
+      gases: N2O
+  3.A.2.b:
+    title: Asses manure left on pasture (indirect emissions N2O)
+    comment: Asses manure left on pasture (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.A.2.b.i
+      - 3.A.2.b.ii
+  3.A.2.b.i:
+    title: Asses manure left on pasture (indirect emissions, N2O that leaches)
+    comment: Asses manure left on pasture (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.A.2.b.ii:
+    title: Asses manure left on pasture (indirect emissions, N2O that volatilises)
+    comment: Asses manure left on pasture (indirect emissions, N2O that volatilises)
+    info:
+      gases: N2O
   3.A.3:
     title: Asses manure applied
     comment: Asses manure applied
+    info:
+      gases: N2O
+    children:
+    - - 3.A.3.a
+      - 3.A.3.b
+  3.A.3.a:
+    title: Asses manure applied (direct emissions N2O)
+    comment: Asses manure applied (direct emissions N2O)
+    info:
+      gases: N2O
+  3.A.3.b:
+    title: Asses manure applied (indirect emissions N2O)
+    comment: Asses manure applied (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.A.3.b.i
+      - 3.A.3.b.ii
+  3.A.3.b.i:
+    title: Asses manure applied (indirect emissions, N2O that leaches)
+    comment: Asses manure applied (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.A.3.b.ii:
+    title: Asses manure applied (indirect emissions, N2O that volatilises)
+    comment: Asses manure applied (indirect emissions, N2O that volatilises)
     info:
       gases: N2O
   3.B.4:
@@ -647,9 +699,61 @@ categories:
     comment: Camels manure left on pasture
     info:
       gases: N2O
+    children:
+    - - 3.B.2.a
+      - 3.B.2.b
+  3.B.2.a:
+    title: Camels manure left on pasture (direct emissions N2O)
+    comment: Camels manure left on pasture (direct emissions N2O)
+    info:
+      gases: N2O
+  3.B.2.b:
+    title: Camels manure left on pasture (indirect emissions N2O)
+    comment: Camels manure left on pasture (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.B.2.b.i
+      - 3.B.2.b.ii
+  3.B.2.b.i:
+    title: Camels manure left on pasture (indirect emissions, N2O that leaches)
+    comment: Camels manure left on pasture (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.B.2.b.ii:
+    title: Camels manure left on pasture (indirect emissions, N2O that volatilises)
+    comment: Camels manure left on pasture (indirect emissions, N2O that volatilises)
+    info:
+      gases: N2O
   3.B.3:
     title: Camels manure applied
     comment: Camels manure applied
+    info:
+      gases: N2O
+    children:
+    - - 3.B.3.a
+      - 3.B.3.b
+  3.B.3.a:
+    title: Camels manure applied (direct emissions N2O)
+    comment: Camels manure applied (direct emissions N2O)
+    info:
+      gases: N2O
+  3.B.3.b:
+    title: Camels manure applied (indirect emissions N2O)
+    comment: Camels manure applied (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.B.3.b.i
+      - 3.B.3.b.ii
+  3.B.3.b.i:
+    title: Camels manure applied (indirect emissions, N2O that leaches)
+    comment: Camels manure applied (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.B.3.b.ii:
+    title: Camels manure applied (indirect emissions, N2O that volatilises)
+    comment: Camels manure applied (indirect emissions, N2O that volatilises)
     info:
       gases: N2O
   3.C.4:
@@ -698,9 +802,61 @@ categories:
     comment: Cattle, dairy manure left on pasture
     info:
       gases: N2O
+    children:
+    - - 3.C.2.a
+      - 3.C.2.b
+  3.C.2.a:
+    title: Cattle, dairy manure left on pasture (direct emissions N2O)
+    comment: Cattle, dairy manure left on pasture (direct emissions N2O)
+    info:
+      gases: N2O
+  3.C.2.b:
+    title: Cattle, dairy manure left on pasture (indirect emissions N2O)
+    comment: Cattle, dairy manure left on pasture (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.C.2.b.i
+      - 3.C.2.b.ii
+  3.C.2.b.i:
+    title: Cattle, dairy manure left on pasture (indirect emissions, N2O that leaches)
+    comment: Cattle, dairy manure left on pasture (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.C.2.b.ii:
+    title: Cattle, dairy manure left on pasture (indirect emissions, N2O that volatilises)
+    comment: Cattle, dairy manure left on pasture (indirect emissions, N2O that volatilises)
+    info:
+      gases: N2O
   3.C.3:
     title: Cattle, dairy manure applied
     comment: Cattle, dairy manure applied
+    info:
+      gases: N2O
+    children:
+    - - 3.C.3.a
+      - 3.C.3.b
+  3.C.3.a:
+    title: Cattle, dairy manure applied (direct emissions N2O)
+    comment: Cattle, dairy manure applied (direct emissions N2O)
+    info:
+      gases: N2O
+  3.C.3.b:
+    title: Cattle, dairy manure applied (indirect emissions N2O)
+    comment: Cattle, dairy manure applied (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.C.3.b.i
+      - 3.C.3.b.ii
+  3.C.3.b.i:
+    title: Cattle, dairy manure applied (indirect emissions, N2O that leaches)
+    comment: Cattle, dairy manure applied (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.C.3.b.ii:
+    title: Cattle, dairy manure applied (indirect emissions, N2O that volatilises)
+    comment: Cattle, dairy manure applied (indirect emissions, N2O that volatilises)
     info:
       gases: N2O
   3.D.4:
@@ -749,9 +905,65 @@ categories:
     comment: Cattle, non-dairy manure left on pasture
     info:
       gases: N2O
+    children:
+    - - 3.D.2.a
+      - 3.D.2.b
+  3.D.2.a:
+    title: Cattle, non-dairy manure left on pasture (direct emissions N2O)
+    comment: Cattle, non-dairy manure left on pasture (direct emissions N2O)
+    info:
+      gases: N2O
+  3.D.2.b:
+    title: Cattle, non-dairy manure left on pasture (indirect emissions N2O)
+    comment: Cattle, non-dairy manure left on pasture (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.D.2.b.i
+      - 3.D.2.b.ii
+  3.D.2.b.i:
+    title: Cattle, non-dairy manure left on pasture (indirect emissions, N2O that
+      leaches)
+    comment: Cattle, non-dairy manure left on pasture (indirect emissions, N2O that
+      leaches)
+    info:
+      gases: N2O
+  3.D.2.b.ii:
+    title: Cattle, non-dairy manure left on pasture (indirect emissions, N2O that
+      volatilises)
+    comment: Cattle, non-dairy manure left on pasture (indirect emissions, N2O that
+      volatilises)
+    info:
+      gases: N2O
   3.D.3:
     title: Cattle, non-dairy manure applied
     comment: Cattle, non-dairy manure applied
+    info:
+      gases: N2O
+    children:
+    - - 3.D.3.a
+      - 3.D.3.b
+  3.D.3.a:
+    title: Cattle, non-dairy manure applied (direct emissions N2O)
+    comment: Cattle, non-dairy manure applied (direct emissions N2O)
+    info:
+      gases: N2O
+  3.D.3.b:
+    title: Cattle, non-dairy manure applied (indirect emissions N2O)
+    comment: Cattle, non-dairy manure applied (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.D.3.b.i
+      - 3.D.3.b.ii
+  3.D.3.b.i:
+    title: Cattle, non-dairy manure applied (indirect emissions, N2O that leaches)
+    comment: Cattle, non-dairy manure applied (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.D.3.b.ii:
+    title: Cattle, non-dairy manure applied (indirect emissions, N2O that volatilises)
+    comment: Cattle, non-dairy manure applied (indirect emissions, N2O that volatilises)
     info:
       gases: N2O
   3.E:
@@ -793,9 +1005,65 @@ categories:
     comment: Chickens, broilers manure left on pasture
     info:
       gases: N2O
+    children:
+    - - 3.E.2.a
+      - 3.E.2.b
+  3.E.2.a:
+    title: Chickens, broilers manure left on pasture (direct emissions N2O)
+    comment: Chickens, broilers manure left on pasture (direct emissions N2O)
+    info:
+      gases: N2O
+  3.E.2.b:
+    title: Chickens, broilers manure left on pasture (indirect emissions N2O)
+    comment: Chickens, broilers manure left on pasture (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.E.2.b.i
+      - 3.E.2.b.ii
+  3.E.2.b.i:
+    title: Chickens, broilers manure left on pasture (indirect emissions, N2O that
+      leaches)
+    comment: Chickens, broilers manure left on pasture (indirect emissions, N2O that
+      leaches)
+    info:
+      gases: N2O
+  3.E.2.b.ii:
+    title: Chickens, broilers manure left on pasture (indirect emissions, N2O that
+      volatilises)
+    comment: Chickens, broilers manure left on pasture (indirect emissions, N2O that
+      volatilises)
+    info:
+      gases: N2O
   3.E.3:
     title: Chickens, broilers manure applied
     comment: Chickens, broilers manure applied
+    info:
+      gases: N2O
+    children:
+    - - 3.E.3.a
+      - 3.E.3.b
+  3.E.3.a:
+    title: Chickens, broilers manure applied (direct emissions N2O)
+    comment: Chickens, broilers manure applied (direct emissions N2O)
+    info:
+      gases: N2O
+  3.E.3.b:
+    title: Chickens, broilers manure applied (indirect emissions N2O)
+    comment: Chickens, broilers manure applied (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.E.3.b.i
+      - 3.E.3.b.ii
+  3.E.3.b.i:
+    title: Chickens, broilers manure applied (indirect emissions, N2O that leaches)
+    comment: Chickens, broilers manure applied (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.E.3.b.ii:
+    title: Chickens, broilers manure applied (indirect emissions, N2O that volatilises)
+    comment: Chickens, broilers manure applied (indirect emissions, N2O that volatilises)
     info:
       gases: N2O
   3.F:
@@ -837,9 +1105,63 @@ categories:
     comment: Chickens, layers manure left on pasture
     info:
       gases: N2O
+    children:
+    - - 3.F.2.a
+      - 3.F.2.b
+  3.F.2.a:
+    title: Chickens, layers manure left on pasture (direct emissions N2O)
+    comment: Chickens, layers manure left on pasture (direct emissions N2O)
+    info:
+      gases: N2O
+  3.F.2.b:
+    title: Chickens, layers manure left on pasture (indirect emissions N2O)
+    comment: Chickens, layers manure left on pasture (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.F.2.b.i
+      - 3.F.2.b.ii
+  3.F.2.b.i:
+    title: Chickens, layers manure left on pasture (indirect emissions, N2O that leaches)
+    comment: Chickens, layers manure left on pasture (indirect emissions, N2O that
+      leaches)
+    info:
+      gases: N2O
+  3.F.2.b.ii:
+    title: Chickens, layers manure left on pasture (indirect emissions, N2O that volatilises)
+    comment: Chickens, layers manure left on pasture (indirect emissions, N2O that
+      volatilises)
+    info:
+      gases: N2O
   3.F.3:
     title: Chickens, layers manure applied
     comment: Chickens, layers manure applied
+    info:
+      gases: N2O
+    children:
+    - - 3.F.3.a
+      - 3.F.3.b
+  3.F.3.a:
+    title: Chickens, layers manure applied (direct emissions N2O)
+    comment: Chickens, layers manure applied (direct emissions N2O)
+    info:
+      gases: N2O
+  3.F.3.b:
+    title: Chickens, layers manure applied (indirect emissions N2O)
+    comment: Chickens, layers manure applied (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.F.3.b.i
+      - 3.F.3.b.ii
+  3.F.3.b.i:
+    title: Chickens, layers manure applied (indirect emissions, N2O that leaches)
+    comment: Chickens, layers manure applied (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.F.3.b.ii:
+    title: Chickens, layers manure applied (indirect emissions, N2O that volatilises)
+    comment: Chickens, layers manure applied (indirect emissions, N2O that volatilises)
     info:
       gases: N2O
   3.G.4:
@@ -888,9 +1210,61 @@ categories:
     comment: Goats manure left on pasture
     info:
       gases: N2O
+    children:
+    - - 3.G.2.a
+      - 3.G.2.b
+  3.G.2.a:
+    title: Goats manure left on pasture (direct emissions N2O)
+    comment: Goats manure left on pasture (direct emissions N2O)
+    info:
+      gases: N2O
+  3.G.2.b:
+    title: Goats manure left on pasture (indirect emissions N2O)
+    comment: Goats manure left on pasture (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.G.2.b.i
+      - 3.G.2.b.ii
+  3.G.2.b.i:
+    title: Goats manure left on pasture (indirect emissions, N2O that leaches)
+    comment: Goats manure left on pasture (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.G.2.b.ii:
+    title: Goats manure left on pasture (indirect emissions, N2O that volatilises)
+    comment: Goats manure left on pasture (indirect emissions, N2O that volatilises)
+    info:
+      gases: N2O
   3.G.3:
     title: Goats manure applied
     comment: Goats manure applied
+    info:
+      gases: N2O
+    children:
+    - - 3.G.3.a
+      - 3.G.3.b
+  3.G.3.a:
+    title: Goats manure applied (direct emissions N2O)
+    comment: Goats manure applied (direct emissions N2O)
+    info:
+      gases: N2O
+  3.G.3.b:
+    title: Goats manure applied (indirect emissions N2O)
+    comment: Goats manure applied (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.G.3.b.i
+      - 3.G.3.b.ii
+  3.G.3.b.i:
+    title: Goats manure applied (indirect emissions, N2O that leaches)
+    comment: Goats manure applied (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.G.3.b.ii:
+    title: Goats manure applied (indirect emissions, N2O that volatilises)
+    comment: Goats manure applied (indirect emissions, N2O that volatilises)
     info:
       gases: N2O
   3.H.4:
@@ -939,9 +1313,61 @@ categories:
     comment: Horses manure left on pasture
     info:
       gases: N2O
+    children:
+    - - 3.H.2.a
+      - 3.H.2.b
+  3.H.2.a:
+    title: Horses manure left on pasture (direct emissions N2O)
+    comment: Horses manure left on pasture (direct emissions N2O)
+    info:
+      gases: N2O
+  3.H.2.b:
+    title: Horses manure left on pasture (indirect emissions N2O)
+    comment: Horses manure left on pasture (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.H.2.b.i
+      - 3.H.2.b.ii
+  3.H.2.b.i:
+    title: Horses manure left on pasture (indirect emissions, N2O that leaches)
+    comment: Horses manure left on pasture (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.H.2.b.ii:
+    title: Horses manure left on pasture (indirect emissions, N2O that volatilises)
+    comment: Horses manure left on pasture (indirect emissions, N2O that volatilises)
+    info:
+      gases: N2O
   3.H.3:
     title: Horses manure applied
     comment: Horses manure applied
+    info:
+      gases: N2O
+    children:
+    - - 3.H.3.a
+      - 3.H.3.b
+  3.H.3.a:
+    title: Horses manure applied (direct emissions N2O)
+    comment: Horses manure applied (direct emissions N2O)
+    info:
+      gases: N2O
+  3.H.3.b:
+    title: Horses manure applied (indirect emissions N2O)
+    comment: Horses manure applied (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.H.3.b.i
+      - 3.H.3.b.ii
+  3.H.3.b.i:
+    title: Horses manure applied (indirect emissions, N2O that leaches)
+    comment: Horses manure applied (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.H.3.b.ii:
+    title: Horses manure applied (indirect emissions, N2O that volatilises)
+    comment: Horses manure applied (indirect emissions, N2O that volatilises)
     info:
       gases: N2O
   3.I.4:
@@ -990,9 +1416,65 @@ categories:
     comment: Mules and hinnies manure left on pasture
     info:
       gases: N2O
+    children:
+    - - 3.I.2.a
+      - 3.I.2.b
+  3.I.2.a:
+    title: Mules and hinnies manure left on pasture (direct emissions N2O)
+    comment: Mules and hinnies manure left on pasture (direct emissions N2O)
+    info:
+      gases: N2O
+  3.I.2.b:
+    title: Mules and hinnies manure left on pasture (indirect emissions N2O)
+    comment: Mules and hinnies manure left on pasture (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.I.2.b.i
+      - 3.I.2.b.ii
+  3.I.2.b.i:
+    title: Mules and hinnies manure left on pasture (indirect emissions, N2O that
+      leaches)
+    comment: Mules and hinnies manure left on pasture (indirect emissions, N2O that
+      leaches)
+    info:
+      gases: N2O
+  3.I.2.b.ii:
+    title: Mules and hinnies manure left on pasture (indirect emissions, N2O that
+      volatilises)
+    comment: Mules and hinnies manure left on pasture (indirect emissions, N2O that
+      volatilises)
+    info:
+      gases: N2O
   3.I.3:
     title: Mules and hinnies manure applied
     comment: Mules and hinnies manure applied
+    info:
+      gases: N2O
+    children:
+    - - 3.I.3.a
+      - 3.I.3.b
+  3.I.3.a:
+    title: Mules and hinnies manure applied (direct emissions N2O)
+    comment: Mules and hinnies manure applied (direct emissions N2O)
+    info:
+      gases: N2O
+  3.I.3.b:
+    title: Mules and hinnies manure applied (indirect emissions N2O)
+    comment: Mules and hinnies manure applied (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.I.3.b.i
+      - 3.I.3.b.ii
+  3.I.3.b.i:
+    title: Mules and hinnies manure applied (indirect emissions, N2O that leaches)
+    comment: Mules and hinnies manure applied (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.I.3.b.ii:
+    title: Mules and hinnies manure applied (indirect emissions, N2O that volatilises)
+    comment: Mules and hinnies manure applied (indirect emissions, N2O that volatilises)
     info:
       gases: N2O
   3.J.4:
@@ -1041,9 +1523,61 @@ categories:
     comment: Sheep manure left on pasture
     info:
       gases: N2O
+    children:
+    - - 3.J.2.a
+      - 3.J.2.b
+  3.J.2.a:
+    title: Sheep manure left on pasture (direct emissions N2O)
+    comment: Sheep manure left on pasture (direct emissions N2O)
+    info:
+      gases: N2O
+  3.J.2.b:
+    title: Sheep manure left on pasture (indirect emissions N2O)
+    comment: Sheep manure left on pasture (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.J.2.b.i
+      - 3.J.2.b.ii
+  3.J.2.b.i:
+    title: Sheep manure left on pasture (indirect emissions, N2O that leaches)
+    comment: Sheep manure left on pasture (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.J.2.b.ii:
+    title: Sheep manure left on pasture (indirect emissions, N2O that volatilises)
+    comment: Sheep manure left on pasture (indirect emissions, N2O that volatilises)
+    info:
+      gases: N2O
   3.J.3:
     title: Sheep manure applied
     comment: Sheep manure applied
+    info:
+      gases: N2O
+    children:
+    - - 3.J.3.a
+      - 3.J.3.b
+  3.J.3.a:
+    title: Sheep manure applied (direct emissions N2O)
+    comment: Sheep manure applied (direct emissions N2O)
+    info:
+      gases: N2O
+  3.J.3.b:
+    title: Sheep manure applied (indirect emissions N2O)
+    comment: Sheep manure applied (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.J.3.b.i
+      - 3.J.3.b.ii
+  3.J.3.b.i:
+    title: Sheep manure applied (indirect emissions, N2O that leaches)
+    comment: Sheep manure applied (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.J.3.b.ii:
+    title: Sheep manure applied (indirect emissions, N2O that volatilises)
+    comment: Sheep manure applied (indirect emissions, N2O that volatilises)
     info:
       gases: N2O
   3.K.4:
@@ -1092,9 +1626,61 @@ categories:
     comment: Llamas manure left on pasture
     info:
       gases: N2O
+    children:
+    - - 3.K.2.a
+      - 3.K.2.b
+  3.K.2.a:
+    title: Llamas manure left on pasture (direct emissions N2O)
+    comment: Llamas manure left on pasture (direct emissions N2O)
+    info:
+      gases: N2O
+  3.K.2.b:
+    title: Llamas manure left on pasture (indirect emissions N2O)
+    comment: Llamas manure left on pasture (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.K.2.b.i
+      - 3.K.2.b.ii
+  3.K.2.b.i:
+    title: Llamas manure left on pasture (indirect emissions, N2O that leaches)
+    comment: Llamas manure left on pasture (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.K.2.b.ii:
+    title: Llamas manure left on pasture (indirect emissions, N2O that volatilises)
+    comment: Llamas manure left on pasture (indirect emissions, N2O that volatilises)
+    info:
+      gases: N2O
   3.K.3:
     title: Llamas manure applied
     comment: Llamas manure applied
+    info:
+      gases: N2O
+    children:
+    - - 3.K.3.a
+      - 3.K.3.b
+  3.K.3.a:
+    title: Llamas manure applied (direct emissions N2O)
+    comment: Llamas manure applied (direct emissions N2O)
+    info:
+      gases: N2O
+  3.K.3.b:
+    title: Llamas manure applied (indirect emissions N2O)
+    comment: Llamas manure applied (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.K.3.b.i
+      - 3.K.3.b.ii
+  3.K.3.b.i:
+    title: Llamas manure applied (indirect emissions, N2O that leaches)
+    comment: Llamas manure applied (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.K.3.b.ii:
+    title: Llamas manure applied (indirect emissions, N2O that volatilises)
+    comment: Llamas manure applied (indirect emissions, N2O that volatilises)
     info:
       gases: N2O
   3.L:
@@ -1136,9 +1722,61 @@ categories:
     comment: Chickens manure left on pasture
     info:
       gases: N2O
+    children:
+    - - 3.L.2.a
+      - 3.L.2.b
+  3.L.2.a:
+    title: Chickens manure left on pasture (direct emissions N2O)
+    comment: Chickens manure left on pasture (direct emissions N2O)
+    info:
+      gases: N2O
+  3.L.2.b:
+    title: Chickens manure left on pasture (indirect emissions N2O)
+    comment: Chickens manure left on pasture (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.L.2.b.i
+      - 3.L.2.b.ii
+  3.L.2.b.i:
+    title: Chickens manure left on pasture (indirect emissions, N2O that leaches)
+    comment: Chickens manure left on pasture (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.L.2.b.ii:
+    title: Chickens manure left on pasture (indirect emissions, N2O that volatilises)
+    comment: Chickens manure left on pasture (indirect emissions, N2O that volatilises)
+    info:
+      gases: N2O
   3.L.3:
     title: Chickens manure applied
     comment: Chickens manure applied
+    info:
+      gases: N2O
+    children:
+    - - 3.L.3.a
+      - 3.L.3.b
+  3.L.3.a:
+    title: Chickens manure applied (direct emissions N2O)
+    comment: Chickens manure applied (direct emissions N2O)
+    info:
+      gases: N2O
+  3.L.3.b:
+    title: Chickens manure applied (indirect emissions N2O)
+    comment: Chickens manure applied (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.L.3.b.i
+      - 3.L.3.b.ii
+  3.L.3.b.i:
+    title: Chickens manure applied (indirect emissions, N2O that leaches)
+    comment: Chickens manure applied (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.L.3.b.ii:
+    title: Chickens manure applied (indirect emissions, N2O that volatilises)
+    comment: Chickens manure applied (indirect emissions, N2O that volatilises)
     info:
       gases: N2O
   3.M:
@@ -1180,9 +1818,61 @@ categories:
     comment: Poultry Birds manure left on pasture
     info:
       gases: N2O
+    children:
+    - - 3.M.2.a
+      - 3.M.2.b
+  3.M.2.a:
+    title: Poultry Birds manure left on pasture (direct emissions N2O)
+    comment: Poultry Birds manure left on pasture (direct emissions N2O)
+    info:
+      gases: N2O
+  3.M.2.b:
+    title: Poultry Birds manure left on pasture (indirect emissions N2O)
+    comment: Poultry Birds manure left on pasture (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.M.2.b.i
+      - 3.M.2.b.ii
+  3.M.2.b.i:
+    title: Poultry Birds manure left on pasture (indirect emissions, N2O that leaches)
+    comment: Poultry Birds manure left on pasture (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.M.2.b.ii:
+    title: Poultry Birds manure left on pasture (indirect emissions, N2O that volatilises)
+    comment: Poultry Birds manure left on pasture (indirect emissions, N2O that volatilises)
+    info:
+      gases: N2O
   3.M.3:
     title: Poultry Birds manure applied
     comment: Poultry Birds manure applied
+    info:
+      gases: N2O
+    children:
+    - - 3.M.3.a
+      - 3.M.3.b
+  3.M.3.a:
+    title: Poultry Birds manure applied (direct emissions N2O)
+    comment: Poultry Birds manure applied (direct emissions N2O)
+    info:
+      gases: N2O
+  3.M.3.b:
+    title: Poultry Birds manure applied (indirect emissions N2O)
+    comment: Poultry Birds manure applied (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.M.3.b.i
+      - 3.M.3.b.ii
+  3.M.3.b.i:
+    title: Poultry Birds manure applied (indirect emissions, N2O that leaches)
+    comment: Poultry Birds manure applied (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.M.3.b.ii:
+    title: Poultry Birds manure applied (indirect emissions, N2O that volatilises)
+    comment: Poultry Birds manure applied (indirect emissions, N2O that volatilises)
     info:
       gases: N2O
   3.N.4:
@@ -1231,9 +1921,61 @@ categories:
     comment: Buffalo manure left on pasture
     info:
       gases: N2O
+    children:
+    - - 3.N.2.a
+      - 3.N.2.b
+  3.N.2.a:
+    title: Buffalo manure left on pasture (direct emissions N2O)
+    comment: Buffalo manure left on pasture (direct emissions N2O)
+    info:
+      gases: N2O
+  3.N.2.b:
+    title: Buffalo manure left on pasture (indirect emissions N2O)
+    comment: Buffalo manure left on pasture (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.N.2.b.i
+      - 3.N.2.b.ii
+  3.N.2.b.i:
+    title: Buffalo manure left on pasture (indirect emissions, N2O that leaches)
+    comment: Buffalo manure left on pasture (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.N.2.b.ii:
+    title: Buffalo manure left on pasture (indirect emissions, N2O that volatilises)
+    comment: Buffalo manure left on pasture (indirect emissions, N2O that volatilises)
+    info:
+      gases: N2O
   3.N.3:
     title: Buffalo manure applied
     comment: Buffalo manure applied
+    info:
+      gases: N2O
+    children:
+    - - 3.N.3.a
+      - 3.N.3.b
+  3.N.3.a:
+    title: Buffalo manure applied (direct emissions N2O)
+    comment: Buffalo manure applied (direct emissions N2O)
+    info:
+      gases: N2O
+  3.N.3.b:
+    title: Buffalo manure applied (indirect emissions N2O)
+    comment: Buffalo manure applied (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.N.3.b.i
+      - 3.N.3.b.ii
+  3.N.3.b.i:
+    title: Buffalo manure applied (indirect emissions, N2O that leaches)
+    comment: Buffalo manure applied (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.N.3.b.ii:
+    title: Buffalo manure applied (indirect emissions, N2O that volatilises)
+    comment: Buffalo manure applied (indirect emissions, N2O that volatilises)
     info:
       gases: N2O
   3.O:
@@ -1275,9 +2017,61 @@ categories:
     comment: Ducks manure left on pasture
     info:
       gases: N2O
+    children:
+    - - 3.O.2.a
+      - 3.O.2.b
+  3.O.2.a:
+    title: Ducks manure left on pasture (direct emissions N2O)
+    comment: Ducks manure left on pasture (direct emissions N2O)
+    info:
+      gases: N2O
+  3.O.2.b:
+    title: Ducks manure left on pasture (indirect emissions N2O)
+    comment: Ducks manure left on pasture (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.O.2.b.i
+      - 3.O.2.b.ii
+  3.O.2.b.i:
+    title: Ducks manure left on pasture (indirect emissions, N2O that leaches)
+    comment: Ducks manure left on pasture (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.O.2.b.ii:
+    title: Ducks manure left on pasture (indirect emissions, N2O that volatilises)
+    comment: Ducks manure left on pasture (indirect emissions, N2O that volatilises)
+    info:
+      gases: N2O
   3.O.3:
     title: Ducks manure applied
     comment: Ducks manure applied
+    info:
+      gases: N2O
+    children:
+    - - 3.O.3.a
+      - 3.O.3.b
+  3.O.3.a:
+    title: Ducks manure applied (direct emissions N2O)
+    comment: Ducks manure applied (direct emissions N2O)
+    info:
+      gases: N2O
+  3.O.3.b:
+    title: Ducks manure applied (indirect emissions N2O)
+    comment: Ducks manure applied (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.O.3.b.i
+      - 3.O.3.b.ii
+  3.O.3.b.i:
+    title: Ducks manure applied (indirect emissions, N2O that leaches)
+    comment: Ducks manure applied (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.O.3.b.ii:
+    title: Ducks manure applied (indirect emissions, N2O that volatilises)
+    comment: Ducks manure applied (indirect emissions, N2O that volatilises)
     info:
       gases: N2O
   3.P.4:
@@ -1326,9 +2120,63 @@ categories:
     comment: Swine, breeding manure left on pasture
     info:
       gases: N2O
+    children:
+    - - 3.P.2.a
+      - 3.P.2.b
+  3.P.2.a:
+    title: Swine, breeding manure left on pasture (direct emissions N2O)
+    comment: Swine, breeding manure left on pasture (direct emissions N2O)
+    info:
+      gases: N2O
+  3.P.2.b:
+    title: Swine, breeding manure left on pasture (indirect emissions N2O)
+    comment: Swine, breeding manure left on pasture (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.P.2.b.i
+      - 3.P.2.b.ii
+  3.P.2.b.i:
+    title: Swine, breeding manure left on pasture (indirect emissions, N2O that leaches)
+    comment: Swine, breeding manure left on pasture (indirect emissions, N2O that
+      leaches)
+    info:
+      gases: N2O
+  3.P.2.b.ii:
+    title: Swine, breeding manure left on pasture (indirect emissions, N2O that volatilises)
+    comment: Swine, breeding manure left on pasture (indirect emissions, N2O that
+      volatilises)
+    info:
+      gases: N2O
   3.P.3:
     title: Swine, breeding manure applied
     comment: Swine, breeding manure applied
+    info:
+      gases: N2O
+    children:
+    - - 3.P.3.a
+      - 3.P.3.b
+  3.P.3.a:
+    title: Swine, breeding manure applied (direct emissions N2O)
+    comment: Swine, breeding manure applied (direct emissions N2O)
+    info:
+      gases: N2O
+  3.P.3.b:
+    title: Swine, breeding manure applied (indirect emissions N2O)
+    comment: Swine, breeding manure applied (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.P.3.b.i
+      - 3.P.3.b.ii
+  3.P.3.b.i:
+    title: Swine, breeding manure applied (indirect emissions, N2O that leaches)
+    comment: Swine, breeding manure applied (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.P.3.b.ii:
+    title: Swine, breeding manure applied (indirect emissions, N2O that volatilises)
+    comment: Swine, breeding manure applied (indirect emissions, N2O that volatilises)
     info:
       gases: N2O
   3.Q.4:
@@ -1377,9 +2225,61 @@ categories:
     comment: Swine, market manure left on pasture
     info:
       gases: N2O
+    children:
+    - - 3.Q.2.a
+      - 3.Q.2.b
+  3.Q.2.a:
+    title: Swine, market manure left on pasture (direct emissions N2O)
+    comment: Swine, market manure left on pasture (direct emissions N2O)
+    info:
+      gases: N2O
+  3.Q.2.b:
+    title: Swine, market manure left on pasture (indirect emissions N2O)
+    comment: Swine, market manure left on pasture (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.Q.2.b.i
+      - 3.Q.2.b.ii
+  3.Q.2.b.i:
+    title: Swine, market manure left on pasture (indirect emissions, N2O that leaches)
+    comment: Swine, market manure left on pasture (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.Q.2.b.ii:
+    title: Swine, market manure left on pasture (indirect emissions, N2O that volatilises)
+    comment: Swine, market manure left on pasture (indirect emissions, N2O that volatilises)
+    info:
+      gases: N2O
   3.Q.3:
     title: Swine, market manure applied
     comment: Swine, market manure applied
+    info:
+      gases: N2O
+    children:
+    - - 3.Q.3.a
+      - 3.Q.3.b
+  3.Q.3.a:
+    title: Swine, market manure applied (direct emissions N2O)
+    comment: Swine, market manure applied (direct emissions N2O)
+    info:
+      gases: N2O
+  3.Q.3.b:
+    title: Swine, market manure applied (indirect emissions N2O)
+    comment: Swine, market manure applied (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.Q.3.b.i
+      - 3.Q.3.b.ii
+  3.Q.3.b.i:
+    title: Swine, market manure applied (indirect emissions, N2O that leaches)
+    comment: Swine, market manure applied (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.Q.3.b.ii:
+    title: Swine, market manure applied (indirect emissions, N2O that volatilises)
+    comment: Swine, market manure applied (indirect emissions, N2O that volatilises)
     info:
       gases: N2O
   3.R:
@@ -1421,9 +2321,61 @@ categories:
     comment: Turkeys manure left on pasture
     info:
       gases: N2O
+    children:
+    - - 3.R.2.a
+      - 3.R.2.b
+  3.R.2.a:
+    title: Turkeys manure left on pasture (direct emissions N2O)
+    comment: Turkeys manure left on pasture (direct emissions N2O)
+    info:
+      gases: N2O
+  3.R.2.b:
+    title: Turkeys manure left on pasture (indirect emissions N2O)
+    comment: Turkeys manure left on pasture (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.R.2.b.i
+      - 3.R.2.b.ii
+  3.R.2.b.i:
+    title: Turkeys manure left on pasture (indirect emissions, N2O that leaches)
+    comment: Turkeys manure left on pasture (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.R.2.b.ii:
+    title: Turkeys manure left on pasture (indirect emissions, N2O that volatilises)
+    comment: Turkeys manure left on pasture (indirect emissions, N2O that volatilises)
+    info:
+      gases: N2O
   3.R.3:
     title: Turkeys manure applied
     comment: Turkeys manure applied
+    info:
+      gases: N2O
+    children:
+    - - 3.R.3.a
+      - 3.R.3.b
+  3.R.3.a:
+    title: Turkeys manure applied (direct emissions N2O)
+    comment: Turkeys manure applied (direct emissions N2O)
+    info:
+      gases: N2O
+  3.R.3.b:
+    title: Turkeys manure applied (indirect emissions N2O)
+    comment: Turkeys manure applied (indirect emissions N2O)
+    info:
+      gases: N2O
+    children:
+    - - 3.R.3.b.i
+      - 3.R.3.b.ii
+  3.R.3.b.i:
+    title: Turkeys manure applied (indirect emissions, N2O that leaches)
+    comment: Turkeys manure applied (indirect emissions, N2O that leaches)
+    info:
+      gases: N2O
+  3.R.3.b.ii:
+    title: Turkeys manure applied (indirect emissions, N2O that volatilises)
+    comment: Turkeys manure applied (indirect emissions, N2O that volatilises)
     info:
       gases: N2O
   '4':

@@ -132,6 +132,7 @@ def read_data(  # noqa: PLR0915 PLR0912
             df_domain["category"] = df_domain["Item - Element"].map(
                 read_config["category_mapping"]
             )
+
         # sometimes there are too many categories per domain to write
         # everything in the config file
         # TODO we could do this for crops as well, but it's not necessary
@@ -148,6 +149,13 @@ def read_data(  # noqa: PLR0915 PLR0912
             df_domain["category"] = (
                 df_domain["mapped_item"] + df_domain["mapped_element"]
             )
+            df_domain = df_domain.drop(
+                labels=[
+                    "mapped_item",
+                    "mapped_element",
+                ],
+                axis=1,
+            )
         else:
             msg = f"Could not find mapping for {domain=}."
             raise ValueError(msg)
@@ -159,6 +167,14 @@ def read_data(  # noqa: PLR0915 PLR0912
                     read_config["items-elements_to_remove"]
                 )
             ]
+
+        # drop combined item - element columns
+        df_domain = df_domain.drop(
+            labels=[
+                "Item - Element",
+            ],
+            axis=1,
+        )
 
         # check if all Item-Element combinations are now converted to category codes
         fao_categories = list(spec["categories"].keys())

@@ -351,24 +351,105 @@ def test_make_dict_comprehension_for_faster_typing():  # noqa: PLR0912 PLR0915
             "info": {"gases": "N2O"},
         }
 
-        # manure left on pasture
-        # manure_left_on_pasture_children = [f"{code}.2.{i}" for i in "ab"]
+        # manure left on pasture branch
+        manure_left_on_pasture_children = [f"{code}.2.{i}" for i in "ab"]
         categories[f"{code}.2"] = {
             "title": f"{animal} manure left on pasture",
             "comment": f"{animal} manure left on pasture",
             # "alternative_codes" : code.replace(".", ""),
             "info": {"gases": "N2O"},
-            # "children" : [manure_left_on_pasture_children],
+            "children": [manure_left_on_pasture_children],
         }
 
-        # manure left on pasture
-        # manure_applied_children = [f"{code}.3.{i}" for i in "ab"]
+        categories[f"{code}.2.a"] = {
+            "title": f"{animal} manure left on pasture (direct emissions N2O)",
+            "comment": f"{animal} manure left on pasture (direct emissions N2O)",
+            # "alternative_codes" : code.replace(".", ""),
+            "info": {"gases": "N2O"},
+        }
+
+        categories[f"{code}.2.b"] = {
+            "title": f"{animal} manure left on pasture (indirect emissions N2O)",
+            "comment": f"{animal} manure left on pasture (indirect emissions N2O)",
+            # "alternative_codes" : code.replace(".", ""),
+            "info": {"gases": "N2O"},
+            "children": [[f"{code}.2.b.i", f"{code}.2.b.ii"]],
+        }
+
+        categories[f"{code}.2.b.i"] = {
+            "title": (
+                f"{animal} manure left on pasture "
+                f"(indirect emissions, N2O that leaches)"
+            ),
+            "comment": (
+                f"{animal} manure left on pasture (indirect "
+                f"emissions, N2O that leaches)"
+            ),
+            # "alternative_codes" : code.replace(".", ""),
+            "info": {"gases": "N2O"},
+        }
+
+        categories[f"{code}.2.b.ii"] = {
+            "title": (
+                f"{animal} manure left on pasture "
+                f"(indirect emissions, N2O that volatilises)"
+            ),
+            "comment": (
+                f"{animal} manure left on pasture (indirect "
+                f"emissions, N2O that volatilises)"
+            ),
+            # "alternative_codes" : code.replace(".", ""),
+            "info": {"gases": "N2O"},
+        }
+
+        # manure applied branch
+
+        manure_applied_children = [f"{code}.3.{i}" for i in "ab"]
         categories[f"{code}.3"] = {
             "title": f"{animal} manure applied",
             "comment": f"{animal} manure applied",
             # "alternative_codes" : code.replace(".", ""),
             "info": {"gases": "N2O"},
-            # "children" : [manure_applied_children],
+            "children": [manure_applied_children],
+        }
+
+        categories[f"{code}.3.a"] = {
+            "title": f"{animal} manure applied (direct emissions N2O)",
+            "comment": f"{animal} manure applied (direct emissions N2O)",
+            # "alternative_codes" : code.replace(".", ""),
+            "info": {"gases": "N2O"},
+        }
+
+        categories[f"{code}.3.b"] = {
+            "title": f"{animal} manure applied (indirect emissions N2O)",
+            "comment": f"{animal} manure applied (indirect emissions N2O)",
+            # "alternative_codes" : code.replace(".", ""),
+            "info": {"gases": "N2O"},
+            "children": [[f"{code}.3.b.i", f"{code}.3.b.ii"]],
+        }
+
+        categories[f"{code}.3.b.i"] = {
+            "title": (
+                f"{animal} manure applied " f"(indirect emissions, N2O that leaches)"
+            ),
+            "comment": (
+                f"{animal} manure applied (indirect " f"emissions, N2O that leaches)"
+            ),
+            # "alternative_codes" : code.replace(".", ""),
+            "info": {"gases": "N2O"},
+        }
+
+        categories[f"{code}.3.b.ii"] = {
+            "title": (
+                f"{animal} manure applied "
+                f"(indirect emissions, N2O that volatilises)"
+            ),
+            "comment": (
+                f"{animal} manure applied (indirect "
+                f"emissions, N2O that volatilises)"
+            ),
+            # "alternative_codes" : code.replace(".", ""),
+            "info": {"gases": "N2O"},
         }
 
     # forests
@@ -411,8 +492,7 @@ def test_make_dict_comprehension_for_faster_typing():  # noqa: PLR0912 PLR0915
         "info": {"gases": ["CO2", "N2O"]},
     }
 
-    # Fires
-
+    # 6 Fires
     # Forest fires
     forest_fires_children = ["Humid tropical forests", "Other forests"]
     forest_fires_children_codes = ["6.A.1", "6.A.2"]
@@ -529,7 +609,7 @@ def test_make_dict_comprehension_for_faster_typing():  # noqa: PLR0912 PLR0915
 
     spec["categories"] = categories
     fao_cats = cc.HierarchicalCategorization.from_spec(spec.copy())
-    # run print(cat.show_as_tree())
+    # run print(fao_cats.show_as_tree())
     fao_cats.to_python("FAO.py")
     fao_cats.to_yaml("FAO.yaml")
     pass
