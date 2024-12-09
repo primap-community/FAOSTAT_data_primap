@@ -11,6 +11,9 @@ from faostat_data_primap.helper.definitions import (
     config_to_if,
     read_config_all,
 )
+
+# todo replace with FAO climate categories once it's done
+from faostat_data_primap.helper.FAO_categorisation_temp import spec
 from faostat_data_primap.helper.paths import (
     downloaded_data_path,
     extracted_data_path,
@@ -60,7 +63,8 @@ def get_latest_release(domain_path: pathlib.Path) -> str:
     return sorted(all_releases, reverse=True)[0]
 
 
-def read_data(
+# TODO split out functions to avoid PLR0915
+def read_data(  # noqa: PLR0915
     read_path: pathlib.Path,
     domains_and_releases_to_read: list[tuple[str, str]],
     save_path: pathlib.Path,
@@ -117,7 +121,28 @@ def read_data(
             raise ValueError(msg)
 
         # create category column (combination of Item and Element works best)
-        df_domain["category"] = df_domain["Item"] + "-" + df_domain["Element"]
+        df_domain["Item - Element"] = df_domain["Item"] + " - " + df_domain["Element"]
+        df_domain["category"] = df_domain["Item - Element"].map(
+            read_config["category_mapping"]
+        )
+        # some rows can only be removed by Item - Element column
+        if "items-elements_to_remove" in read_config.keys():
+            df_domain = df_domain[
+                ~df_domain["Item - Element"].isin(
+                    read_config["items-elements_to_remove"]
+                )
+            ]
+        # check if all Item-Element combinations are now be converted to category codes
+        fao_categories = list(spec["categories"].keys())
+        unknown_categories = [
+            i for i in df_domain.category.unique() if i not in fao_categories
+        ]
+        if unknown_categories:
+            msg = (
+                f"Not all categories are part of FAO categorisation. "
+                f"Check mapping for {unknown_categories}"
+            )
+            raise ValueError(msg)
 
         # drop columns we don't need
         df_domain = df_domain.drop(

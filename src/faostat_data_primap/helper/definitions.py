@@ -137,6 +137,86 @@ read_config_all: Any = {
                     "(Synthetic fertilizers)"
                 ): "N2O",
             },
+            "category_mapping": {
+                "Barley - Crop residues (Emissions N2O)": "1.A.5.a",
+                "Barley - Crop residues (Direct emissions N2O)": "1.A.5.a.i",
+                "Barley - Crop residues (Indirect emissions N2O)": "1.A.5.a.ii",
+                "Maize (corn) - Crop residues (Emissions N2O)": "1.A.6.a",
+                "Maize (corn) - Crop residues (Direct emissions N2O)": "1.A.6.a.i",
+                "Maize (corn) - Crop residues (Indirect emissions N2O)": "1.A.6.a.ii",
+                "Maize (corn) - Burning crop residues (Emissions N2O)": "1.A.6.b",
+                "Maize (corn) - Burning crop residues (Emissions CH4)": "1.A.6.b",
+                "Sugar cane - Crop residues (Emissions N2O)": "1.A.7.a",
+                "Sugar cane - Burning crop residues (Emissions N2O)": "1.A.7.b",
+                "Sugar cane - Burning crop residues (Emissions CH4)": "1.A.7.b",
+                "Millet - Crop residues (Emissions N2O)": "1.A.4.a",
+                "Millet - Crop residues (Direct emissions N2O)": "1.A.4.a.i",
+                "Millet - Crop residues (Indirect emissions N2O)": "1.A.4.a.ii",
+                "Potatoes - Crop residues (Emissions N2O)": "1.A.3.a",
+                "Potatoes - Crop residues (Direct emissions N2O)": "1.A.3.a.i",
+                "Potatoes - Crop residues (Indirect emissions N2O)": "1.A.3.a.ii",
+                "Rice - Crop residues (Emissions N2O)": "1.A.2.a",
+                "Rice - Crop residues (Direct emissions N2O)": "1.A.2.a.i",
+                "Rice - Crop residues (Indirect emissions N2O)": "1.A.2.a.ii",
+                "Rice - Burning crop residues (Emissions N2O)": "1.A.2.b",
+                "Rice - Burning crop residues (Emissions CH4)": "1.A.2.b",
+                "Rice - Rice cultivation (Emissions CH4)": "1.A.2.c",
+                "Wheat - Crop residues (Emissions N2O)": "1.A.1.a",
+                "Wheat - Crop residues (Direct emissions N2O)": "1.A.1.a.i",
+                "Wheat - Crop residues (Indirect emissions N2O)": "1.A.1.a.ii",
+                "Wheat - Burning crop residues (Emissions N2O)": "1.A.1.b",
+                "Wheat - Burning crop residues (Emissions CH4)": "1.A.1.b",
+                "All Crops - Crops total (Emissions N2O)": "1.A",
+                "All Crops - Crops total (Emissions CH4)": "1.A",
+                (
+                    "Nutrient nitrogen N (total) - Synthetic "
+                    "fertilizers (Emissions N2O)"
+                ): "1.B",
+                (
+                    "Nutrient nitrogen N (total) - "
+                    "Synthetic fertilizers (Direct emissions N2O)"
+                ): "1.B.1",
+                (
+                    "Nutrient nitrogen N (total) - "
+                    "Indirect emissions (N2O that leaches) "
+                    "(Synthetic fertilizers)"
+                ): "1.B.2.b",
+                (
+                    "Nutrient nitrogen N (total) - "
+                    "Indirect emissions (N2O that volatilises) "
+                    "(Synthetic fertilizers)"
+                ): "1.B.2.a",
+                "Beans, dry - Crop residues (Emissions N2O)": "1.A.8.a",
+                "Beans, dry - Crop residues (Direct emissions N2O)": "1.A.8.a.i",
+                "Beans, dry - Crop residues (Indirect emissions N2O)": "1.A.8.a.ii",
+                "Oats - Crop residues (Emissions N2O)": "1.A.9.a",
+                "Oats - Crop residues (Direct emissions N2O)": "1.A.9.a.i",
+                "Oats - Crop residues (Indirect emissions N2O)": "1.A.9.a.ii",
+                "Rye - Crop residues (Emissions N2O)": "1.A.10.a",
+                "Rye - Crop residues (Direct emissions N2O)": "1.A.10.a.i",
+                "Rye - Crop residues (Indirect emissions N2O)": "1.A.10.a.ii",
+                "Sorghum - Crop residues (Emissions N2O)": "1.A.11.a",
+                "Sorghum - Crop residues (Direct emissions N2O)": "1.A.11.a.i",
+                "Sorghum - Crop residues (Indirect emissions N2O)": "1.A.11.a.ii",
+                "Soya beans - Crop residues (Emissions N2O)": "1.A.12.a",
+                "Soya beans - Crop residues (Direct emissions N2O)": "1.A.12.a.i",
+                "Soya beans - Crop residues (Indirect emissions N2O)": "1.A.12.a.ii",
+                "Maize (corn) - Crops total (Emissions N2O)": "1.A.6",
+                "Maize (corn) - Crops total (Emissions CH4)": "1.A.6",
+                "Sugar cane - Crops total (Emissions N2O)": "1.A.7",
+                "Sugar cane - Crops total (Emissions CH4)": "1.A.7",
+                "Rice - Crops total (Emissions N2O)": "1.A.2",
+                "Rice - Crops total (Emissions CH4)": "1.A.2",
+                "Wheat - Crops total (Emissions N2O)": "1.A.1",
+                "Wheat - Crops total (Emissions CH4)": "1.A.1",
+            },
+            "items-elements_to_remove": [
+                "All Crops - Crop residues (Emissions N2O)",
+                "All Crops - Crop residues (Direct emissions N2O)",
+                "All Crops - Crop residues (Indirect emissions N2O)",
+                "All Crops - Burning crop residues (Emissions N2O)",
+                "All Crops - Burning crop residues (Emissions CH4)",
+            ],
             "columns_to_drop": [
                 "Element",
                 "Element Code",
@@ -436,3 +516,5 @@ domains_and_releases_to_read = {
         ("pre_post_agricultural_production", "2024-11-14"),
     ]
 }
+
+FAO_climate_categories = []
