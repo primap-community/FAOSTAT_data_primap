@@ -4,6 +4,26 @@ Define tasks to download and read the FAO data set.
 import datalad.api
 
 
+def task_add_github_sibling():
+    """
+    Create github sibling after cloning from gin
+    """
+
+    def run_add_sibling():
+        datalad.api.create_sibling_github(
+            "primap-community/FAOSTAT_data_primap",
+            name="github",
+            existing="error",
+            access_protocol="ssh",
+            publish_depends="origin",
+            private=False,
+            dry_run=False,
+            api="https://api.github.com",
+        )
+
+    return {"actions": [run_add_sibling]}
+
+
 def task_download():
     """
     Download latest data
