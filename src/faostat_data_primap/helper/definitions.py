@@ -442,6 +442,14 @@ read_config_all: Any = {
                 "Area Code",
                 "Source Code",
             ],
+            "category_mapping_item_element": {
+                "Cropland organic soils - Emissions (N2O)": "5.",
+                "Cropland organic soils - Emissions (CO2)": "5.",
+                "Grassland organic soils - Emissions (N2O)": "5.",
+                "Grassland organic soils - Emissions (CO2)": "5.",
+                "Drained organic soils - Emissions (N2O)": "5.",
+                "Drained organic soils - Emissions (CO2)": "5.",
+            },
         },
     },
     "land_use_fires": {

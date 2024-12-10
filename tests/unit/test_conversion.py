@@ -10,8 +10,8 @@ def test_read(tmp_path):
     domains_and_releases_to_read = [
         # ("farm_gate_agriculture_energy", "2024-11-14"),
         # ("farm_gate_emissions_crops", "2024-11-14"),
-        ("farm_gate_livestock", "2024-11-14"),
-        # ("land_use_drained_organic_soils", "2024-11-14"),
+        # ("farm_gate_livestock", "2024-11-14"),
+        ("land_use_drained_organic_soils", "2024-11-14"),
         # ("land_use_fires", "2024-11-14"),
         # ("land_use_forests", "2024-11-14"),
         # ("pre_post_agricultural_production", "2024-11-14"),

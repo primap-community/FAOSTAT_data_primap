@@ -130,7 +130,7 @@ def read_data(  # noqa: PLR0915 PLR0912
 
         if "category_mapping_item_element" in read_config.keys():
             df_domain["category"] = df_domain["Item - Element"].map(
-                read_config["category_mapping"]
+                read_config["category_mapping_item_element"]
             )
 
         # sometimes there are too many categories per domain to write
