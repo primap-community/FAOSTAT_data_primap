@@ -1,6 +1,5 @@
 import climate_categories as cc
 import primap2 as pm2
-import pytest
 
 from src.faostat_data_primap.helper.paths import downloaded_data_path
 from src.faostat_data_primap.read import read_data
@@ -615,11 +614,10 @@ def test_make_dict_comprehension_for_faster_typing():  # noqa: PLR0912 PLR0915
     pass
 
 
-@pytest.mark.xfail
+# @pytest.mark.xfail
 def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
     # make categorisation A from yaml
-    categorisation_a = cc.from_yaml("FAO.yaml")
-
+    categorisation_a = cc.from_python("FAO.py")
     # make categorisation B from yaml
     categorisation_b = cc.IPCC2006_PRIMAP
 
