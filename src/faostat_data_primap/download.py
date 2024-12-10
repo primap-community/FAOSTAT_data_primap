@@ -118,43 +118,44 @@ def download_methodology(url_download: str, save_path: pathlib.Path) -> None:
         print(f"Skipping download of {download_path} because it already exists.")
         return
 
-    previous_release = find_previous_release_path(save_path)
-    # Attempt to find a file to compare in the previous release
-    if previous_release:
-        file_to_compare = previous_release / filename
-        if file_to_compare.exists():
-            response = requests.get(url_download, stream=True, timeout=30)
-            response.raise_for_status()
-            file_to_download_checksum = hashlib.sha256(response.content).hexdigest()
-            file_to_compare_checksum = calculate_checksum(file_to_compare)
+    # previous_release = find_previous_release_path(save_path)
+    # # Attempt to find a file to compare in the previous release
+    # if previous_release:
+    #     file_to_compare = previous_release / filename
+    #     if file_to_compare.exists():
+    #         response = requests.get(url_download, stream=True, timeout=30)
+    #         response.raise_for_status()
+    #         file_to_download_checksum = hashlib.sha256(response.content).hexdigest()
+    #         file_to_compare_checksum = calculate_checksum(file_to_compare)
+    #
+    #         if file_to_download_checksum == file_to_compare_checksum:
+    #             print(
+    #                 f"File '{filename}' is identical in the previous release. "
+    #                 f"Creating symlink."
+    #             )
+    #             os.symlink(file_to_compare, download_path)
+    #             return
+    #         else:
+    #             print(
+    #                 f"File '{filename}' differs from previous release. "
+    #                 f"Downloading file."
+    #             )
+    #     else:
+    #         print(f"File '{filename}' not found in
+    #         previous release. Downloading file.")
+    #         response = requests.get(url_download, stream=True, timeout=30)
+    #         response.raise_for_status()
 
-            if file_to_download_checksum == file_to_compare_checksum:
-                print(
-                    f"File '{filename}' is identical in the previous release. "
-                    f"Creating symlink."
-                )
-                os.symlink(file_to_compare, download_path)
-                return
-            else:
-                print(
-                    f"File '{filename}' differs from previous release. "
-                    f"Downloading file."
-                )
-        else:
-            print(f"File '{filename}' not found in previous release. Downloading file.")
-            response = requests.get(url_download, stream=True, timeout=30)
-            response.raise_for_status()
+    # Save downloaded file to current release
+    # with open(download_path, "wb") as f:
+    #     f.write(response.content)
 
-        # Save downloaded file to current release
-        with open(download_path, "wb") as f:
-            f.write(response.content)
-
-    else:
-        print(f"No previous release found. Downloading file '{filename}'.")
-        response = requests.get(url_download, stream=True, timeout=30)
-        response.raise_for_status()
-        with open(download_path, "wb") as f:
-            f.write(response.content)
+    # else:
+    #     print(f"No previous release found. Downloading file '{filename}'.")
+    response = requests.get(url_download, stream=True, timeout=30)
+    response.raise_for_status()
+    with open(download_path, "wb") as f:
+        f.write(response.content)
 
 
 def get_html_content(url: str) -> BeautifulSoup:
