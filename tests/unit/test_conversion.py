@@ -11,10 +11,10 @@ def test_read(tmp_path):
         # ("farm_gate_agriculture_energy", "2024-11-14"),
         # ("farm_gate_emissions_crops", "2024-11-14"),
         # ("farm_gate_livestock", "2024-11-14"),
-        ("land_use_drained_organic_soils", "2024-11-14"),
+        # ("land_use_drained_organic_soils", "2024-11-14"),
         # ("land_use_fires", "2024-11-14"),
         # ("land_use_forests", "2024-11-14"),
-        # ("pre_post_agricultural_production", "2024-11-14"),
+        ("pre_post_agricultural_production", "2024-11-14"),
     ]
 
     read_data(
@@ -564,7 +564,7 @@ def test_make_dict_comprehension_for_faster_typing():  # noqa: PLR0912 PLR0915
         "Food Processing",
         "Food Packaging",
     ]
-    pre_post_production_categories_codes = ["7." + i for i in "ABCDEFGHIKLM"]
+    pre_post_production_categories_codes = ["7." + i for i in "ABCDEFGHIJKLMNO"]
     pre_post_production_categories_gases = [
         ["CO2", "N2O", "KYOTOGHG (AR5GWP100)"],
         ["CO2", "CH4", "N2O", "KYOTOGHG (AR5GWP100)", "FGASES (AR5GWP100)"],

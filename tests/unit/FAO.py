@@ -2103,20 +2103,43 @@ spec = {
                 ]
             },
         },
-        "7.K": {
+        "7.J": {
             "title": "Energy Use (Pre- and Post-Production)",
             "comment": "Energy Use (Pre- and Post-Production)",
             "info": {"gases": ["CO2", "CH4", "N2O", "KYOTOGHG (AR5GWP100)"]},
         },
-        "7.L": {
+        "7.K": {
             "title": "Agrifood Systems Waste Disposal",
             "comment": "Agrifood Systems Waste Disposal",
             "info": {"gases": ["CO2", "CH4", "N2O", "KYOTOGHG (AR5GWP100)"]},
         },
-        "7.M": {
+        "7.L": {
             "title": "Cold Chain F-Gas",
             "comment": "Cold Chain F-Gas",
             "info": {"gases": ["FGASES (AR5GWP100)"]},
+        },
+        "7.M": {
+            "title": "Pesticides Manufacturing",
+            "comment": "Pesticides Manufacturing",
+            "info": {"gases": ["CO2", "CH4", "N2O", "KYOTOGHG (AR5GWP100)"]},
+        },
+        "7.N": {
+            "title": "Food Processing",
+            "comment": "Food Processing",
+            "info": {
+                "gases": [
+                    "CO2",
+                    "CH4",
+                    "N2O",
+                    "KYOTOGHG (AR5GWP100)",
+                    "FGASES (AR5GWP100)",
+                ]
+            },
+        },
+        "7.O": {
+            "title": "Food Packaging",
+            "comment": "Food Packaging",
+            "info": {"gases": ["CO2", "CH4", "N2O", "KYOTOGHG (AR5GWP100)"]},
         },
         "7": {
             "title": "Pre and post agricultural production",
@@ -2141,9 +2164,12 @@ spec = {
                     "7.G",
                     "7.H",
                     "7.I",
+                    "7.J",
                     "7.K",
                     "7.L",
                     "7.M",
+                    "7.N",
+                    "7.O",
                 ]
             ],
         },
