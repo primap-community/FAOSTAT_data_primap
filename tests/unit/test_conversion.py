@@ -73,12 +73,12 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
 
 def test_read(tmp_path):
     domains_and_releases_to_read = [
-        # ("farm_gate_agriculture_energy", "2024-11-14"),
-        # ("farm_gate_emissions_crops", "2024-11-14"),
-        # ("farm_gate_livestock", "2024-11-14"),
-        # ("land_use_drained_organic_soils", "2024-11-14"),
-        # ("land_use_fires", "2024-11-14"),
-        # ("land_use_forests", "2024-11-14"),
+        ("farm_gate_agriculture_energy", "2024-11-14"),
+        ("farm_gate_emissions_crops", "2024-11-14"),
+        ("farm_gate_livestock", "2024-11-14"),
+        ("land_use_drained_organic_soils", "2024-11-14"),
+        ("land_use_fires", "2024-11-14"),
+        ("land_use_forests", "2024-11-14"),
         ("pre_post_agricultural_production", "2024-11-14"),
     ]
 
@@ -103,7 +103,7 @@ def test_python_to_yaml():
 
 def test_make_dict_comprehension_for_faster_typing():  # noqa: PLR0912 PLR0915
     spec = {
-        "name": "FAO",
+        "name": "FAOSTAT",
         "title": (
             "Food and Agriculture Organization of the United Nations (FAO) "
             "FAOSTAT data set categorisation"
@@ -365,7 +365,7 @@ def test_make_dict_comprehension_for_faster_typing():  # noqa: PLR0912 PLR0915
 
     for animal, code in zip(animals, codes_animals):
         if animal in enteric_fermentation:
-            gases = ["CH4", "N2O"]
+            gases = ["CH4"]
             animal_children = [f"{code}.{i}" for i in "1234"]
             categories[f"{code}.4"] = {
                 "title": f"{animal} enteric fermentation",

@@ -1,4 +1,4 @@
-name: FAO
+name: FAOSTAT
 title: Food and Agriculture Organization of the United Nations (FAO) FAOSTAT data
   set categorisation
 comment: Needed to add FAOSTAT data to PRIMAP-hist
@@ -556,7 +556,6 @@ categories:
     info:
       gases: &id001
       - CH4
-      - N2O
   3.A:
     title: Asses
     comment: Asses
@@ -659,7 +658,6 @@ categories:
     info:
       gases: &id002
       - CH4
-      - N2O
   3.B:
     title: Camels
     comment: Camels
@@ -762,7 +760,6 @@ categories:
     info:
       gases: &id003
       - CH4
-      - N2O
   3.C:
     title: Cattle, dairy
     comment: Cattle, dairy
@@ -865,7 +862,6 @@ categories:
     info:
       gases: &id004
       - CH4
-      - N2O
   3.D:
     title: Cattle, non-dairy
     comment: Cattle, non-dairy
@@ -1170,7 +1166,6 @@ categories:
     info:
       gases: &id007
       - CH4
-      - N2O
   3.G:
     title: Goats
     comment: Goats
@@ -1273,7 +1268,6 @@ categories:
     info:
       gases: &id008
       - CH4
-      - N2O
   3.H:
     title: Horses
     comment: Horses
@@ -1376,7 +1370,6 @@ categories:
     info:
       gases: &id009
       - CH4
-      - N2O
   3.I:
     title: Mules and hinnies
     comment: Mules and hinnies
@@ -1483,7 +1476,6 @@ categories:
     info:
       gases: &id010
       - CH4
-      - N2O
   3.J:
     title: Sheep
     comment: Sheep
@@ -1586,7 +1578,6 @@ categories:
     info:
       gases: &id011
       - CH4
-      - N2O
   3.K:
     title: Llamas
     comment: Llamas
@@ -1881,7 +1872,6 @@ categories:
     info:
       gases: &id014
       - CH4
-      - N2O
   3.N:
     title: Buffalo
     comment: Buffalo
@@ -2080,7 +2070,6 @@ categories:
     info:
       gases: &id016
       - CH4
-      - N2O
   3.P:
     title: Swine, breeding
     comment: Swine, breeding
@@ -2185,7 +2174,6 @@ categories:
     info:
       gases: &id017
       - CH4
-      - N2O
   3.Q:
     title: Swine, market
     comment: Swine, market

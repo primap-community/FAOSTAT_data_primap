@@ -199,10 +199,12 @@ def read_data(  # noqa: PLR0915 PLR0912
     df_all = pd.concat(df_list, axis=0, join="outer", ignore_index=True)
 
     # some domains don't have Source column or values are empty
+    # we assume these values come from FAO
+    # TODO Better not to hard-code this in case the label changes
     if "Source" not in df_all.columns:
-        df_all["Source"] = "unknown"
+        df_all["Source"] = "FAO TIER 1"
     else:
-        df_all["Source"] = df_all["Source"].fillna("unknown")
+        df_all["Source"] = df_all["Source"].fillna("FAO TIER 1")
 
     # Remove the "Y" prefix for the years columns
     df_all = df_all.rename(columns=lambda x: x.lstrip("Y") if x.startswith("Y") else x)
