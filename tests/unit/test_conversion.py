@@ -20,6 +20,7 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
     cats = {
         "FAOSTAT": categorisation_a,
         "IPCC2006_PRIMAP": categorisation_b,
+        "gas": cc.cats["gas"],
     }
 
     # make conversion from csv
@@ -41,9 +42,12 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
         da_dict[var] = ds[var].pr.convert(
             dim="category (FAOSTAT)",
             conversion=conv,
-            # auxiliary_dimensions={"gas" : "entity"},
+            auxiliary_dimensions={"gas": "entity"},
         )
     result = xr.Dataset(da_dict)
+
+    # ds = ds.set_coords(("lat", "lon"))
+
     result_if = result.pr.to_interchange_format()
 
     df_all = pd.concat([ds_if, result_if], axis=0, join="outer", ignore_index=True)
