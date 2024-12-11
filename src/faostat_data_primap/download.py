@@ -149,7 +149,6 @@ def download_methodology(url_download: str, save_path: pathlib.Path) -> None:
     # Save downloaded file to current release
     # with open(download_path, "wb") as f:
     #     f.write(response.content)
-
     # else:
     #     print(f"No previous release found. Downloading file '{filename}'.")
     response = requests.get(url_download, stream=True, timeout=30)
