@@ -3,3 +3,4 @@
 * annex.largefiles=((mimeencoding=binary)and(largerthan=0))
 *.csv annex.largefiles=anything
 *.zip annex.largefiles=anything
+*.pdf annex.largefiles=anything
