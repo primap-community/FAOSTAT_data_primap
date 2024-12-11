@@ -1,8 +1,56 @@
 import climate_categories as cc
+import pandas as pd
 import primap2 as pm2
+import xarray as xr
 
-from src.faostat_data_primap.helper.paths import downloaded_data_path
+from src.faostat_data_primap.helper.paths import (
+    downloaded_data_path,
+    extracted_data_path,
+)
 from src.faostat_data_primap.read import read_data
+
+
+def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
+    # make categorisation A from yaml
+    categorisation_a = cc.from_python("FAO.py")
+    # make categorisation B from yaml
+    categorisation_b = cc.IPCC2006_PRIMAP
+
+    # category a not part of climate categories, so we need to add them manually
+    cats = {
+        "FAOSTAT": categorisation_a,
+        "IPCC2006_PRIMAP": categorisation_b,
+    }
+
+    # make conversion from csv
+    conv = cc.Conversion.from_csv("conversion_FAO_IPPCC2006_PRIMAP.csv", cats=cats)
+
+    ds_fao = (
+        extracted_data_path
+        / "v2024-11-14/FAOSTAT_Agrifood_system_emissions_v2024-11-14.nc"
+    )
+    ds = pm2.open_dataset(ds_fao)
+
+    ds_if = ds.pr.to_interchange_format()
+
+    da_dict = {}
+    for var in ds.data_vars:
+        da_dict[var] = ds[var].pr.convert(
+            dim="category (FAOSTAT)",
+            conversion=conv,
+            # auxiliary_dimensions={"gas" : "source (gas)"},
+        )
+    result = xr.Dataset(da_dict)
+    result_if = result.pr.to_interchange_format()
+
+    df_all = pd.concat([ds_if, result_if], axis=0, join="outer", ignore_index=True)
+
+    compare = df_all.loc[
+        (df_all["category (IPCC2006_PRIMAP)"] == "3.A")
+        | (df_all["category (FAOSTAT)"] == "3")
+    ]
+
+    assert compare
 
 
 def test_read(tmp_path):
@@ -572,7 +620,7 @@ def test_make_dict_comprehension_for_faster_typing():  # noqa: PLR0912 PLR0915
         ["KYOTOGHG (AR5GWP100)", "CH4"],
         ["KYOTOGHG (AR5GWP100)", "CH4", "N2O"],
         ["KYOTOGHG (AR5GWP100)", "CH4", "N2O"],
-        ["CO2", "KYOTOGHG (AR5GWP100)"],  #  incineration
+        ["CO2", "KYOTOGHG (AR5GWP100)"],  # incineration
         ["CO2", "CH4", "N2O", "KYOTOGHG (AR5GWP100)", "FGASES (AR5GWP100)"],
         ["CO2", "CH4", "N2O", "KYOTOGHG (AR5GWP100)"],
         ["CO2", "CH4", "N2O", "KYOTOGHG (AR5GWP100)"],
@@ -612,32 +660,3 @@ def test_make_dict_comprehension_for_faster_typing():  # noqa: PLR0912 PLR0915
     fao_cats.to_python("FAO.py")
     fao_cats.to_yaml("FAO.yaml")
     pass
-
-
-# @pytest.mark.xfail
-def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
-    # make categorisation A from yaml
-    categorisation_a = cc.from_python("FAO.py")
-    # make categorisation B from yaml
-    categorisation_b = cc.IPCC2006_PRIMAP
-
-    # category a not part of climate categories, so we need to add them manually
-    cats = {
-        "A": categorisation_a,
-        "B": categorisation_b,
-    }
-
-    # make conversion from csv
-    conv = cc.Conversion.from_csv("conversion.FAO.IPPCC2006_PRIMAP.csv", cats=cats)
-
-    ds = pm2.open_dataset(
-        "extracted_data/v2024-11-14/FAOSTAT_Agrifood_system_emissions_v2024-11-14.nc"
-    )
-
-    result = ds.pr.convert(
-        dim="category",
-        conversion=conv,
-        auxiliary_dimensions={"gas": "source (gas)"},
-    )
-
-    assert result
