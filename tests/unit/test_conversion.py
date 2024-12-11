@@ -31,6 +31,9 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
     )
     ds = pm2.open_dataset(ds_fao)
 
+    # drop UNFCCC data
+    ds = ds.drop_sel(source="UNFCCC")
+
     ds_if = ds.pr.to_interchange_format()
 
     da_dict = {}
@@ -38,7 +41,7 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
         da_dict[var] = ds[var].pr.convert(
             dim="category (FAOSTAT)",
             conversion=conv,
-            # auxiliary_dimensions={"gas" : "source (gas)"},
+            # auxiliary_dimensions={"gas" : "entity"},
         )
     result = xr.Dataset(da_dict)
     result_if = result.pr.to_interchange_format()
@@ -48,9 +51,24 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
     compare = df_all.loc[
         (df_all["category (IPCC2006_PRIMAP)"] == "3.A")
         | (df_all["category (FAOSTAT)"] == "3")
+    ].sort_values(by="area (ISO3)")
+
+    compare_short = compare[
+        [
+            "source",
+            "scenario (FAO)",
+            "area (ISO3)",
+            "entity",
+            "unit",
+            "category (FAOSTAT)",
+            "2021",
+            "2022",
+            "2023",
+            "category (IPCC2006_PRIMAP)",
+        ]
     ]
 
-    assert compare
+    assert compare_short
 
 
 def test_read(tmp_path):
