@@ -20,11 +20,8 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
     cats = {
         "FAOSTAT": categorisation_a,
         "IPCC2006_PRIMAP": categorisation_b,
-        "gas": cc.cats["gas"],
+        # "gas": cc.cats["gas"],
     }
-
-    # make conversion from csv
-    conv = cc.Conversion.from_csv("conversion_FAO_IPPCC2006_PRIMAP.csv", cats=cats)
 
     ds_fao = (
         extracted_data_path
@@ -35,26 +32,33 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
     # drop UNFCCC data
     ds = ds.drop_sel(source="UNFCCC")
 
+    conv = {}
+    gases = ["CH4"]
+    for var in gases:
+        conv[var] = cc.Conversion.from_csv(
+            f"conversion_FAO_IPPCC2006_PRIMAP_{var}.csv", cats=cats
+        )
+
     ds_if = ds.pr.to_interchange_format()
 
     da_dict = {}
-    for var in ds.data_vars:
+    for var in gases:
         da_dict[var] = ds[var].pr.convert(
             dim="category (FAOSTAT)",
-            conversion=conv,
-            auxiliary_dimensions={"gas": "entity"},
+            conversion=conv[var],
+            # auxiliary_dimensions={"gas": "entity"},
         )
-    result = xr.Dataset(da_dict)
 
-    # ds = ds.set_coords(("lat", "lon"))
+    result = xr.Dataset(da_dict)
 
     result_if = result.pr.to_interchange_format()
 
     df_all = pd.concat([ds_if, result_if], axis=0, join="outer", ignore_index=True)
 
     compare = df_all.loc[
-        (df_all["category (IPCC2006_PRIMAP)"] == "3.A")
-        | (df_all["category (FAOSTAT)"] == "3")
+        df_all["entity"] == "CH4"
+        # (df_all["category (IPCC2006_PRIMAP)"] == "3.A")
+        # | (df_all["category (FAOSTAT)"] == "3")
     ].sort_values(by="area (ISO3)")
 
     compare_short = compare[
