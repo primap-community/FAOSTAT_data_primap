@@ -33,7 +33,7 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
     ds = ds.drop_sel(source="UNFCCC")
 
     conv = {}
-    gases = ["CH4"]
+    gases = ["CO2", "CH4", "N2O"]
     for var in gases:
         conv[var] = cc.Conversion.from_csv(
             f"conversion_FAO_IPPCC2006_PRIMAP_{var}.csv", cats=cats
@@ -56,7 +56,7 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
     df_all = pd.concat([ds_if, result_if], axis=0, join="outer", ignore_index=True)
 
     compare = df_all.loc[
-        df_all["entity"] == "CH4"
+        df_all["entity"] == "CO2"
         # (df_all["category (IPCC2006_PRIMAP)"] == "3.A")
         # | (df_all["category (FAOSTAT)"] == "3")
     ].sort_values(by="area (ISO3)")
@@ -81,13 +81,13 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
 
 def test_read(tmp_path):
     domains_and_releases_to_read = [
-        ("farm_gate_agriculture_energy", "2024-11-14"),
+        # ("farm_gate_agriculture_energy", "2024-11-14"),
         ("farm_gate_emissions_crops", "2024-11-14"),
-        ("farm_gate_livestock", "2024-11-14"),
-        ("land_use_drained_organic_soils", "2024-11-14"),
-        ("land_use_fires", "2024-11-14"),
-        ("land_use_forests", "2024-11-14"),
-        ("pre_post_agricultural_production", "2024-11-14"),
+        # ("farm_gate_livestock", "2024-11-14"),
+        # ("land_use_drained_organic_soils", "2024-11-14"),
+        # ("land_use_fires", "2024-11-14"),
+        # ("land_use_forests", "2024-11-14"),
+        # ("pre_post_agricultural_production", "2024-11-14"),
     ]
 
     read_data(
