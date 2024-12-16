@@ -238,7 +238,7 @@ def read_data(  # noqa: PLR0915 PLR0912
     data_if = data_pm2.pr.to_interchange_format()
 
     # save raw data
-    output_filename = f"FAOSTAT_Agrifood_system_emissions_{release_name}"
+    output_filename = f"FAOSTAT_Agrifood_system_emissions_{release_name}_raw"
 
     if not save_path.exists():
         save_path.mkdir()
