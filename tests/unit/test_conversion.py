@@ -15,11 +15,10 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
     # make categorisation B from yaml
     categorisation_b = cc.IPCC2006_PRIMAP
 
-    # category a not part of climate categories, so we need to add them manually
+    # category FAOSTAT not yet part of climate categories, so we need to add it manually
     cats = {
         "FAOSTAT": categorisation_a,
         "IPCC2006_PRIMAP": categorisation_b,
-        # "gas": cc.cats["gas"],
     }
 
     ds_fao = (
@@ -31,6 +30,8 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
     # drop UNFCCC data
     ds = ds.drop_sel(source="UNFCCC")
 
+    # We need a comversion CSV file for each entity
+    # That's a temporary workaround until convert function can filter for data variables (entities)
     conv = {}
     gases = ["CO2", "CH4", "N2O"]
     for var in gases:
@@ -38,22 +39,19 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
             f"../../conversion_FAO_IPPCC2006_PRIMAP_{var}.csv", cats=cats
         )
 
-    # ds_if = ds.pr.to_interchange_format()
-
+    # convert for each entity
     da_dict = {}
-
     for var in gases:
         da_dict[var] = ds[var].pr.convert(
             dim="category (FAOSTAT)",
             conversion=conv[var],
         )
-
     result = xr.Dataset(da_dict)
     result.attrs = ds.attrs
     result.attrs["cat"] = "category (IPCC2006_PRIMAP)"
 
+    # convert to interchange format and back to get rid of empty categories
     result_if = result.pr.to_interchange_format()
-
     result = pm2.pm2io.from_interchange_format(result_if)
 
     agg_info = {
@@ -121,7 +119,7 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
             "3.A": {"sources": ["3.A.1", "3.A.2"]},
             "M.AG": {"sources": ["3.A", "M.AG.ELV"]},
             # "M.3.D.LU": {"sources": ["3.D.1"]},
-            # Forest Land + Cropland + Grassland, all we have
+            # For LULUCF Forest Land, Cropland, Grassland, is all we have
             "M.LULUCF": {"sources": ["3.B.1", "3.B.2", "3.B.3"]},
             "M.AFOLU": {"sources": ["M.AG", "M.LULUCF"]},
         }
@@ -131,7 +129,7 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
 
     result_proc_if = result_proc.pr.to_interchange_format()
 
-    # save raw data
+    # save processed data
     release_name = "v2024-11-14"
     output_filename = f"FAOSTAT_Agrifood_system_emissions_{release_name}"
     output_folder = extracted_data_path / release_name
