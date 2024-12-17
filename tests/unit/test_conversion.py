@@ -1,5 +1,4 @@
 import climate_categories as cc
-import pandas as pd
 import primap2 as pm2
 import xarray as xr
 
@@ -25,7 +24,7 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
 
     ds_fao = (
         extracted_data_path
-        / "v2024-11-14/FAOSTAT_Agrifood_system_emissions_v2024-11-14.nc"
+        / "v2024-11-14/FAOSTAT_Agrifood_system_emissions_v2024-11-14_raw.nc"
     )
     ds = pm2.open_dataset(ds_fao)
 
@@ -39,7 +38,7 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
             f"conversion_FAO_IPPCC2006_PRIMAP_{var}.csv", cats=cats
         )
 
-    ds_if = ds.pr.to_interchange_format()
+    # ds_if = ds.pr.to_interchange_format()
 
     da_dict = {}
 
@@ -52,33 +51,133 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
 
     result = xr.Dataset(da_dict)
     result.attrs = ds.attrs
+    result.attrs["cat"] = "category (IPCC2006_PRIMAP)"
 
     result_if = result.pr.to_interchange_format()
 
-    df_all = pd.concat([ds_if, result_if], axis=0, join="outer", ignore_index=True)
+    result = pm2.pm2io.from_interchange_format(result_if)
 
-    compare = df_all.loc[
-        df_all["entity"] == "CO2"
-        # (df_all["category (IPCC2006_PRIMAP)"] == "3.A")
-        # | (df_all["category (FAOSTAT)"] == "3")
-    ].sort_values(by="area (ISO3)")
+    country_processing_step1 = {
+        "tolerance": 0.01,
+        "aggregate_cats": {
+            # "M.3.D.AG" : {"sources" : ["3.D.2"]}, we don't have 3.D.2
+            "M.3.C.AG": {
+                "sources": ["3.C.1", "3.C.4", "3.C.5"],
+            },
+            "M.AG.ELV": {
+                "sources": ["M.3.C.AG"],  # "M.3.D.AG" is zero
+            },
+            "3.C.1": {"sources": ["3.C.1.a", "3.C.1.b"]},
+            "3.C": {
+                "sources": [
+                    "3.C.1",
+                    "3.C.2",
+                    "3.C.3",
+                    "3.C.4",
+                    "3.C.5",
+                    "3.C.6",
+                    "3.C.7",
+                ]
+            },
+            # "3.D" : {"sources" : ["3.D.1", "3.D.2"]}, # we don't have it
+            "3.A.1.a": {
+                "sources": [
+                    "3.A.1.a.i",
+                    "3.A.1.a.ii",
+                ]
+            },  # cattle (dairy) + cattle (non-dairy)
+            "3.A.1": {
+                "sources": [
+                    "3.A.1.a",
+                    "3.A.1.b",
+                    "3.A.1.c",
+                    "3.A.1.d",
+                    "3.A.1.e",
+                    "3.A.1.f",
+                    "3.A.1.g",
+                    "3.A.1.h",  # what happened to 3.A.1.i
+                    "3.A.1.j",
+                ]
+            },
+            "3.A.2.a": {
+                "sources": [
+                    "3.A.2.a.i",
+                    "3.A.2.a.ii",
+                ]
+            },  # cattle (dairy) + cattle (non-dairy)
+            "3.A.2": {
+                "sources": [
+                    "3.A.2.a",
+                    "3.A.2.b",
+                    "3.A.2.c",
+                    "3.A.2.d",
+                    "3.A.2.e",
+                    "3.A.2.f",
+                    "3.A.2.g",
+                    "3.A.2.h",
+                    "3.A.2.i",
+                    "3.A.2.j",
+                ]
+            },
+            "3.A": {"sources": ["3.A.1", "3.A.2"]},
+            "M.AG": {"sources": ["3.A", "M.AG.ELV"]},
+            # M.AG.ELV
+            # AFOLU
+            # "M.3.D.LU": {"sources": ["3.D.1"]},
+            "M.LULUCF": {"sources": ["3.B"]},  # , "M.3.D.LU"]},
+        },
+    }
 
-    compare_short = compare[
-        [
-            "source",
-            "scenario (FAO)",
-            "area (ISO3)",
-            "entity",
-            "unit",
-            "category (FAOSTAT)",
-            "2021",
-            "2022",
-            "2023",
-            "category (IPCC2006_PRIMAP)",
+    # prep input to add_aggregates_coordinates
+    agg_info = {"category": country_processing_step1["aggregate_cats"]}
+
+    agg_tolerance = country_processing_step1["tolerance"]
+
+    df_list = []
+    for iso3_code in result.coords["area (ISO3)"].to_numpy():
+        result_per_country = result.pr.loc[
+            {
+                "area (ISO3)": iso3_code,
+            }
         ]
-    ]
 
-    assert compare_short
+        result_per_country = result_per_country.pr.add_aggregates_coordinates(
+            agg_info=agg_info,
+            tolerance=agg_tolerance,
+            skipna=True,
+            min_count=1,
+        )
+
+        result_per_country_if = result_per_country.pr.to_interchange_format()
+
+        df_list.append(result_per_country_if)
+
+    # df_all = pd.concat(df_list, axis=0, join="outer", ignore_index=True)
+
+    # df_all = pd.concat([ds_if, result_if], axis=0, join="outer", ignore_index=True)
+    #
+    # compare = df_all.loc[
+    #     df_all["entity"] == "CO2"
+    #     # (df_all["category (IPCC2006_PRIMAP)"] == "3.A")
+    #     # | (df_all["category (FAOSTAT)"] == "3")
+    #     ].sort_values(by="area (ISO3)")
+    #
+    # compare_short = compare[
+    #     [
+    #         "source",
+    #         "scenario (FAO)",
+    #         "area (ISO3)",
+    #         "entity",
+    #         "unit",
+    #         "category (FAOSTAT)",
+    #         "2021",
+    #         "2022",
+    #         "2023",
+    #         "category (IPCC2006_PRIMAP)",
+    #     ]
+    # ]
+    #
+    # assert compare_short
 
 
 def test_read(tmp_path):
