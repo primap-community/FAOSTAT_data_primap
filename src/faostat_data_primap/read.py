@@ -11,6 +11,9 @@ from faostat_data_primap.helper.definitions import (
     config_to_if,
     read_config_all,
 )
+
+# todo replace with FAO climate categories once it's done
+from faostat_data_primap.helper.FAO_categorisation_temp import spec
 from faostat_data_primap.helper.paths import (
     downloaded_data_path,
     extracted_data_path,
@@ -60,33 +63,39 @@ def get_latest_release(domain_path: pathlib.Path) -> str:
     return sorted(all_releases, reverse=True)[0]
 
 
-def read_latest_data(
-    downloaded_data_path: pathlib.Path = downloaded_data_path,
-    save_path: pathlib.Path = extracted_data_path,
+# TODO split out functions to avoid PLR0915
+def read_data(  # noqa: PLR0915 PLR0912
+    read_path: pathlib.Path,
+    domains_and_releases_to_read: list[tuple[str, str]],
+    save_path: pathlib.Path,
 ) -> None:
     """
-    Read and save the latest data
+    Read specified domains and releases and save output files.
 
-    Converts downloaded data into interchange format and primap2 native format
-    and saves the files in the extracted_data directory.
+    Parameters
+    ----------
+    read_path
+        Where to look for the downloaded data
+    domains_and_releases_to_read
+        The domains and releases to use
+    save_path
+        The path to save the data to
 
     """
-    domains = get_all_domains(downloaded_data_path)
-
-    files_to_read = []
-    for domain in domains:
-        domain_path = downloaded_data_path / domain
-        files_to_read.append((domain, get_latest_release(domain_path)))
-
     df_list = []
-    for domain, release in files_to_read:
+    for domain, release in domains_and_releases_to_read:
         read_config = read_config_all[domain][release]
 
         print(f"Read {read_config['filename']}")
-        dataset_path = downloaded_data_path / domain / release / read_config["filename"]
+        dataset_path = read_path / domain / release / read_config["filename"]
 
         # There are some non-utf8 characters
         df_domain = pd.read_csv(dataset_path, encoding="ISO-8859-1")
+
+        if "items_to_remove" in read_config.keys():
+            df_domain = df_domain[
+                ~df_domain["Item"].isin(read_config["items_to_remove"])
+            ]
 
         # remove rows by element
         if "elements_to_remove" in read_config.keys():
@@ -117,7 +126,67 @@ def read_latest_data(
             raise ValueError(msg)
 
         # create category column (combination of Item and Element works best)
-        df_domain["category"] = df_domain["Item"] + "-" + df_domain["Element"]
+        df_domain["Item - Element"] = df_domain["Item"] + " - " + df_domain["Element"]
+
+        if "category_mapping_item_element" in read_config.keys():
+            df_domain["category"] = df_domain["Item - Element"].map(
+                read_config["category_mapping_item_element"]
+            )
+
+        # sometimes there are too many categories per domain to write
+        # everything in the config file
+        # TODO we could do this for crops as well, but it's not necessary
+        elif ("category_mapping_element" in read_config.keys()) and (
+            "category_mapping_item" in read_config.keys()
+        ):
+            # split steps for easier debugging
+            df_domain["mapped_item"] = df_domain["Item"].map(
+                read_config["category_mapping_item"]
+            )
+            df_domain["mapped_element"] = df_domain["Element"].map(
+                read_config["category_mapping_element"]
+            )
+            df_domain["category"] = (
+                df_domain["mapped_item"] + df_domain["mapped_element"]
+            )
+            df_domain = df_domain.drop(
+                labels=[
+                    "mapped_item",
+                    "mapped_element",
+                ],
+                axis=1,
+            )
+        else:
+            msg = f"Could not find mapping for {domain=}."
+            raise ValueError(msg)
+
+        # some rows can only be removed by Item - Element column
+        if "items-elements_to_remove" in read_config.keys():
+            df_domain = df_domain[
+                ~df_domain["Item - Element"].isin(
+                    read_config["items-elements_to_remove"]
+                )
+            ]
+
+        # drop combined item - element columns
+        df_domain = df_domain.drop(
+            labels=[
+                "Item - Element",
+            ],
+            axis=1,
+        )
+
+        # check if all Item-Element combinations are now converted to category codes
+        fao_categories = list(spec["categories"].keys())
+        unknown_categories = [
+            i for i in df_domain.category.unique() if i not in fao_categories
+        ]
+        if unknown_categories:
+            msg = (
+                f"Not all categories are part of FAO categorisation. "
+                f"Check mapping for {unknown_categories}"
+            )
+            raise ValueError(msg)
 
         # drop columns we don't need
         df_domain = df_domain.drop(
@@ -129,8 +198,13 @@ def read_latest_data(
 
     df_all = pd.concat(df_list, axis=0, join="outer", ignore_index=True)
 
-    # sometimes Source is empty
-    df_all["Source"] = df_all["Source"].fillna("unknown")
+    # some domains don't have Source column or values are empty
+    # we assume these values come from FAO
+    # TODO Better not to hard-code this in case the label changes
+    if "Source" not in df_all.columns:
+        df_all["Source"] = "FAO TIER 1"
+    else:
+        df_all["Source"] = df_all["Source"].fillna("FAO TIER 1")
 
     # Remove the "Y" prefix for the years columns
     df_all = df_all.rename(columns=lambda x: x.lstrip("Y") if x.startswith("Y") else x)
@@ -139,7 +213,9 @@ def read_latest_data(
     df_all["Unit"] = df_all["entity"] + " * " + df_all["Unit"] + "/ year"
     df_all["Unit"] = df_all["Unit"].replace(read_config_all["replace_units"])
 
-    date_last_updated = sorted([i[1] for i in files_to_read], reverse=True)[0]
+    date_last_updated = sorted(
+        [i[1] for i in domains_and_releases_to_read], reverse=True
+    )[0]
     release_name = f"v{date_last_updated}"
 
     data_if = pm2.pm2io.convert_wide_dataframe_if(
@@ -162,7 +238,7 @@ def read_latest_data(
     data_if = data_pm2.pr.to_interchange_format()
 
     # save raw data
-    output_filename = f"FAOSTAT_Agrifood_system_emissions_{release_name}"
+    output_filename = f"FAOSTAT_Agrifood_system_emissions_{release_name}_raw"
 
     if not save_path.exists():
         save_path.mkdir()
@@ -171,15 +247,44 @@ def read_latest_data(
     if not output_folder.exists():
         output_folder.mkdir()
 
+    filepath = output_folder / (output_filename + ".csv")
+    print(f"Writing raw primap2 file to {filepath}")
     pm2.pm2io.write_interchange_format(
-        output_folder / (output_filename + ".csv"),
+        filepath,
         data_if,
     )
 
     compression = dict(zlib=True, complevel=9)
     encoding = {var: compression for var in data_pm2.data_vars}
-    data_pm2.pr.to_netcdf(output_folder / (output_filename + ".nc"), encoding=encoding)
+    filepath = output_folder / (output_filename + ".nc")
+    print(f"Writing netcdf file to {filepath}")
+    data_pm2.pr.to_netcdf(filepath, encoding=encoding)
 
     # next steps
     # convert to IPCC2006_PRIMAP categories
     # save final version
+
+
+def read_latest_data(
+    downloaded_data_path_custom: pathlib.Path = downloaded_data_path,
+    save_path: pathlib.Path = extracted_data_path,
+) -> None:
+    """
+    Read and save the latest data
+
+    Converts downloaded data into interchange format and primap2 native format
+    and saves the files in the extracted_data directory.
+
+    """
+    domains = get_all_domains(downloaded_data_path_custom)
+
+    domains_and_releases_to_read = []
+    for domain in domains:
+        domain_path = downloaded_data_path_custom / domain
+        domains_and_releases_to_read.append((domain, get_latest_release(domain_path)))
+
+    read_data(
+        read_path=downloaded_data_path_custom,
+        domains_and_releases_to_read=domains_and_releases_to_read,
+        save_path=save_path,
+    )
