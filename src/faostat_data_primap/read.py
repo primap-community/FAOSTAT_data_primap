@@ -248,7 +248,7 @@ def read_data(  # noqa: PLR0915 PLR0912
         output_folder.mkdir()
 
     filepath = output_folder / (output_filename + ".csv")
-    print(f"Writing primap2 file to {filepath}")
+    print(f"Writing raw primap2 file to {filepath}")
     pm2.pm2io.write_interchange_format(
         filepath,
         data_if,

@@ -35,7 +35,7 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
     gases = ["CO2", "CH4", "N2O"]
     for var in gases:
         conv[var] = cc.Conversion.from_csv(
-            f"conversion_FAO_IPPCC2006_PRIMAP_{var}.csv", cats=cats
+            f"../../conversion_FAO_IPPCC2006_PRIMAP_{var}.csv", cats=cats
         )
 
     # ds_if = ds.pr.to_interchange_format()
@@ -130,32 +130,27 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
     result_proc = result.pr.add_aggregates_coordinates(agg_info=agg_info)
 
     result_proc_if = result_proc.pr.to_interchange_format()
-    assert result_proc_if
 
-    # df_all = pd.concat([ds_if, result_if], axis=0, join="outer", ignore_index=True)
-    #
-    # compare = df_all.loc[
-    #     df_all["entity"] == "CO2"
-    #     # (df_all["category (IPCC2006_PRIMAP)"] == "3.A")
-    #     # | (df_all["category (FAOSTAT)"] == "3")
-    #     ].sort_values(by="area (ISO3)")
-    #
-    # compare_short = compare[
-    #     [
-    #         "source",
-    #         "scenario (FAO)",
-    #         "area (ISO3)",
-    #         "entity",
-    #         "unit",
-    #         "category (FAOSTAT)",
-    #         "2021",
-    #         "2022",
-    #         "2023",
-    #         "category (IPCC2006_PRIMAP)",
-    #     ]
-    # ]
-    #
-    # assert compare_short
+    # save raw data
+    release_name = "v2024-11-14"
+    output_filename = f"FAOSTAT_Agrifood_system_emissions_{release_name}"
+    output_folder = extracted_data_path / release_name
+
+    if not output_folder.exists():
+        output_folder.mkdir()
+
+    filepath = output_folder / (output_filename + ".csv")
+    print(f"Writing processed primap2 file to {filepath}")
+    pm2.pm2io.write_interchange_format(
+        filepath,
+        result_proc_if,
+    )
+
+    compression = dict(zlib=True, complevel=9)
+    encoding = {var: compression for var in result_proc.data_vars}
+    filepath = output_folder / (output_filename + ".nc")
+    print(f"Writing netcdf file to {filepath}")
+    result_proc.pr.to_netcdf(filepath, encoding=encoding)
 
 
 def test_read(tmp_path):
