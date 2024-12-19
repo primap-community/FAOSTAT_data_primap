@@ -60,7 +60,12 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
                 "sources": ["3.C.1.a", "3.C.1.b", "3.C.1.c"],
             },
             "M.3.C.AG": {
-                "sources": ["3.C.1", "3.C.4", "3.C.5"],
+                "sources": [
+                    "3.C.1.b",
+                    "3.C.1.c",
+                    "3.C.4",
+                    "3.C.5",
+                ],  # savanna, cropland fires
             },
             "M.AG.ELV": {
                 "sources": ["M.3.C.AG"],  # "M.3.D.AG" is zero
@@ -120,8 +125,10 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
             "M.AG": {"sources": ["3.A", "M.AG.ELV"]},
             # "M.3.D.LU": {"sources": ["3.D.1"]},
             # For LULUCF Forest Land, Cropland, Grassland, is all we have
-            "M.LULUCF": {"sources": ["3.B.1", "3.B.2", "3.B.3"]},
-            "M.AFOLU": {"sources": ["M.AG", "M.LULUCF"]},
+            "M.LULUCF": {
+                "sources": ["3.B.1", "3.B.2", "3.B.3", "3.C.1.a"]
+            },  # forest fires
+            "3": {"sources": ["M.AG", "M.LULUCF"]},
         }
     }
 
