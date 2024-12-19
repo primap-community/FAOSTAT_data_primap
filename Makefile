@@ -77,13 +77,3 @@ virtual-environment:  ## update virtual environment, create a new one if it does
 	poetry config virtualenvs.in-project true
 	poetry install --all-extras
 	poetry run pre-commit install
-
-.PHONY: download_all_domains-environment
-download_all_domains:
-	# downloads and stages (datalad save) all available data
-	datalad run poetry run python3 scripts/download_all_domains.py
-
-.PHONY: read_latest_data
-download_all_domains:
-	# reads and stages (datalad save) the latest data for each domain
-	datalad run poetry run python3 scripts/read_all_domains.py
