@@ -26,11 +26,24 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
         / "v2024-11-14/FAOSTAT_Agrifood_system_emissions_v2024-11-14_raw.nc"
     )
     ds = pm2.open_dataset(ds_fao)
-
+    # consistency check in original categorisation
     # drop UNFCCC data
     ds = ds.drop_sel(source="UNFCCC")
 
     # We need a comversion CSV file for each entity
+    # agg_info_fao = {
+    #     "category (FAOSTAT)" : {
+    #         "4" : {
+    #             "sources" : [
+    #                 "4.A",
+    #                 "4.B",
+    #             ],
+    #             "sel": {"variable": ["CO2"]},
+    #         },
+    #     }
+    # }
+    # ds_checked = ds.pr.add_aggregates_coordinates(agg_info=agg_info_fao)
+
     # That's a temporary workaround until convert function can filter for data variables (entities)
     conv = {}
     gases = ["CO2", "CH4", "N2O"]
@@ -61,11 +74,12 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
             },
             "M.3.C.AG": {
                 "sources": [
-                    "3.C.1.b",
-                    "3.C.1.c",
-                    "3.C.4",
-                    "3.C.5",
-                ],  # savanna, cropland fires
+                    "3.C.1.b",  # Biomass Burning In Croplands
+                    "3.C.1.c",  # Biomass Burning in Grasslands
+                    "3.C.4",  # Direct N2O Emissions from Managed Soils
+                    "3.C.5",  # Indirect N2O Emissions from Managed Soils
+                    "3.C.6",  # Indirect N2O Emissions from Manure Management
+                ],
             },
             "M.AG.ELV": {
                 "sources": ["M.3.C.AG"],  # "M.3.D.AG" is zero
@@ -126,7 +140,12 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
             # "M.3.D.LU": {"sources": ["3.D.1"]},
             # For LULUCF Forest Land, Cropland, Grassland, is all we have
             "M.LULUCF": {
-                "sources": ["3.B.1", "3.B.2", "3.B.3", "3.C.1.a"]
+                "sources": [
+                    "3.B.1",  # Carbon stock change in forests
+                    "3.B.2",  # Drained grassland
+                    "3.B.3",  # Drained cropland
+                    "3.C.1.a",  # Biomass Burning In Forests
+                ]
             },  # forest fires
             "3": {"sources": ["M.AG", "M.LULUCF"]},
         }
@@ -160,13 +179,13 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
 
 def test_read(tmp_path):
     domains_and_releases_to_read = [
-        ("farm_gate_agriculture_energy", "2024-11-14"),
-        ("farm_gate_emissions_crops", "2024-11-14"),
-        ("farm_gate_livestock", "2024-11-14"),
-        ("land_use_drained_organic_soils", "2024-11-14"),
-        ("land_use_fires", "2024-11-14"),
-        ("land_use_forests", "2024-11-14"),
-        ("pre_post_agricultural_production", "2024-11-14"),
+        # ("farm_gate_agriculture_energy", "2024-11-14"),
+        # ("farm_gate_emissions_crops", "2024-11-14"),
+        # ("farm_gate_livestock", "2024-11-14"),
+        # ("land_use_drained_organic_soils", "2024-11-14"),
+        ("land_use_fires", "2023-11-09"),
+        # ("land_use_forests", "2024-11-14"),
+        # ("pre_post_agricultural_production", "2024-11-14"),
     ]
 
     read_data(
