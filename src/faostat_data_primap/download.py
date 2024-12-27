@@ -120,7 +120,7 @@ def download_methodology(url_download: str, save_path: pathlib.Path) -> None:
         return
     # there is a file with that name and it's not a symlink
     # we need do delete and download again
-    elif download_path.exists() and download_path.is_symlink():
+    elif download_path.is_symlink():
         response = requests.get(url_download, stream=True, timeout=30)
         response.raise_for_status()
         # delete file
