@@ -114,10 +114,25 @@ def download_methodology(url_download: str, save_path: pathlib.Path) -> None:
     filename = url_download.split("/")[-1]
     download_path = save_path / filename
 
-    if download_path.exists():
+    # there is a file with that name and it's not a symlink
+    if download_path.exists() and not download_path.is_symlink():
         print(f"Skipping download of {download_path} because it already exists.")
         return
-
+    # there is a file with that name and it's not a symlink
+    # we need do delete and download again
+    elif download_path.exists() and download_path.is_symlink():
+        response = requests.get(url_download, stream=True, timeout=30)
+        response.raise_for_status()
+        # delete file
+        os.remove(download_path)
+        with open(download_path, "wb") as f:
+            f.write(response.content)
+    # if there is no such file we can just download
+    else:
+        response = requests.get(url_download, stream=True, timeout=30)
+        response.raise_for_status()
+        with open(download_path, "wb") as f:
+            f.write(response.content)
     # previous_release = find_previous_release_path(save_path)
     # # Attempt to find a file to compare in the previous release
     # if previous_release:
@@ -151,10 +166,6 @@ def download_methodology(url_download: str, save_path: pathlib.Path) -> None:
     #     f.write(response.content)
     # else:
     #     print(f"No previous release found. Downloading file '{filename}'.")
-    response = requests.get(url_download, stream=True, timeout=30)
-    response.raise_for_status()
-    with open(download_path, "wb") as f:
-        f.write(response.content)
 
 
 def get_html_content(url: str) -> BeautifulSoup:
