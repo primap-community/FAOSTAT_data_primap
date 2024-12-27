@@ -256,7 +256,6 @@ def unzip_file(local_filename: pathlib.Path) -> list[str]:
                     else:
                         print(f"Extracting '{file_info.filename}'...")
                         file_to_unzip_path = local_filename.parent / file_info.filename
-                        print(file_to_unzip_path)
                         os.remove(file_to_unzip_path)
                         zip_file.extract(file_info, local_filename.parent)
                         unzipped_files.append(local_filename.name)
