@@ -245,20 +245,22 @@ def unzip_file(local_filename: pathlib.Path) -> list[str]:
                 for file_info in zip_file.infolist():
                     extracted_file_path = local_filename.parent / file_info.filename
 
-                    if (
-                        extracted_file_path.exists()
-                        and not extracted_file_path.is_symlink()
-                    ):
-                        print(
-                            f"File '{file_info.filename}' already exists. "
-                            f"Skipping extraction."
-                        )
-                    else:
-                        print(f"Extracting '{file_info.filename}'...")
-                        file_to_unzip_path = local_filename.parent / file_info.filename
-                        os.remove(file_to_unzip_path)
-                        zip_file.extract(file_info, local_filename.parent)
-                        unzipped_files.append(local_filename.name)
+                    if extracted_file_path.exists():
+                        if not extracted_file_path.is_symlink():
+                            print(
+                                f"File '{file_info.filename}' already exists. "
+                                f"Skipping extraction."
+                            )
+                            continue
+                        else:
+                            file_to_unzip_path = (
+                                local_filename.parent / file_info.filename
+                            )
+                            os.remove(file_to_unzip_path)
+
+                    print(f"Extracting '{file_info.filename}'...")
+                    zip_file.extract(file_info, local_filename.parent)
+                    unzipped_files.append(local_filename.name)
 
         # TODO Better error logging/visibilty
         except zipfile.BadZipFile:
