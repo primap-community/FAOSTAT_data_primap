@@ -118,7 +118,7 @@ def download_methodology(url_download: str, save_path: pathlib.Path) -> None:
     if download_path.exists() and not download_path.is_symlink():
         print(f"Skipping download of {download_path} because it already exists.")
         return
-    # there is a file with that name and it's not a symlink
+    # there is a file with that name, but it's a symlink
     # we need do delete and download again
     elif download_path.is_symlink():
         response = requests.get(url_download, stream=True, timeout=30)
@@ -252,17 +252,21 @@ def download_file(url_download: str, save_path: pathlib.Path) -> bool:
     -------
         True if the file was downloaded, False if a cached file was found
     """
-    if not save_path.exists():
+    if save_path.exists() and not save_path.is_symlink():
+        print(f"Skipping download of {save_path}" " because it already exists.")
+        return False
+    elif save_path.is_symlink():
         with requests.get(url_download, stream=True, timeout=30) as response:
             response.raise_for_status()
-
+            os.remove(save_path)
             with open(save_path, mode="wb") as file:
                 file.write(response.content)
-
-        return True
     else:
-        print(f"Skipping download of {save_path}" " because it already exists.")
-    return False
+        with requests.get(url_download, stream=True, timeout=30) as response:
+            response.raise_for_status()
+            with open(save_path, mode="wb") as file:
+                file.write(response.content)
+    return True
 
 
 def unzip_file(local_filename: pathlib.Path) -> list[str]:
