@@ -34,16 +34,10 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
     # There are discrepancies of up to 100% due to rounding errors for small values
     # theoretical example, 0.0001 (rounded from 0.00006) + 0.0004 (rounded from 0.00036)
     # = 0.00042 which is then rounded to 0.0004, while the consistency check expects 0.0005
+    # At the moment, we are only checking categories that will later be used by primap-hist.
+    # If we want to use other categories we should expand this consistency check.
     agg_info_fao = {
         "category (FAOSTAT)": {
-            "1": {
-                "tolerance": 0.01,
-                "sources": [
-                    "1.A",
-                    "1.B",
-                ],
-                "sel": {"variable": ["N2O", "CH4"]},
-            },
             # 1.A.1 wheat
             # rounding errors
             "1.A.1.a": {
@@ -81,22 +75,6 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
                 ],
                 "sel": {"variable": ["N2O", "CH4"]},
             },
-            # "1.A" : {
-            #     "tolerance" : 0.01,
-            #     "sources" : [
-            #         "1.A.1",
-            #         "1.A.2",
-            #         "1.A.3",
-            #         "1.A.4",
-            #         "1.A.5",
-            #         "1.A.6",
-            #         "1.A.7",
-            #         "1.A.8",
-            #         "1.A.9",
-            #         "1.A.10",
-            #         "1.A.10",
-            #     ],
-            # },
             # potatoes
             "1.A.3.a": {
                 "tolerance": 1,
@@ -161,6 +139,171 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
                     "1.A.6.b",
                 ],
                 "sel": {"variable": ["N2O", "CH4"]},
+            },
+            # sugar cane
+            "1.A.7.a": {
+                "tolerance": 1,
+                "sources": [
+                    "1.A.7.a.i",
+                    "1.A.7.a.ii",
+                ],
+                "sel": {"variable": ["N2O"]},
+            },
+            "1.A.7": {
+                "tolerance": 0.01,
+                "sources": [
+                    "1.A.7.a",
+                    "1.A.7.b",
+                ],
+                "sel": {"variable": ["N2O", "CH4"]},
+            },
+            # dry beans
+            "1.A.8.a": {
+                "tolerance": 1,
+                "sources": [
+                    "1.A.8.a.i",
+                    "1.A.8.a.ii",
+                ],
+                "sel": {"variable": ["N2O"]},
+            },
+            "1.A.8": {
+                "tolerance": 0.01,
+                "sources": [
+                    "1.A.8.a",
+                ],
+                "sel": {"variable": ["N2O"]},
+            },
+            # oats
+            "1.A.9.a": {
+                "tolerance": 1,
+                "sources": [
+                    "1.A.9.a.i",
+                    "1.A.9.a.ii",
+                ],
+                "sel": {"variable": ["N2O"]},
+            },
+            "1.A.9": {
+                "tolerance": 0.01,
+                "sources": [
+                    "1.A.9.a",
+                ],
+                "sel": {"variable": ["N2O"]},
+            },
+            # rye
+            "1.A.10.a": {
+                "tolerance": 1,
+                "sources": [
+                    "1.A.10.a.i",
+                    "1.A.10.a.ii",
+                ],
+                "sel": {"variable": ["N2O"]},
+            },
+            "1.A.10": {
+                "tolerance": 0.01,
+                "sources": [
+                    "1.A.10.a",
+                ],
+                "sel": {"variable": ["N2O"]},
+            },
+            # sorghum
+            "1.A.11.a": {
+                "tolerance": 1,
+                "sources": [
+                    "1.A.11.a.i",
+                    "1.A.11.a.ii",
+                ],
+                "sel": {"variable": ["N2O"]},
+            },
+            "1.A.11": {
+                "tolerance": 0.01,
+                "sources": [
+                    "1.A.11.a",
+                ],
+                "sel": {"variable": ["N2O"]},
+            },
+            # soya beans
+            "1.A.12.a": {
+                "tolerance": 1,
+                "sources": [
+                    "1.A.12.a.i",
+                    "1.A.12.a.ii",
+                ],
+                "sel": {"variable": ["N2O"]},
+            },
+            "1.A.12": {
+                "tolerance": 0.01,
+                "sources": [
+                    "1.A.12.a",
+                ],
+                "sel": {"variable": ["N2O"]},
+            },
+            "1.A": {
+                # some rounding errors for CH4
+                "tolerance": 1,
+                "sources": [
+                    "1.A.1",
+                    "1.A.2",
+                    "1.A.3",
+                    "1.A.4",
+                    "1.A.5",
+                    "1.A.6",
+                    "1.A.7",
+                    "1.A.8",
+                    "1.A.9",
+                    "1.A.10",
+                    "1.A.11",
+                    "1.A.12",
+                ],
+            },
+            "1.B.2": {
+                "tolerance": 0.01,
+                "sources": [
+                    "1.B.2.a",
+                    "1.B.2.b",
+                ],
+                "sel": {"variable": ["N2O"]},
+            },
+            "1.B": {
+                "tolerance": 1,
+                "sources": [
+                    "1.B.1",
+                    "1.B.2",
+                ],
+                "sel": {"variable": ["N2O"]},
+            },
+            # Category 1 is not available on FAOSTAT, so that's not a check
+            "1": {
+                "tolerance": 0.01,
+                "sources": [
+                    "1.A",
+                    "1.B",
+                ],
+            },
+            "3": {
+                # mostly rounding errors, Macedonia slightly higher than 100% discrepancy
+                # Saint Pierre and Miquelon, 1992, N20 200% error, considered negligible
+                "tolerance": 2.01,
+                "sources": [
+                    "3.A",
+                    "3.B",
+                    "3.C",
+                    "3.D",
+                    "3.E",
+                    "3.F",
+                    "3.G",
+                    "3.H",
+                    "3.I",
+                    "3.J",
+                    "3.K",
+                    "3.L",
+                    # "3.M", # poultry is an aggregate of other categories I forgot to remove
+                    "3.N",
+                    "3.O",
+                    "3.P",
+                    "3.Q",
+                    "3.R",
+                ],
+                "sel": {"variable": ["CH4", "N2O"]},
             },
             "4": {
                 "tolerance": 0.01,
