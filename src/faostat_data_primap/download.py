@@ -114,58 +114,17 @@ def download_methodology(url_download: str, save_path: pathlib.Path) -> None:
     filename = url_download.split("/")[-1]
     download_path = save_path / filename
 
-    # there is a file with that name and it's not a symlink
-    if download_path.exists() and not download_path.is_symlink():
-        print(f"Skipping download of {download_path} because it already exists.")
-        return
-    # there is a file with that name, but it's a symlink
-    # we need do delete and download again
-    elif download_path.is_symlink():
-        response = requests.get(url_download, stream=True, timeout=30)
-        response.raise_for_status()
-        # delete file
-        os.remove(download_path)
-        with open(download_path, "wb") as f:
-            f.write(response.content)
-    # if there is no such file we can just download
-    else:
-        response = requests.get(url_download, stream=True, timeout=30)
-        response.raise_for_status()
-        with open(download_path, "wb") as f:
-            f.write(response.content)
-    # previous_release = find_previous_release_path(save_path)
-    # # Attempt to find a file to compare in the previous release
-    # if previous_release:
-    #     file_to_compare = previous_release / filename
-    #     if file_to_compare.exists():
-    #         response = requests.get(url_download, stream=True, timeout=30)
-    #         response.raise_for_status()
-    #         file_to_download_checksum = hashlib.sha256(response.content).hexdigest()
-    #         file_to_compare_checksum = calculate_checksum(file_to_compare)
-    #
-    #         if file_to_download_checksum == file_to_compare_checksum:
-    #             print(
-    #                 f"File '{filename}' is identical in the previous release. "
-    #                 f"Creating symlink."
-    #             )
-    #             os.symlink(file_to_compare, download_path)
-    #             return
-    #         else:
-    #             print(
-    #                 f"File '{filename}' differs from previous release. "
-    #                 f"Downloading file."
-    #             )
-    #     else:
-    #         print(f"File '{filename}' not found in
-    #         previous release. Downloading file.")
-    #         response = requests.get(url_download, stream=True, timeout=30)
-    #         response.raise_for_status()
+    if download_path.exists():
+        if download_path.is_symlink():
+            os.remove(download_path)
+        else:
+            print(f"Skipping download of {download_path} because it already exists.")
+            return
 
-    # Save downloaded file to current release
-    # with open(download_path, "wb") as f:
-    #     f.write(response.content)
-    # else:
-    #     print(f"No previous release found. Downloading file '{filename}'.")
+    response = requests.get(url_download, stream=True, timeout=30)
+    response.raise_for_status()
+    with open(download_path, "wb") as f:
+        f.write(response.content)
 
 
 def get_html_content(url: str) -> BeautifulSoup:
@@ -252,20 +211,17 @@ def download_file(url_download: str, save_path: pathlib.Path) -> bool:
     -------
         True if the file was downloaded, False if a cached file was found
     """
-    if save_path.exists() and not save_path.is_symlink():
-        print(f"Skipping download of {save_path}" " because it already exists.")
-        return False
-    elif save_path.is_symlink():
-        with requests.get(url_download, stream=True, timeout=30) as response:
-            response.raise_for_status()
-            os.remove(save_path)
-            with open(save_path, mode="wb") as file:
-                file.write(response.content)
-    else:
-        with requests.get(url_download, stream=True, timeout=30) as response:
-            response.raise_for_status()
-            with open(save_path, mode="wb") as file:
-                file.write(response.content)
+    if save_path.exists():
+        if not save_path.is_symlink():
+            print(f"Skipping download of {save_path} because it already exists.")
+            return False
+        os.remove(save_path)
+
+    with requests.get(url_download, stream=True, timeout=30) as response:
+        response.raise_for_status()
+        with open(save_path, mode="wb") as file:
+            file.write(response.content)
+
     return True
 
 
