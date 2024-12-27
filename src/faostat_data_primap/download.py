@@ -1,6 +1,5 @@
 """Downloads data from FAOSTAT website."""
 
-import hashlib
 import os
 import pathlib
 import time
@@ -16,78 +15,6 @@ from selenium.webdriver.chrome.service import Service
 from faostat_data_primap.exceptions import DateTagNotFoundError
 from faostat_data_primap.helper.definitions import domains
 from faostat_data_primap.helper.paths import downloaded_data_path
-
-
-def find_previous_release_path(
-    current_release_path: pathlib.Path,
-) -> pathlib.Path | None:
-    """
-    Find the most recent previous release directory within same domain
-
-    Release directories are assumed to be subdirectories within the same parent
-    directory as `current_release_path`. The Sorting is done alphabetically,
-    so directory names should follow the naming convention YYYY-MM-DD
-
-    Parameters
-    ----------
-    current_release_path : pathlib.Path
-        The path of the current release directory.
-
-    Returns
-    -------
-    pathlib.Path or None
-        Returns the path of the most recent previous release directory if one exists,
-        otherwise returns None.
-    """
-    domain_path = current_release_path.parent
-    all_releases = [
-        release_name
-        for release_name in os.listdir(current_release_path.parent)
-        if (domain_path / release_name).is_dir()
-    ]
-
-    # make sure all directories follow the naming convention
-    try:
-        all_releases_datetime = [
-            datetime.strptime(release, "%Y-%m-%d") for release in all_releases
-        ]
-    except ValueError as e:
-        msg = (
-            "All release folders must be in YYYY-MM-DD format, "
-            f"got {sorted(all_releases)}"
-        )
-        raise ValueError(msg) from e
-
-    all_releases_datetime = sorted(all_releases_datetime)
-    current_release_datetime = datetime.strptime(current_release_path.name, "%Y-%m-%d")
-    index = all_releases_datetime.index(current_release_datetime)
-
-    # if the current release is the latest or the only one
-    if index == 0:
-        return None
-
-    return domain_path / all_releases_datetime[index - 1].strftime("%Y-%m-%d")
-
-
-def calculate_checksum(file_path: pathlib.Path) -> str:
-    """
-    Calculate the SHA-256 checksum of a file.
-
-    Parameters
-    ----------
-    file_path : pathlib.Path
-        The path to the file for which the checksum is calculated.
-
-    Returns
-    -------
-    str
-        The SHA-256 checksum of the file as a hexadecimal string.
-    """
-    sha256 = hashlib.sha256()
-    with open(file_path, "rb") as f:
-        for chunk in iter(lambda: f.read(4096), b""):
-            sha256.update(chunk)
-    return sha256.hexdigest()
 
 
 def download_methodology(url_download: str, save_path: pathlib.Path) -> None:
