@@ -380,15 +380,21 @@ agg_info_fao = {
 
 agg_info_ipcc2006_primap = {
     "category (IPCC2006_PRIMAP)": {
-        "3.C.1": {
-            "sources": ["3.C.1.a", "3.C.1.b", "3.C.1.c"],
+        "3.C.1": {  # Emissions from Biomass Burning
+            "sources": [
+                "3.C.1.a",  # Biomass Burning In Forest Lands
+                "3.C.1.b",  # Biomass Burning In Croplands
+                "3.C.1.c",  # Biomass Burning in Grasslands
+            ],
         },
         "M.3.C.AG": {
             "sources": [
                 "3.C.1.b",  # Biomass Burning In Croplands
                 "3.C.1.c",  # Biomass Burning in Grasslands
                 "3.C.4",  # Direct N2O Emissions from Managed Soils
+                "M.3.C.4.SF",  # synthetic fertilisers
                 "3.C.5",  # Indirect N2O Emissions from Managed Soils
+                "M.3.C.5.SF",  # synthetic fertilisers
                 "3.C.6",  # Indirect N2O Emissions from Manure Management
             ],
         },
@@ -401,19 +407,20 @@ agg_info_ipcc2006_primap = {
                 "3.C.2",
                 "3.C.3",
                 "3.C.4",
+                "M.3.C.4.SF",  # synthetic fertilisers
                 "3.C.5",
+                "M.3.C.5.SF",  # synthetic fertilisers
                 "3.C.6",
                 "3.C.7",
             ]
         },
-        # "3.D" : {"sources" : ["3.D.1", "3.D.2"]}, # we don't have it
-        "3.A.1.a": {  # cattle (dairy) + cattle (non-dairy)
+        "3.A.1.a": {  # enteric fermentation
             "sources": [
-                "3.A.1.a.i",
-                "3.A.1.a.ii",
+                "3.A.1.a.i",  # cattle (dairy)
+                "3.A.1.a.ii",  # cattle (non-dairy)
             ]
         },
-        "3.A.1": {
+        "3.A.1": {  # enteric fermentation
             "sources": [
                 "3.A.1.a",
                 "3.A.1.b",
@@ -422,17 +429,17 @@ agg_info_ipcc2006_primap = {
                 "3.A.1.e",
                 "3.A.1.f",
                 "3.A.1.g",
-                "3.A.1.h",  # 3.A.1.i poultry left out because it is a group of categories
+                "3.A.1.h",
                 "3.A.1.j",
             ]
         },
-        "3.A.2.a": {  # decomposition of manure cattle (dairy) + cattle (non-dairy)
+        "3.A.2.a": {  # decomposition of manure - CH4, N2O
             "sources": [
-                "3.A.2.a.i",
-                "3.A.2.a.ii",
+                "3.A.2.a.i",  # cattle (dairy)
+                "3.A.2.a.ii",  # cattle (non-dairy)
             ]
         },
-        "3.A.2": {
+        "3.A.2": {  # decomposition of manure - CH4, N2O
             "sources": [
                 "3.A.2.a",
                 "3.A.2.b",
@@ -448,8 +455,6 @@ agg_info_ipcc2006_primap = {
         },
         "3.A": {"sources": ["3.A.1", "3.A.2"]},
         "M.AG": {"sources": ["3.A", "M.AG.ELV"]},
-        # "M.3.D.LU": {"sources": ["3.D.1"]},
-        # For LULUCF Forest Land, Cropland, Grassland, is all we have
         "M.LULUCF": {
             "sources": [
                 "3.B.1",  # Carbon stock change in forests
@@ -457,7 +462,7 @@ agg_info_ipcc2006_primap = {
                 "3.B.3",  # Drained cropland
                 "3.C.1.a",  # Biomass Burning In Forests
             ]
-        },  # forest fires
+        },
         "3": {"sources": ["M.AG", "M.LULUCF"]},
     }
 }
