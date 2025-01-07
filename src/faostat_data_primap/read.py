@@ -3,6 +3,7 @@
 import os
 import pathlib
 
+import climate_categories as cc
 import pandas as pd
 import primap2 as pm2  # type: ignore
 
@@ -13,7 +14,6 @@ from faostat_data_primap.helper.definitions import (
 )
 
 # todo replace with FAO climate categories once it's done
-from faostat_data_primap.helper.FAO_categorisation_temp import spec
 from faostat_data_primap.helper.paths import (
     downloaded_data_path,
     extracted_data_path,
@@ -177,14 +177,14 @@ def read_data(  # noqa: PLR0915 PLR0912
         )
 
         # check if all Item-Element combinations are now converted to category codes
-        fao_categories = list(spec["categories"].keys())
+        fao_categories = list(cc.FAO.df.index)
         unknown_categories = [
             i for i in df_domain.category.unique() if i not in fao_categories
         ]
         if unknown_categories:
             msg = (
                 f"Not all categories are part of FAO categorisation. "
-                f"Check mapping for {unknown_categories}"
+                f"Check mapping for {unknown_categories} in domain {domain}"
             )
             raise ValueError(msg)
 

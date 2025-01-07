@@ -9,7 +9,7 @@ attrs:
   rights: Creative Commons Attribution-4.0 International licence (CC BY 4.0)
   scen: scenario (FAO)
   title: Agrifood systems emissions
-data_file: FAOSTAT_Agrifood_system_emissions_v2024-11-14_raw.csv
+data_file: FAOSTAT_Agrifood_system_emissions_v2023-12-13_raw.csv
 dimensions:
   '*':
   - area (ISO3)

@@ -15,19 +15,21 @@ from src.faostat_data_primap.read import read_data
 
 def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
     # make categorisation A from yaml
-    categorisation_a = cc.from_python("FAO.py")
+    categorisation_a = cc.FAO
     # make categorisation B from yaml
     categorisation_b = cc.IPCC2006_PRIMAP
 
     # category FAOSTAT not yet part of climate categories, so we need to add it manually
     cats = {
-        "FAOSTAT": categorisation_a,
+        "FAO": categorisation_a,
         "IPCC2006_PRIMAP": categorisation_b,
     }
-
+    # release_name = "v2024-11-14"
+    release_name = "v2023-12-13"
     ds_fao = (
         extracted_data_path
-        / "v2024-11-14/FAOSTAT_Agrifood_system_emissions_v2024-11-14_raw.nc"
+        # / "v2024-11-14/FAOSTAT_Agrifood_system_emissions_v2024-11-14_raw.nc"
+        / f"{release_name}/FAOSTAT_Agrifood_system_emissions_{release_name}_raw.nc"
     )
     ds = pm2.open_dataset(ds_fao)
 
@@ -51,7 +53,7 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
     da_dict = {}
     for var in gases:
         da_dict[var] = ds[var].pr.convert(
-            dim="category (FAOSTAT)",
+            dim="category (FAO)",
             conversion=conv[var],
         )
     result = xr.Dataset(da_dict)
@@ -70,7 +72,6 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
     result_proc_if = result_proc.pr.to_interchange_format()
 
     # save processed data
-    release_name = "v2024-11-14"
     output_filename = f"FAOSTAT_Agrifood_system_emissions_{release_name}"
     output_folder = extracted_data_path / release_name
 
@@ -109,6 +110,31 @@ def test_read(tmp_path):
     )
 
 
+def test_read_2023():
+    domains_and_releases_to_read = [
+        # ("farm_gate_agriculture_energy", "2023-12-13"),
+        # ("farm_gate_emissions_crops", "2023-11-09"),
+        # ("farm_gate_livestock", "2023-11-09"),
+        # ("land_use_drained_organic_soils", "2023-11-09"),
+        # ("land_use_fires", "2023-11-09"),
+        # ("land_use_forests", "2023-11-09"),
+        # ("pre_post_agricultural_production", "2023-11-09"),
+        ("farm_gate_agriculture_energy", "2024-11-14"),
+        ("farm_gate_emissions_crops", "2024-11-14"),
+        ("farm_gate_livestock", "2024-11-14"),
+        ("land_use_drained_organic_soils", "2024-11-14"),
+        ("land_use_fires", "2024-11-14"),
+        ("land_use_forests", "2024-11-14"),
+        ("pre_post_agricultural_production", "2024-11-14"),
+    ]
+
+    read_data(
+        domains_and_releases_to_read=domains_and_releases_to_read,
+        read_path=downloaded_data_path,
+        save_path=extracted_data_path,
+    )
+
+
 def test_yaml_to_python():
     cat = cc.from_yaml("FAO.yaml")
     cat.to_python("FAO.py")
@@ -121,7 +147,7 @@ def test_python_to_yaml():
     assert cat
 
 
-def test_make_dict_comprehension_for_faster_typing():  # noqa: PLR0912 PLR0915
+def test_fao_categorisation():  # noqa: PLR0912 PLR0915
     spec = {
         "name": "FAOSTAT",
         "title": (
@@ -139,6 +165,7 @@ def test_make_dict_comprehension_for_faster_typing():  # noqa: PLR0912 PLR0915
     }
 
     categories = {}
+
     # 0. main categories
     categories["0"] = {
         "title": "Total",
@@ -148,10 +175,7 @@ def test_make_dict_comprehension_for_faster_typing():  # noqa: PLR0912 PLR0915
     children_1 = ["1.A", "1.B"]
     children_2 = ["2.A", "2.B", "2.C", "2.D", "2.E"]
     children_3 = [f"3.{i}" for i in "ABCDEFGHIJKLMNOPQR"]
-    # children_4 = ["4.A"]
-    # children_5 = ["5.A", "5.B"]
-    # children_6 = ["6.A", "6.B", "6.C"]
-    # children_7 = [f"3.{i}" for i in "ABCDEFGHIJKLM"]
+
     main_categories = (
         # category code, name and comment, gases, children
         ("1", "Crops", ["CH4", "N2O"], children_1),
@@ -697,4 +721,3 @@ def test_make_dict_comprehension_for_faster_typing():  # noqa: PLR0912 PLR0915
     # run print(fao_cats.show_as_tree())
     fao_cats.to_python("FAO.py")
     fao_cats.to_yaml("FAO.yaml")
-    pass

@@ -1,19 +1,20 @@
 attrs:
   area: area (ISO3)
-  cat: category (FAO)
+  cat: category (IPCC2006_PRIMAP)
   comment: Published by Food and Agriculture Organization of the United Nations (FAO),
     converted to PRIMAP2 format by Daniel Busch
   contact: daniel.busch@climate-resource.com
+  entity: N2O
   institution: Food and Agriculture Organization of the United Nations
   references: https://www.fao.org/faostat
   rights: Creative Commons Attribution-4.0 International licence (CC BY 4.0)
   scen: scenario (FAO)
   title: Agrifood systems emissions
-data_file: FAOSTAT_Agrifood_system_emissions_v2024-11-14_raw.csv
+data_file: FAOSTAT_Agrifood_system_emissions_v2023-12-13.csv
 dimensions:
   '*':
   - area (ISO3)
-  - category (FAO)
+  - category (IPCC2006_PRIMAP)
   - entity
   - scenario (FAO)
   - source

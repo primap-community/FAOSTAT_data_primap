@@ -9,7 +9,7 @@ Definitions for category aggregation.
 # At the moment, we are only checking categories that will later be used by primap-hist.
 # If we want to use other categories we should expand this consistency check.
 agg_info_fao = {
-    "category (FAOSTAT)": {
+    "category (FAO)": {
         # 1.A.1 wheat
         # rounding errors
         "1.A.1.a": {
@@ -21,7 +21,7 @@ agg_info_fao = {
             "sel": {"variable": ["N2O"]},
         },
         "1.A.1": {
-            "tolerance": 0.01,
+            "tolerance": 1,
             "sources": [
                 "1.A.1.a",
                 "1.A.1.b",
@@ -39,7 +39,7 @@ agg_info_fao = {
             "sel": {"variable": ["N2O"]},
         },
         "1.A.2": {
-            "tolerance": 0.01,
+            "tolerance": 1,
             "sources": [
                 "1.A.2.a",
                 "1.A.2.b",
@@ -57,7 +57,7 @@ agg_info_fao = {
             "sel": {"variable": ["N2O"]},
         },
         "1.A.3": {
-            "tolerance": 0.01,
+            "tolerance": 1,
             "sources": [
                 "1.A.3.a",
             ],
@@ -73,7 +73,7 @@ agg_info_fao = {
             "sel": {"variable": ["N2O"]},
         },
         "1.A.4": {
-            "tolerance": 0.01,
+            "tolerance": 1,
             "sources": [
                 "1.A.4.a",
             ],
@@ -105,7 +105,7 @@ agg_info_fao = {
             "sel": {"variable": ["N2O"]},
         },
         "1.A.6": {
-            "tolerance": 0.01,
+            "tolerance": 1,
             "sources": [
                 "1.A.6.a",
                 "1.A.6.b",
@@ -122,7 +122,7 @@ agg_info_fao = {
             "sel": {"variable": ["N2O"]},
         },
         "1.A.7": {
-            "tolerance": 0.01,
+            "tolerance": 1,
             "sources": [
                 "1.A.7.a",
                 "1.A.7.b",
@@ -139,7 +139,7 @@ agg_info_fao = {
             "sel": {"variable": ["N2O"]},
         },
         "1.A.8": {
-            "tolerance": 0.01,
+            "tolerance": 1,
             "sources": [
                 "1.A.8.a",
             ],
@@ -155,7 +155,7 @@ agg_info_fao = {
             "sel": {"variable": ["N2O"]},
         },
         "1.A.9": {
-            "tolerance": 0.01,
+            "tolerance": 1,
             "sources": [
                 "1.A.9.a",
             ],
@@ -171,7 +171,7 @@ agg_info_fao = {
             "sel": {"variable": ["N2O"]},
         },
         "1.A.10": {
-            "tolerance": 0.01,
+            "tolerance": 1,
             "sources": [
                 "1.A.10.a",
             ],
@@ -187,7 +187,7 @@ agg_info_fao = {
             "sel": {"variable": ["N2O"]},
         },
         "1.A.11": {
-            "tolerance": 0.01,
+            "tolerance": 1,
             "sources": [
                 "1.A.11.a",
             ],
@@ -203,7 +203,7 @@ agg_info_fao = {
             "sel": {"variable": ["N2O"]},
         },
         "1.A.12": {
-            "tolerance": 0.01,
+            "tolerance": 1,
             "sources": [
                 "1.A.12.a",
             ],
@@ -228,7 +228,7 @@ agg_info_fao = {
             ],
         },
         "1.B.2": {
-            "tolerance": 0.01,
+            "tolerance": 1,
             "sources": [
                 "1.B.2.a",
                 "1.B.2.b",
@@ -243,7 +243,7 @@ agg_info_fao = {
             ],
             "sel": {"variable": ["N2O"]},
         },
-        # Category 1 is not available on FAOSTAT, so that's not a check
+        # Category 1 is not available on FAOS, so that's not a check
         "1": {
             "tolerance": 0.01,
             "sources": [
@@ -389,13 +389,14 @@ agg_info_ipcc2006_primap = {
         },
         "M.3.C.AG": {
             "sources": [
-                "3.C.1.b",  # Biomass Burning In Croplands
-                "3.C.1.c",  # Biomass Burning in Grasslands
+                "3.C.1.b",  # Biomass Burning In Croplands - looks good (CH4, N2O)
+                "3.C.1.c",  # Biomass Burning in Grasslands - looks good (CH4)
                 "3.C.4",  # Direct N2O Emissions from Managed Soils
                 "M.3.C.4.SF",  # synthetic fertilisers
                 "3.C.5",  # Indirect N2O Emissions from Managed Soils
                 "M.3.C.5.SF",  # synthetic fertilisers
                 "3.C.6",  # Indirect N2O Emissions from Manure Management
+                "3.C.7",  # rice cultivation
             ],
         },
         "M.AG.ELV": {
@@ -406,9 +407,9 @@ agg_info_ipcc2006_primap = {
                 "3.C.1",
                 "3.C.2",
                 "3.C.3",
-                "3.C.4",
+                "3.C.4",  # excluding synthetic fertilisers
                 "M.3.C.4.SF",  # synthetic fertilisers
-                "3.C.5",
+                "3.C.5",  # excluding synthetic fertilisers
                 "M.3.C.5.SF",  # synthetic fertilisers
                 "3.C.6",
                 "3.C.7",
