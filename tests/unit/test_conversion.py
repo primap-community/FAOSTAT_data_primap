@@ -4,15 +4,140 @@ import xarray as xr
 
 from src.faostat_data_primap.helper.category_aggregation import (
     agg_info_fao,
-    agg_info_ipcc2006_primap,
     agg_info_ipcc2006_primap_CH4,
     agg_info_ipcc2006_primap_CO2,
+    agg_info_ipcc2006_primap_N2O,
 )
 from src.faostat_data_primap.helper.paths import (
     downloaded_data_path,
     extracted_data_path,
 )
 from src.faostat_data_primap.read import read_data
+
+
+def test_conversion_from_FAO_to_IPCC2006_PRIMAP_output_equal():
+    # make categorisation A from yaml
+    categorisation_a = cc.FAO
+    # make categorisation B from yaml
+    categorisation_b = cc.IPCC2006_PRIMAP
+
+    # category FAOSTAT not yet part of climate categories, so we need to add it manually
+    cats = {
+        "FAO": categorisation_a,
+        "IPCC2006_PRIMAP": categorisation_b,
+    }
+    # release_name = "v2024-11-14"
+    release_name = "v2023-12-13"
+
+    # reproduce 2023 data set
+    reproduce23 = True
+
+    ds_fao = (
+        extracted_data_path
+        # / "v2024-11-14/FAOSTAT_Agrifood_system_emissions_v2024-11-14_raw.nc"
+        / f"{release_name}/FAOSTAT_Agrifood_system_emissions_{release_name}_raw.nc"
+    )
+    ds = pm2.open_dataset(ds_fao)
+
+    # drop UNFCCC data
+    ds = ds.drop_sel(source="UNFCCC")
+
+    # consistency check in original categorisation
+    ds_checked = ds.pr.add_aggregates_coordinates(agg_info=agg_info_fao)  # noqa: F841
+    # ds_checked_if = ds_checked.pr.to_interchange_format()
+
+    # We need a conversion CSV file for each entity
+    # That's a temporary workaround until convert function can filter for data variables (entities)
+    conv = {}
+    gases = ["CO2", "CH4", "N2O"]
+
+    if reproduce23:
+        reproduce23_filename = "_reproduce23"
+    else:
+        reproduce23_filename = ""
+
+    for var in gases:
+        conv[var] = cc.Conversion.from_csv(
+            f"../../conversion_FAO_IPPCC2006_PRIMAP_{var}{reproduce23_filename}.csv",
+            cats=cats,
+        )
+
+    # convert for each entity
+    da_dict = {}
+    for var in gases:
+        da_dict[var] = ds[var].pr.convert(
+            dim="category (FAO)",
+            conversion=conv[var],
+        )
+    result = xr.Dataset(da_dict)
+    result.attrs = ds.attrs
+    result.attrs["cat"] = "category (IPCC2006_PRIMAP)"
+
+    # convert to interchange format and back to get rid of empty categories
+    # TODO there may be a better way to do this
+    result_if = result.pr.to_interchange_format()
+    result = pm2.pm2io.from_interchange_format(result_if)
+
+    # aggregation for each gas for better understanding
+    # TODO creates some duplicate code, we can combine maybe
+    result_proc = result.pr.add_aggregates_coordinates(
+        agg_info=agg_info_ipcc2006_primap_N2O
+    )
+
+    result_proc = result_proc.pr.add_aggregates_coordinates(
+        agg_info=agg_info_ipcc2006_primap_CO2
+    )
+
+    result_proc = result_proc.pr.add_aggregates_coordinates(
+        agg_info=agg_info_ipcc2006_primap_CH4
+    )
+
+    # get processed data
+    output_filename = f"FAOSTAT_Agrifood_system_emissions_{release_name}"
+    output_folder = extracted_data_path / release_name
+    filepath = output_folder / (output_filename + ".nc")
+    ds_original = pm2.open_dataset(filepath)
+
+    # result_proc_if = result_proc.pr.to_interchange_format()
+
+    assert ds_original.broadcast_equals(result_proc)
+    # result_proc_if = result_proc.pr.to_interchange_format()
+    #
+    #
+    #
+    # if not output_folder.exists() :
+    #     output_folder.mkdir()
+    #
+    # filepath = output_folder / (output_filename + ".csv")
+    # print(f"Writing processed primap2 file to {filepath}")
+    # pm2.pm2io.write_interchange_format(
+    #     filepath,
+    #     result_proc_if,
+    # )
+    #
+    # compression = dict(zlib=True, complevel=9)
+    # encoding = {var : compression for var in result_proc.data_vars}
+    # filepath = output_folder / (output_filename + ".nc")
+    # print(f"Writing netcdf file to {filepath}")
+    # result_proc.pr.to_netcdf(filepath, encoding=encoding)
+
+
+def test_read(tmp_path):
+    domains_and_releases_to_read = [
+        # ("farm_gate_agriculture_energy", "2024-11-14"),
+        # ("farm_gate_emissions_crops", "2024-11-14"),
+        # ("farm_gate_livestock", "2024-11-14"),
+        # ("land_use_drained_organic_soils", "2024-11-14"),
+        ("land_use_fires", "2023-11-09"),
+        # ("land_use_forests", "2024-11-14"),
+        # ("pre_post_agricultural_production", "2024-11-14"),
+    ]
+
+    read_data(
+        domains_and_releases_to_read=domains_and_releases_to_read,
+        read_path=downloaded_data_path,
+        save_path=tmp_path,
+    )
 
 
 def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
@@ -79,8 +204,9 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
     result = pm2.pm2io.from_interchange_format(result_if)
 
     # aggregation for each gas for better understanding
+    # TODO creates some duplicate code, we can combine maybe
     result_proc = result.pr.add_aggregates_coordinates(
-        agg_info=agg_info_ipcc2006_primap
+        agg_info=agg_info_ipcc2006_primap_N2O
     )
 
     result_proc = result_proc.pr.add_aggregates_coordinates(
@@ -114,22 +240,22 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
     result_proc.pr.to_netcdf(filepath, encoding=encoding)
 
 
-def test_read(tmp_path):
-    domains_and_releases_to_read = [
-        # ("farm_gate_agriculture_energy", "2024-11-14"),
-        # ("farm_gate_emissions_crops", "2024-11-14"),
-        # ("farm_gate_livestock", "2024-11-14"),
-        # ("land_use_drained_organic_soils", "2024-11-14"),
-        ("land_use_fires", "2023-11-09"),
-        # ("land_use_forests", "2024-11-14"),
-        # ("pre_post_agricultural_production", "2024-11-14"),
-    ]
-
-    read_data(
-        domains_and_releases_to_read=domains_and_releases_to_read,
-        read_path=downloaded_data_path,
-        save_path=tmp_path,
-    )
+# def test_read(tmp_path):
+#     domains_and_releases_to_read = [
+#         # ("farm_gate_agriculture_energy", "2024-11-14"),
+#         # ("farm_gate_emissions_crops", "2024-11-14"),
+#         # ("farm_gate_livestock", "2024-11-14"),
+#         # ("land_use_drained_organic_soils", "2024-11-14"),
+#         ("land_use_fires", "2023-11-09"),
+#         # ("land_use_forests", "2024-11-14"),
+#         # ("pre_post_agricultural_production", "2024-11-14"),
+#     ]
+#
+#     read_data(
+#         domains_and_releases_to_read=domains_and_releases_to_read,
+#         read_path=downloaded_data_path,
+#         save_path=tmp_path,
+#     )
 
 
 def test_read_2023():
