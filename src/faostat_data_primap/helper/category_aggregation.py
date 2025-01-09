@@ -382,7 +382,13 @@ agg_info_ipcc2006_primap = {
     "category (IPCC2006_PRIMAP)": {
         "3.C.1": {  # Emissions from Biomass Burning
             "sources": [
-                "3.C.1.a",  # Biomass Burning In Forest Lands
+                # "3.C.1.a",  # Biomass Burning In Forest Lands, because not there in 2023 release
+                "3.C.1.b",  # Biomass Burning In Croplands
+                "3.C.1.c",  # Biomass Burning in Grasslands
+            ],
+        },
+        "M.3.C.1.AG": {  # Emissions from Biomass Burning
+            "sources": [
                 "3.C.1.b",  # Biomass Burning In Croplands
                 "3.C.1.c",  # Biomass Burning in Grasslands
             ],
@@ -392,27 +398,31 @@ agg_info_ipcc2006_primap = {
                 "3.C.1.b",  # Biomass Burning In Croplands - looks good (CH4, N2O)
                 "3.C.1.c",  # Biomass Burning in Grasslands - looks good (CH4)
                 "3.C.4",  # Direct N2O Emissions from Managed Soils
-                "M.3.C.4.SF",  # synthetic fertilisers
-                "3.C.5",  # Indirect N2O Emissions from Managed Soils
-                "M.3.C.5.SF",  # synthetic fertilisers
-                "3.C.6",  # Indirect N2O Emissions from Manure Management
+                "M.3.C.4.SF",  # synthetic fertilisers direct
+                # "3.C.5",  # Indirect N2O Emissions from Managed Soils, empty
+                "M.3.C.5.SF",  # synthetic fertilisers indirect
+                # "3.C.6",  # Indirect N2O Emissions from Manure Management
                 "3.C.7",  # rice cultivation
+                "3.B.2",  # Drained grassland, was in LULUCF orginally
+                "3.B.3",  # Drained cropland, was in LULUCF originally
             ],
+            "sel": {"variable": ["N2O"]},
         },
         "M.AG.ELV": {
-            "sources": ["M.3.C.AG"],  # "M.3.D.AG" is zero
+            "sources": ["M.3.C.AG"],
+            "sel": {"variable": ["N2O"]},  # "M.3.D.AG" is zero
         },
         "3.C": {
             "sources": [
-                "3.C.1",
-                "3.C.2",
-                "3.C.3",
-                "3.C.4",  # excluding synthetic fertilisers
-                "M.3.C.4.SF",  # synthetic fertilisers
-                "3.C.5",  # excluding synthetic fertilisers
-                "M.3.C.5.SF",  # synthetic fertilisers
-                "3.C.6",
-                "3.C.7",
+                "M.3.C.1.AG",  # maybe better 3.C.1?
+                "3.C.4",  # Direct N2O Emissions from Managed Soils
+                "M.3.C.4.SF",  # synthetic fertilisers direct
+                # "3.C.5",  # Indirect N2O Emissions from Managed Soils, empty
+                "M.3.C.5.SF",  # synthetic fertilisers indirect
+                # "3.C.6",  # Indirect N2O Emissions from Manure Management
+                "3.C.7",  # rice cultivation
+                "3.B.2",  # Drained grassland, was in LULUCF orginally
+                "3.B.3",  # Drained cropland, was in LULUCF originally
             ]
         },
         "3.A.1.a": {  # enteric fermentation
@@ -440,30 +450,136 @@ agg_info_ipcc2006_primap = {
                 "3.A.2.a.ii",  # cattle (non-dairy)
             ]
         },
-        "3.A.2": {  # decomposition of manure - CH4, N2O
-            "sources": [
-                "3.A.2.a",
-                "3.A.2.b",
-                "3.A.2.c",
-                "3.A.2.d",
-                "3.A.2.e",
-                "3.A.2.f",
-                "3.A.2.g",
-                "3.A.2.h",
-                "3.A.2.i",
-                "3.A.2.j",
-            ]
-        },
+        # "3.A.2": {  # decomposition of manure - CH4, N2O
+        #     "sources": [
+        #         "3.A.2.a",
+        #         "3.A.2.b",
+        #         "3.A.2.c",
+        #         "3.A.2.d",
+        #         "3.A.2.e",
+        #         "3.A.2.f",
+        #         "3.A.2.g",
+        #         "3.A.2.h",
+        #         "3.A.2.i",
+        #         "3.A.2.j",
+        #     ]
+        # },
         "3.A": {"sources": ["3.A.1", "3.A.2"]},
-        "M.AG": {"sources": ["3.A", "M.AG.ELV"]},
+        "M.AG": {
+            "sources": [
+                "3.A",
+                "M.AG.ELV",
+            ],
+            "sel": {"variable": ["N2O"]},
+        },
+        "M.LULUCF": {
+            "sources": [
+                "3.B.1",  # Carbon stock change in forests (FAO 4, or 4.A and 4.B)
+                "M.NFC",
+                # "3.B.2",  # Drained grassland
+                # "3.B.3",  # Drained cropland
+                "3.C.1.a",  # Biomass Burning In Forests
+            ],
+            "sel": {"variable": ["N2O"]},
+        },
+        "3": {
+            "sources": ["M.AG", "M.LULUCF"],
+            "sel": {"variable": ["N2O"]},
+        },
+    }
+}
+
+agg_info_ipcc2006_primap_CO2 = {
+    "category (IPCC2006_PRIMAP)": {
+        "M.3.C.AG": {
+            "sources": [
+                # "3.C.1.b",  # Biomass Burning In Croplands - looks good (CH4, N2O)
+                # "3.C.1.c",  # Biomass Burning in Grasslands - looks good (CH4)
+                # "3.C.4",  # Direct N2O Emissions from Managed Soils, only N2O
+                # "M.3.C.4.SF",  # synthetic fertilisers direct, only N2O
+                # "3.C.5",  # Indirect N2O Emissions from Managed Soils, only N2O
+                # "M.3.C.5.SF",  # synthetic fertilisers indirect, only N2O
+                # "3.C.6",  # Indirect N2O Emissions from Manure Management, only N2O
+                # "3.C.7",  # rice cultivation, only CH4
+                # "3.B.2",  # Drained grassland, is already in LULUCF and seems to fit
+                # "3.B.3",  # Drained cropland, is already in LULUCF and seems to fit
+                # "2.G",  # pesticides and fertilisers manufacturing, doesn't match
+            ],
+            "sel": {"variable": ["CO2"]},
+        },
+        "M.AG.ELV": {
+            "sources": [
+                "M.3.C.AG",
+            ],
+            "sel": {"variable": ["CO2"]},
+        },
+        "M.AG": {
+            "sources": [
+                "3.A",
+                "M.AG.ELV",
+            ],
+            "sel": {"variable": ["CO2"]},
+        },
+        "M.LULUCF": {
+            "sources": [
+                "3.B.1",  # Carbon stock change in forests (FAO 4, or 4.A and 4.B)
+                "3.B.2",  # Drained grassland
+                "3.B.3",  # Drained cropland
+                # "3.C.1.a",  # Biomass Burning In Forests
+                "3.C.1.b",  # Fires in organic soils
+            ],
+            "sel": {"variable": ["CO2"]},
+        },
+        "3": {
+            "sources": ["M.AG", "M.LULUCF"],
+            "sel": {"variable": ["CO2"]},
+        },
+    }
+}
+
+
+agg_info_ipcc2006_primap_CH4 = {
+    "category (IPCC2006_PRIMAP)": {
+        "M.3.C.AG": {
+            "sources": [
+                "3.C.1.b",  # Biomass Burning In Croplands - looks good (CH4, N2O)
+                "3.C.1.c",  # Biomass Burning in Grasslands - looks good (CH4)
+                # "3.C.4",  # Direct N2O Emissions from Managed Soils
+                # "M.3.C.4.SF",  # synthetic fertilisers direct
+                # "3.C.5",  # Indirect N2O Emissions from Managed Soils, empty
+                # "M.3.C.5.SF",  # synthetic fertilisers indirect
+                # "3.C.6",  # Indirect N2O Emissions from Manure Management
+                "3.C.7",  # rice cultivation
+                # "3.B.2",  # Drained grassland, was in LULUCF orginally
+                # "3.B.3",  # Drained cropland, was in LULUCF originally
+            ],
+            "sel": {"variable": ["CH4"]},
+        },
+        "M.AG.ELV": {
+            "sources": [
+                "M.3.C.AG",
+            ],
+            "sel": {"variable": ["CH4"]},
+        },
+        "M.AG": {
+            "sources": [
+                "3.A",
+                "M.AG.ELV",
+            ],
+            "sel": {"variable": ["CH4"]},
+        },
         "M.LULUCF": {
             "sources": [
                 "3.B.1",  # Carbon stock change in forests
                 "3.B.2",  # Drained grassland
                 "3.B.3",  # Drained cropland
                 "3.C.1.a",  # Biomass Burning In Forests
-            ]
+            ],
+            "sel": {"variable": ["CH4"]},
         },
-        "3": {"sources": ["M.AG", "M.LULUCF"]},
+        "3": {
+            "sources": ["M.AG", "M.LULUCF"],
+            "sel": {"variable": ["CH4"]},
+        },
     }
 }

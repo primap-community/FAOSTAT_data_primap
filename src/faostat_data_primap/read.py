@@ -136,7 +136,7 @@ def read_data(  # noqa: PLR0915 PLR0912
         # sometimes there are too many categories per domain to write
         # everything in the config file
         # TODO we could do this for crops as well, but it's not necessary
-        elif ("category_mapping_element" in read_config.keys()) and (
+        if ("category_mapping_element" in read_config.keys()) and (
             "category_mapping_item" in read_config.keys()
         ):
             # split steps for easier debugging
@@ -146,9 +146,21 @@ def read_data(  # noqa: PLR0915 PLR0912
             df_domain["mapped_element"] = df_domain["Element"].map(
                 read_config["category_mapping_element"]
             )
-            df_domain["category"] = (
-                df_domain["mapped_item"] + df_domain["mapped_element"]
-            )
+            if "category" in df_domain.columns:
+                df_domain["category_1"] = (
+                    df_domain["mapped_item"] + df_domain["mapped_element"]
+                )
+                df_domain["category"] = df_domain["category"].fillna(
+                    df_domain["category_1"]
+                )
+                df_domain = df_domain.drop(
+                    labels=["category_1"],
+                    axis=1,
+                )
+            else:
+                df_domain["category"] = (
+                    df_domain["mapped_item"] + df_domain["mapped_element"]
+                )
             df_domain = df_domain.drop(
                 labels=[
                     "mapped_item",
@@ -156,9 +168,6 @@ def read_data(  # noqa: PLR0915 PLR0912
                 ],
                 axis=1,
             )
-        else:
-            msg = f"Could not find mapping for {domain=}."
-            raise ValueError(msg)
 
         # some rows can only be removed by Item - Element column
         if "items-elements_to_remove" in read_config.keys():
@@ -167,6 +176,9 @@ def read_data(  # noqa: PLR0915 PLR0912
                     read_config["items-elements_to_remove"]
                 )
             ]
+        # else:
+        #     msg = f"Could not find mapping for {domain=}."
+        #     raise ValueError(msg)
 
         # drop combined item - element columns
         df_domain = df_domain.drop(

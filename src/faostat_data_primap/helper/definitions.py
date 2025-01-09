@@ -294,13 +294,13 @@ read_config_all: Any = {
                 "Rye - Crops total (Emissions N2O)": "1.A.10",
                 "Sorghum - Crops total (Emissions N2O)": "1.A.11",
                 "Soya beans - Crops total (Emissions N2O)": "1.A.12",
+                "All Crops - Crop residues (Emissions N2O)": "M.1.CR",
+                "All Crops - Burning crop residues (Emissions N2O)": "M.1.BCR",
+                "All Crops - Burning crop residues (Emissions CH4)": "M.1.BCR",
             },
             "items-elements_to_remove": [
-                "All Crops - Crop residues (Emissions N2O)",
                 "All Crops - Crop residues (Direct emissions N2O)",
                 "All Crops - Crop residues (Indirect emissions N2O)",
-                "All Crops - Burning crop residues (Emissions N2O)",
-                "All Crops - Burning crop residues (Emissions CH4)",
             ],
             "columns_to_drop": [
                 "Element",
@@ -417,9 +417,11 @@ read_config_all: Any = {
                 "Rice - Crops total (Emissions CH4)": "1.A.2",
                 "Wheat - Crops total (Emissions N2O)": "1.A.1",
                 "Wheat - Crops total (Emissions CH4)": "1.A.1",
+                "All Crops - Crop residues (Emissions N2O)": "M.1.CR",
+                "All Crops - Burning crop residues (Emissions N2O)": "M.1.BCR",
+                "All Crops - Burning crop residues (Emissions CH4)": "M.1.BCR",
             },
             "items-elements_to_remove": [
-                "All Crops - Crop residues (Emissions N2O)",
                 "All Crops - Crop residues (Direct emissions N2O)",
                 "All Crops - Crop residues (Indirect emissions N2O)",
                 "All Crops - Burning crop residues (Emissions N2O)",
@@ -490,6 +492,13 @@ read_config_all: Any = {
                 "Indirect emissions (N2O that volatilises) (Manure applied)": "N2O",
                 "Manure applied to soils (Indirect emissions N2O)": "N2O",
             },
+            "category_mapping_item_element": {
+                "All Animals - Enteric fermentation (Emissions CH4)": "M.3.EF",
+                "All Animals - Manure management (Emissions CH4)": "M.3.MM",
+                "All Animals - Manure management (Emissions N2O)": "M.3.MM",
+                "All Animals - Manure left on pasture (Emissions N2O)": "M.3.MP",
+                "All Animals - Emissions (N2O) (Manure applied)": "M.3.MA",
+            },
             "category_mapping_item": {
                 "All Animals": "3",
                 "Asses": "3.A",
@@ -534,12 +543,6 @@ read_config_all: Any = {
                 "Manure applied to soils (Indirect emissions N2O)": ".3.b",
             },
             "items-elements_to_remove": [
-                # we only keep All animals total CH4 and total N2O
-                "All Animals - Enteric fermentation (Emissions CH4)",
-                "All Animals - Manure management (Emissions CH4)",
-                "All Animals - Manure management (Direct emissions N2O)",
-                "All Animals - Manure management (Indirect emissions N2O)",
-                "All Animals - Manure left on pasture (Emissions N2O)",
                 "All Animals - Manure left on pasture (Direct emissions N2O)",
                 (
                     "All Animals - Indirect emissions (N2O that leaches) "
@@ -550,7 +553,6 @@ read_config_all: Any = {
                     "(Manure on pasture)"
                 ),
                 "All Animals - Manure left on pasture (Indirect emissions N2O)",
-                "All Animals - Emissions (N2O) (Manure applied)",
                 "All Animals - Manure applied to soils (Direct emissions N2O)",
                 "All Animals - Indirect emissions (N2O that leaches) (Manure applied)",
                 (
@@ -558,7 +560,13 @@ read_config_all: Any = {
                     "(Manure applied)"
                 ),
                 "All Animals - Manure applied to soils (Indirect emissions N2O)",
-                "All Animals - Manure management (Emissions N2O)",
+                "All Animals - Manure management (Direct emissions N2O)",
+                "All Animals - Manure management (Indirect emissions N2O)",
+                # "All Animals - Enteric fermentation (Emissions CH4)",
+                # "All Animals - Manure management (Emissions CH4)",
+                # "All Animals - Manure management (Emissions N2O)",
+                # "All Animals - Manure left on pasture (Emissions N2O)",
+                # "All Animals - Emissions (N2O) (Manure applied)",
             ],
             "columns_to_drop": [
                 "Element",
@@ -623,6 +631,13 @@ read_config_all: Any = {
                 "Indirect emissions (N2O that volatilises) (Manure applied)": "N2O",
                 "Manure applied to soils (Indirect emissions N2O)": "N2O",
             },
+            "category_mapping_item_element": {
+                "All Animals - Enteric fermentation (Emissions CH4)": "M.3.EF",
+                "All Animals - Manure management (Emissions CH4)": "M.3.MM",
+                "All Animals - Manure management (Emissions N2O)": "M.3.MM",
+                "All Animals - Manure left on pasture (Emissions N2O)": "M.3.MP",
+                "All Animals - Emissions (N2O) (Manure applied)": "M.3.MA",
+            },
             "category_mapping_item": {
                 "All Animals": "3",
                 "Asses": "3.A",
@@ -667,12 +682,6 @@ read_config_all: Any = {
                 "Manure applied to soils (Indirect emissions N2O)": ".3.b",
             },
             "items-elements_to_remove": [
-                # we only keep All animals total CH4 and total N2O
-                "All Animals - Enteric fermentation (Emissions CH4)",
-                "All Animals - Manure management (Emissions CH4)",
-                "All Animals - Manure management (Direct emissions N2O)",
-                "All Animals - Manure management (Indirect emissions N2O)",
-                "All Animals - Manure left on pasture (Emissions N2O)",
                 "All Animals - Manure left on pasture (Direct emissions N2O)",
                 (
                     "All Animals - Indirect emissions (N2O that leaches) "
@@ -683,7 +692,6 @@ read_config_all: Any = {
                     "(Manure on pasture)"
                 ),
                 "All Animals - Manure left on pasture (Indirect emissions N2O)",
-                "All Animals - Emissions (N2O) (Manure applied)",
                 "All Animals - Manure applied to soils (Direct emissions N2O)",
                 "All Animals - Indirect emissions (N2O that leaches) (Manure applied)",
                 (
@@ -691,7 +699,13 @@ read_config_all: Any = {
                     "(Manure applied)"
                 ),
                 "All Animals - Manure applied to soils (Indirect emissions N2O)",
-                "All Animals - Manure management (Emissions N2O)",
+                "All Animals - Manure management (Direct emissions N2O)",
+                "All Animals - Manure management (Indirect emissions N2O)",
+                # "All Animals - Enteric fermentation (Emissions CH4)",
+                # "All Animals - Manure management (Emissions CH4)",
+                # "All Animals - Manure management (Emissions N2O)",
+                # "All Animals - Manure left on pasture (Emissions N2O)",
+                # "All Animals - Emissions (N2O) (Manure applied)",
             ],
             "columns_to_drop": [
                 "Element",

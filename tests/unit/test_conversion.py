@@ -5,6 +5,8 @@ import xarray as xr
 from src.faostat_data_primap.helper.category_aggregation import (
     agg_info_fao,
     agg_info_ipcc2006_primap,
+    agg_info_ipcc2006_primap_CH4,
+    agg_info_ipcc2006_primap_CO2,
 )
 from src.faostat_data_primap.helper.paths import (
     downloaded_data_path,
@@ -26,6 +28,10 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
     }
     # release_name = "v2024-11-14"
     release_name = "v2023-12-13"
+
+    # reproduce 2023 data set
+    reproduce23 = True
+
     ds_fao = (
         extracted_data_path
         # / "v2024-11-14/FAOSTAT_Agrifood_system_emissions_v2024-11-14_raw.nc"
@@ -44,9 +50,16 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
     # That's a temporary workaround until convert function can filter for data variables (entities)
     conv = {}
     gases = ["CO2", "CH4", "N2O"]
+
+    if reproduce23:
+        reproduce23_filename = "_reproduce23"
+    else:
+        reproduce23_filename = ""
+
     for var in gases:
         conv[var] = cc.Conversion.from_csv(
-            f"../../conversion_FAO_IPPCC2006_PRIMAP_{var}.csv", cats=cats
+            f"../../conversion_FAO_IPPCC2006_PRIMAP_{var}{reproduce23_filename}.csv",
+            cats=cats,
         )
 
     # convert for each entity
@@ -65,8 +78,17 @@ def test_conversion_from_FAO_to_IPCC2006_PRIMAP():
     result_if = result.pr.to_interchange_format()
     result = pm2.pm2io.from_interchange_format(result_if)
 
+    # aggregation for each gas for better understanding
     result_proc = result.pr.add_aggregates_coordinates(
         agg_info=agg_info_ipcc2006_primap
+    )
+
+    result_proc = result_proc.pr.add_aggregates_coordinates(
+        agg_info=agg_info_ipcc2006_primap_CO2
+    )
+
+    result_proc = result_proc.pr.add_aggregates_coordinates(
+        agg_info=agg_info_ipcc2006_primap_CH4
     )
 
     result_proc_if = result_proc.pr.to_interchange_format()
@@ -112,20 +134,20 @@ def test_read(tmp_path):
 
 def test_read_2023():
     domains_and_releases_to_read = [
-        # ("farm_gate_agriculture_energy", "2023-12-13"),
-        # ("farm_gate_emissions_crops", "2023-11-09"),
-        # ("farm_gate_livestock", "2023-11-09"),
-        # ("land_use_drained_organic_soils", "2023-11-09"),
-        # ("land_use_fires", "2023-11-09"),
-        # ("land_use_forests", "2023-11-09"),
-        # ("pre_post_agricultural_production", "2023-11-09"),
-        ("farm_gate_agriculture_energy", "2024-11-14"),
-        ("farm_gate_emissions_crops", "2024-11-14"),
-        ("farm_gate_livestock", "2024-11-14"),
-        ("land_use_drained_organic_soils", "2024-11-14"),
-        ("land_use_fires", "2024-11-14"),
-        ("land_use_forests", "2024-11-14"),
-        ("pre_post_agricultural_production", "2024-11-14"),
+        ("farm_gate_agriculture_energy", "2023-12-13"),
+        ("farm_gate_emissions_crops", "2023-11-09"),
+        ("farm_gate_livestock", "2023-11-09"),
+        ("land_use_drained_organic_soils", "2023-11-09"),
+        ("land_use_fires", "2023-11-09"),
+        ("land_use_forests", "2023-11-09"),
+        ("pre_post_agricultural_production", "2023-11-09"),
+        # ("farm_gate_agriculture_energy", "2024-11-14"),
+        # ("farm_gate_emissions_crops", "2024-11-14"),
+        # ("farm_gate_livestock", "2024-11-14"),
+        # ("land_use_drained_organic_soils", "2024-11-14"),
+        # ("land_use_fires", "2024-11-14"),
+        # ("land_use_forests", "2024-11-14"),
+        # ("pre_post_agricultural_production", "2024-11-14"),
     ]
 
     read_data(
