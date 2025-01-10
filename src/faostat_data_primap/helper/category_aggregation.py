@@ -3,16 +3,12 @@ Definitions for category aggregation.
 """
 
 # Checking consistency of category tree in FAO categorisation
-# There are discrepancies of up to 100% due to rounding errors for small values
-# theoretical example, 0.0001 (rounded from 0.00006) + 0.0004 (rounded from 0.00036)
+# There are discrepancies of up to 100% due to rounding errors for small values,
+# for example, 0.0001 (rounded from 0.00006) + 0.0004 (rounded from 0.00036)
 # = 0.00042 which is then rounded to 0.0004, while the consistency check expects 0.0005
-# At the moment, we are only checking categories that will later be used by primap-hist.
-# If we want to use other categories we should expand this consistency check.
 agg_info_fao = {
     "category (FAO)": {
-        # 1.A.1 wheat
-        # rounding errors
-        "1.A.1.a": {
+        "1.A.1.a": {  # wheat
             "tolerance": 1,
             "sources": [
                 "1.A.1.a.i",
@@ -28,9 +24,7 @@ agg_info_fao = {
             ],
             "sel": {"variable": ["N2O", "CH4"]},
         },
-        # 1.A.2 rice
-        # rounding errors
-        "1.A.2.a": {
+        "1.A.2.a": {  # 1.A.2 rice
             "tolerance": 1,
             "sources": [
                 "1.A.2.a.i",
@@ -210,7 +204,7 @@ agg_info_fao = {
             "sel": {"variable": ["N2O"]},
         },
         "1.A": {
-            # some rounding errors for CH4
+            # crops
             "tolerance": 1,
             "sources": [
                 "1.A.1",
@@ -243,7 +237,7 @@ agg_info_fao = {
             ],
             "sel": {"variable": ["N2O"]},
         },
-        # Category 1 is not available on FAOS, so that's not a check
+        # Category 1 is not available on FAO, so that's not a check
         "1": {
             "tolerance": 0.01,
             "sources": [
@@ -268,7 +262,7 @@ agg_info_fao = {
                 "3.J",
                 "3.K",
                 "3.L",
-                # "3.M", # poultry is an aggregate of other categories I forgot to remove
+                # "3.M", # poultry is an aggregate of other categories, I forgot to remove
                 "3.N",
                 "3.O",
                 "3.P",
@@ -278,7 +272,7 @@ agg_info_fao = {
             "sel": {"variable": ["CH4", "N2O"]},
         },
         # Testing for one animal type to make sure the category tree makes sense
-        # TODO: We could do the same for each animal but that's a lot of effort
+        # TODO: We could do the same for each animal
         "3.C.3.b": {
             "tolerance": 1,
             "sources": [
@@ -355,7 +349,7 @@ agg_info_fao = {
             "sel": {"variable": ["CH4", "N2O", "CO2"]},
         },
         "6.B": {
-            # rounding errors, NLD looks problematic but hard to tell which value is right
+            # rounding errors
             "tolerance": 1,
             "sources": [
                 "6.B.1",
@@ -378,11 +372,13 @@ agg_info_fao = {
     }
 }
 
+# aggregating each gas separately to make this easier to understand
+# We can change it back to one dict once it's all organised
 agg_info_ipcc2006_primap_N2O = {
     "category (IPCC2006_PRIMAP)": {
         "3.C.1": {  # Emissions from Biomass Burning
             "sources": [
-                # "3.C.1.a",  # Biomass Burning In Forest Lands, because not included in 2023 release
+                # "3.C.1.a",  # leaving out "Biomass Burning In Forest Lands", because not included in 2023 release
                 "3.C.1.b",  # Biomass Burning In Croplands
                 "3.C.1.c",  # Biomass Burning in Grasslands
             ],
@@ -401,9 +397,9 @@ agg_info_ipcc2006_primap_N2O = {
                 "3.C.1.c",  # Biomass Burning in Grasslands - looks good (CH4)
                 "3.C.4",  # Direct N2O Emissions from Managed Soils
                 "M.3.C.4.SF",  # synthetic fertilisers direct
-                # "3.C.5",  # Indirect N2O Emissions from Managed Soils, empty
+                # "3.C.5",  # Indirect N2O Emissions from Managed Soils, currently empty
                 "M.3.C.5.SF",  # synthetic fertilisers indirect
-                # "3.C.6",  # Indirect N2O Emissions from Manure Management
+                # "3.C.6",  # Indirect N2O Emissions from Manure Management, currently empty
                 "3.C.7",  # rice cultivation
                 "3.B.2",  # Drained grassland, was in LULUCF orginally
                 "3.B.3",  # Drained cropland, was in LULUCF originally
@@ -416,43 +412,27 @@ agg_info_ipcc2006_primap_N2O = {
         },
         "3.C": {
             "sources": [
-                "M.3.C.1.AG",  # maybe better 3.C.1?
+                "M.3.C.1.AG",  # TODO 3.C.1 would be correct, but doesn't match 2023
                 "3.C.4",  # Direct N2O Emissions from Managed Soils
                 "M.3.C.4.SF",  # synthetic fertilisers direct
                 # "3.C.5",  # Indirect N2O Emissions from Managed Soils, empty
                 "M.3.C.5.SF",  # synthetic fertilisers indirect
-                # "3.C.6",  # Indirect N2O Emissions from Manure Management
+                # "3.C.6",  # Indirect N2O Emissions from Manure Management, empty
                 "3.C.7",  # rice cultivation
                 "3.B.2",  # Drained grassland, was in LULUCF orginally
                 "3.B.3",  # Drained cropland, was in LULUCF originally
             ],
             "sel": {"variable": ["N2O"]},
         },
-        "3.A.1.a": {  # enteric fermentation
-            "sources": [
-                "3.A.1.a.i",  # cattle (dairy)
-                "3.A.1.a.ii",  # cattle (non-dairy)
-            ]
-        },
-        "3.A.1": {  # enteric fermentation
-            "sources": [
-                "3.A.1.a",
-                "3.A.1.b",
-                "3.A.1.c",
-                "3.A.1.d",
-                "3.A.1.e",
-                "3.A.1.f",
-                "3.A.1.g",
-                "3.A.1.h",
-                "3.A.1.j",
-            ]
-        },
-        "3.A.2.a": {  # decomposition of manure - CH4, N2O
-            "sources": [
-                "3.A.2.a.i",  # cattle (dairy)
-                "3.A.2.a.ii",  # cattle (non-dairy)
-            ]
-        },
+        # TODO 3.A.2.x are currently not read in
+        # "3.A.2.a": {  # decomposition of manure - CH4, N2O
+        #     "sources": [
+        #         "3.A.2.a.i",  # cattle (dairy)
+        #         "3.A.2.a.ii",  # cattle (non-dairy)
+        #     ],
+        #     "sel": {"variable": ["N2O"]},
+        # },
+        # # consistency check
         # "3.A.2": {  # decomposition of manure - CH4, N2O
         #     "sources": [
         #         "3.A.2.a",
@@ -465,9 +445,13 @@ agg_info_ipcc2006_primap_N2O = {
         #         "3.A.2.h",
         #         "3.A.2.i",
         #         "3.A.2.j",
-        #     ]
+        #     ],
+        #     "sel": {"variable": ["N2O"]},
         # },
-        "3.A": {"sources": ["3.A.1", "3.A.2"]},
+        "3.A": {
+            "sources": ["3.A.1", "3.A.2"],
+            "sel": {"variable": ["N2O"]},
+        },
         "M.AG": {
             "sources": [
                 "3.A",
@@ -549,9 +533,57 @@ agg_info_ipcc2006_primap_CO2 = {
     }
 }
 
-
 agg_info_ipcc2006_primap_CH4 = {
     "category (IPCC2006_PRIMAP)": {
+        "3.A.1.a": {  # enteric fermentation
+            "sources": [
+                "3.A.1.a.i",  # cattle (dairy)
+                "3.A.1.a.ii",  # cattle (non-dairy)
+            ],
+            "sel": {"variable": ["CH4"]},
+        },
+        "3.A.1": {  # enteric fermentation
+            "sources": [
+                "3.A.1.a",
+                "3.A.1.b",
+                "3.A.1.c",
+                "3.A.1.d",
+                "3.A.1.e",
+                "3.A.1.f",
+                "3.A.1.g",
+                "3.A.1.h",
+                "3.A.1.j",
+            ],
+            "sel": {"variable": ["CH4"]},
+        },
+        # TODO 3.A.2.x are currently not read in
+        # "3.A.2.a": {  # decomposition of manure - CH4, N2O
+        #     "sources": [
+        #         "3.A.2.a.i",  # cattle (dairy)
+        #         "3.A.2.a.ii",  # cattle (non-dairy)
+        #     ],
+        #     "sel": {"variable": ["CH4"]},
+        # },
+        # # consistency check
+        # "3.A.2": {  # decomposition of manure - CH4, N2O
+        #     "sources": [
+        #         "3.A.2.a",
+        #         "3.A.2.b",
+        #         "3.A.2.c",
+        #         "3.A.2.d",
+        #         "3.A.2.e",
+        #         "3.A.2.f",
+        #         "3.A.2.g",
+        #         "3.A.2.h",
+        #         "3.A.2.i",
+        #         "3.A.2.j",
+        #     ],
+        #     "sel": {"variable": ["CH4"]},
+        # },
+        "3.A": {
+            "sources": ["3.A.1", "3.A.2"],
+            "sel": {"variable": ["CH4"]},
+        },
         "3.C.1": {  # Emissions from Biomass Burning
             "sources": [
                 # "3.C.1.a",  # Biomass Burning In Forest Lands, because not there in 2023 release
