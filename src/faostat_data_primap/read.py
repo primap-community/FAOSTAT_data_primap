@@ -281,7 +281,7 @@ def read_data(  # noqa: PLR0915 PLR0912
     data_pm2.pr.to_netcdf(filepath, encoding=encoding)
 
 
-def process(ds: xarray.Dataset):
+def process(ds: xarray.Dataset, year: str):
     """
     Process dataset.
 
@@ -308,39 +308,22 @@ def process(ds: xarray.Dataset):
         "FAO": categorisation_a,
         "IPCC2006_PRIMAP": categorisation_b,
     }
-    # # release_name = "v2024-11-14"
-    # release_name = "v2023-12-13"
-    #
-    # # reproduce 2023 data set
-    reproduce23 = True
-    #
-    # ds_fao = (
-    #         extracted_data_path
-    #         # / "v2024-11-14/FAOSTAT_Agrifood_system_emissions_v2024-11-14_raw.nc"
-    #         / f"{release_name}/FAOSTAT_Agrifood_system_emissions_{release_name}_raw.nc"
-    # )
-    # ds = pm2.open_dataset(ds_fao)
 
     # drop UNFCCC data
     ds = ds.drop_sel(source="UNFCCC")
 
     # consistency check in original categorisation
     ds_checked = ds.pr.add_aggregates_coordinates(agg_info=agg_info_fao)  # noqa: F841
-    # ds_checked_if = ds_checked.pr.to_interchange_format()
 
     # We need a conversion CSV file for each entity
     # That's a temporary workaround until convert function can filter for data variables (entities)
+    # TODO the "year" variable is not a great approach to handle configurations
     conv = {}
     gases = ["CO2", "CH4", "N2O"]
 
-    if reproduce23:
-        reproduce23_filename = "_reproduce23"
-    else:
-        reproduce23_filename = ""
-
     for var in gases:
         conv[var] = cc.Conversion.from_csv(
-            f"../../conversion_FAO_IPPCC2006_PRIMAP_{var}{reproduce23_filename}.csv",
+            f"../../conversion_FAO_IPPCC2006_PRIMAP_{var}_{year}.csv",
             cats=cats,
         )
 
@@ -351,6 +334,7 @@ def process(ds: xarray.Dataset):
             dim="category (FAO)",
             conversion=conv[var],
         )
+
     result = xr.Dataset(da_dict)
     result.attrs = ds.attrs
     result.attrs["cat"] = "category (IPCC2006_PRIMAP)"
@@ -361,7 +345,7 @@ def process(ds: xarray.Dataset):
     result = pm2.pm2io.from_interchange_format(result_if)
 
     # aggregation for each gas for better understanding
-    # TODO creates some duplicate code, we can combine maybe
+    # TODO creates some duplicate code, we can combine again later
     result_proc = result.pr.add_aggregates_coordinates(
         agg_info=agg_info_ipcc2006_primap_N2O
     )

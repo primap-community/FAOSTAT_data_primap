@@ -31,7 +31,7 @@ def test_process_output_remains_the_same():
     ds_raw = pm2.open_dataset(filename_raw_ds)
 
     # process raw data
-    ds_processed_new = process(ds_raw)
+    ds_processed_new = process(ds=ds_raw, year="2023")
 
     # compare
     assert ds_processed.broadcast_equals(ds_processed_new)
@@ -39,13 +39,13 @@ def test_process_output_remains_the_same():
 
 def test_read(tmp_path):
     domains_and_releases_to_read = [
-        # ("farm_gate_agriculture_energy", "2024-11-14"),
-        # ("farm_gate_emissions_crops", "2024-11-14"),
-        # ("farm_gate_livestock", "2024-11-14"),
-        # ("land_use_drained_organic_soils", "2024-11-14"),
+        ("farm_gate_agriculture_energy", "2024-11-14"),
+        ("farm_gate_emissions_crops", "2024-11-14"),
+        ("farm_gate_livestock", "2024-11-14"),
+        ("land_use_drained_organic_soils", "2024-11-14"),
         ("land_use_fires", "2023-11-09"),
-        # ("land_use_forests", "2024-11-14"),
-        # ("pre_post_agricultural_production", "2024-11-14"),
+        ("land_use_forests", "2024-11-14"),
+        ("pre_post_agricultural_production", "2024-11-14"),
     ]
 
     read_data(
