@@ -280,8 +280,35 @@ def read_data(  # noqa: PLR0915 PLR0912
     print(f"Writing netcdf file to {filepath}")
     data_pm2.pr.to_netcdf(filepath, encoding=encoding)
 
+    # process data - conversion and category aggregation
+    # todo variable naming
+    result_proc = process(data_pm2)
 
-def process(ds: xarray.Dataset, year: str):
+    # save processed data
+    result_proc_if = result_proc.pr.to_interchange_format()
+
+    output_filename = f"FAOSTAT_Agrifood_system_emissions_{release_name}"
+    output_folder = extracted_data_path / release_name
+
+    if not output_folder.exists():
+        output_folder.mkdir()
+
+    filepath = output_folder / (output_filename + ".csv")
+    print(f"Writing processed primap2 file to {filepath}")
+    pm2.pm2io.write_interchange_format(
+        filepath,
+        result_proc_if,
+    )
+
+    compression = dict(zlib=True, complevel=9)
+    encoding = {var: compression for var in result_proc.data_vars}
+    filepath = output_folder / (output_filename + ".nc")
+    print(f"Writing netcdf file to {filepath}")
+    result_proc.pr.to_netcdf(filepath, encoding=encoding)
+
+
+# TODO we don't need the year, the conversion should remain the same
+def process(ds: xarray.Dataset, year: str = "2024"):
     """
     Process dataset.
 
