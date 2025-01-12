@@ -288,7 +288,7 @@ def read_data(  # noqa: PLR0915 PLR0912
     result_proc_if = result_proc.pr.to_interchange_format()
 
     output_filename = f"FAOSTAT_Agrifood_system_emissions_{release_name}"
-    output_folder = extracted_data_path / release_name
+    # output_folder = extracted_data_path / release_name
 
     if not output_folder.exists():
         output_folder.mkdir()
@@ -308,7 +308,7 @@ def read_data(  # noqa: PLR0915 PLR0912
 
 
 # TODO we don't need the year, the conversion should remain the same
-def process(ds: xarray.Dataset, year: str = "2024"):
+def process(ds: xarray.Dataset):
     """
     Process dataset.
 
@@ -343,14 +343,14 @@ def process(ds: xarray.Dataset, year: str = "2024"):
     ds_checked = ds.pr.add_aggregates_coordinates(agg_info=agg_info_fao)  # noqa: F841
 
     # We need a conversion CSV file for each entity
-    # That's a temporary workaround until convert function can filter for data variables (entities)
+    # That's a temporary workaround until the filter function in climate categories works
     # TODO the "year" variable is not a great approach to handle configurations
     conv = {}
     gases = ["CO2", "CH4", "N2O"]
 
     for var in gases:
         conv[var] = cc.Conversion.from_csv(
-            f"../../conversion_FAO_IPPCC2006_PRIMAP_{var}_{year}.csv",
+            f"../../conversion_FAO_IPPCC2006_PRIMAP_{var}.csv",
             cats=cats,
         )
 
