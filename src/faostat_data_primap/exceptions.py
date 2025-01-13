@@ -18,5 +18,5 @@ class DateTagNotFoundError(Exception):
         url
             Link to download domain page
         """
-        msg = f"Tag for date lat updated was not found on page with url {url}."
+        msg = f"Tag for date last updated was not found on page with url {url}."
         super().__init__(msg)
