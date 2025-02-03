@@ -1,6 +1,5 @@
 """Downloads data from FAOSTAT website."""
 
-import hashlib
 import os
 import pathlib
 import time
@@ -14,79 +13,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 
 from faostat_data_primap.exceptions import DateTagNotFoundError
-from faostat_data_primap.helper.definitions import domains, downloaded_data_path
-
-
-def find_previous_release_path(
-    current_release_path: pathlib.Path,
-) -> pathlib.Path | None:
-    """
-    Find the most recent previous release directory within same domain
-
-    Release directories are assumed to be subdirectories within the same parent
-    directory as `current_release_path`. The Sorting is done alphabetically,
-    so directory names should follow the naming convention YYYY-MM-DD
-
-    Parameters
-    ----------
-    current_release_path : pathlib.Path
-        The path of the current release directory.
-
-    Returns
-    -------
-    pathlib.Path or None
-        Returns the path of the most recent previous release directory if one exists,
-        otherwise returns None.
-    """
-    domain_path = current_release_path.parent
-    all_releases = [
-        release_name
-        for release_name in os.listdir(current_release_path.parent)
-        if (domain_path / release_name).is_dir()
-    ]
-
-    # make sure all directories follow the naming convention
-    try:
-        all_releases_datetime = [
-            datetime.strptime(release, "%Y-%m-%d") for release in all_releases
-        ]
-    except ValueError as e:
-        msg = (
-            "All release folders must be in YYYY-MM-DD format, "
-            f"got {sorted(all_releases)}"
-        )
-        raise ValueError(msg) from e
-
-    all_releases_datetime = sorted(all_releases_datetime)
-    current_release_datetime = datetime.strptime(current_release_path.name, "%Y-%m-%d")
-    index = all_releases_datetime.index(current_release_datetime)
-
-    # if the current release is the latest or the only one
-    if index == 0:
-        return None
-
-    return domain_path / all_releases_datetime[index - 1].strftime("%Y-%m-%d")
-
-
-def calculate_checksum(file_path: pathlib.Path) -> str:
-    """
-    Calculate the SHA-256 checksum of a file.
-
-    Parameters
-    ----------
-    file_path : pathlib.Path
-        The path to the file for which the checksum is calculated.
-
-    Returns
-    -------
-    str
-        The SHA-256 checksum of the file as a hexadecimal string.
-    """
-    sha256 = hashlib.sha256()
-    with open(file_path, "rb") as f:
-        for chunk in iter(lambda: f.read(4096), b""):
-            sha256.update(chunk)
-    return sha256.hexdigest()
+from faostat_data_primap.helper.definitions import domains
+from faostat_data_primap.helper.paths import downloaded_data_path
 
 
 def download_methodology(url_download: str, save_path: pathlib.Path) -> None:
@@ -114,46 +42,16 @@ def download_methodology(url_download: str, save_path: pathlib.Path) -> None:
     download_path = save_path / filename
 
     if download_path.exists():
-        print(f"Skipping download of {download_path} because it already exists.")
-        return
-
-    previous_release = find_previous_release_path(save_path)
-    # Attempt to find a file to compare in the previous release
-    if previous_release:
-        file_to_compare = previous_release / filename
-        if file_to_compare.exists():
-            response = requests.get(url_download, stream=True, timeout=30)
-            response.raise_for_status()
-            file_to_download_checksum = hashlib.sha256(response.content).hexdigest()
-            file_to_compare_checksum = calculate_checksum(file_to_compare)
-
-            if file_to_download_checksum == file_to_compare_checksum:
-                print(
-                    f"File '{filename}' is identical in the previous release. "
-                    f"Creating symlink."
-                )
-                os.symlink(file_to_compare, download_path)
-                return
-            else:
-                print(
-                    f"File '{filename}' differs from previous release. "
-                    f"Downloading file."
-                )
+        if download_path.is_symlink():
+            os.remove(download_path)
         else:
-            print(f"File '{filename}' not found in previous release. Downloading file.")
-            response = requests.get(url_download, stream=True, timeout=30)
-            response.raise_for_status()
+            print(f"Skipping download of {download_path} because it already exists.")
+            return
 
-        # Save downloaded file to current release
-        with open(download_path, "wb") as f:
-            f.write(response.content)
-
-    else:
-        print(f"No previous release found. Downloading file '{filename}'.")
-        response = requests.get(url_download, stream=True, timeout=30)
-        response.raise_for_status()
-        with open(download_path, "wb") as f:
-            f.write(response.content)
+    response = requests.get(url_download, stream=True, timeout=30)
+    response.raise_for_status()
+    with open(download_path, "wb") as f:
+        f.write(response.content)
 
 
 def get_html_content(url: str) -> BeautifulSoup:
@@ -180,7 +78,7 @@ def get_html_content(url: str) -> BeautifulSoup:
     driver.get(url)
 
     # give time to load javascript
-    time.sleep(3)
+    time.sleep(5)
 
     html_content = driver.page_source
 
@@ -240,17 +138,18 @@ def download_file(url_download: str, save_path: pathlib.Path) -> bool:
     -------
         True if the file was downloaded, False if a cached file was found
     """
-    if not save_path.exists():
-        with requests.get(url_download, stream=True, timeout=30) as response:
-            response.raise_for_status()
+    if save_path.exists():
+        if not save_path.is_symlink():
+            print(f"Skipping download of {save_path} because it already exists.")
+            return False
+        os.remove(save_path)
 
-            with open(save_path, mode="wb") as file:
-                file.write(response.content)
+    with requests.get(url_download, stream=True, timeout=30) as response:
+        response.raise_for_status()
+        with open(save_path, mode="wb") as file:
+            file.write(response.content)
 
-        return True
-    else:
-        print(f"Skipping download of {save_path}" " because it already exists.")
-    return False
+    return True
 
 
 def unzip_file(local_filename: pathlib.Path) -> list[str]:
@@ -274,14 +173,21 @@ def unzip_file(local_filename: pathlib.Path) -> list[str]:
                     extracted_file_path = local_filename.parent / file_info.filename
 
                     if extracted_file_path.exists():
-                        print(
-                            f"File '{file_info.filename}' already exists. "
-                            f"Skipping extraction."
-                        )
-                    else:
-                        print(f"Extracting '{file_info.filename}'...")
-                        zip_file.extract(file_info, local_filename.parent)
-                        unzipped_files.append(local_filename.name)
+                        if not extracted_file_path.is_symlink():
+                            print(
+                                f"File '{file_info.filename}' already exists. "
+                                f"Skipping extraction."
+                            )
+                            continue
+                        else:
+                            file_to_unzip_path = (
+                                local_filename.parent / file_info.filename
+                            )
+                            os.remove(file_to_unzip_path)
+
+                    print(f"Extracting '{file_info.filename}'...")
+                    zip_file.extract(file_info, local_filename.parent)
+                    unzipped_files.append(local_filename.name)
 
         # TODO Better error logging/visibilty
         except zipfile.BadZipFile:

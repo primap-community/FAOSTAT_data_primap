@@ -206,6 +206,9 @@ authorized_licenses = [
     "python software foundation license",
     "zpl 2.1",
     'CMU License (MIT-CMU)',
+    'GNU General Public License v3 (GPLv3)',
+    'GNU Lesser General Public License v3 (LGPLv3)',
+
 ]
 # This starting list is relatively conservative. Depending on the project, it
 # may make sense to move some of these into the authorized list
