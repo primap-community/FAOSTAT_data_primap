@@ -348,7 +348,7 @@ def process(ds: xarray.Dataset):
     gases = ["CO2", "CH4", "N2O"]
 
     for var in gases:
-        conversion_path = root_path / f"conversion_FAO_IPPCC2006_PRIMAP_{var}.csv"
+        conversion_path = root_path / f"conv_FAO_IPPCC2006_PRIMAP_{var}.csv"
         conv[var] = cc.Conversion.from_csv(
             conversion_path,
             cats=cats,
