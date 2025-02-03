@@ -307,7 +307,7 @@ def read_data(  # noqa: PLR0915 PLR0912
 
 
 # TODO we don't need the year, the conversion should remain the same
-def process(ds: xarray.Dataset):
+def process(ds: xarray.Dataset) -> xarray.Dataset:
     """
     Process dataset.
 
@@ -351,7 +351,7 @@ def process(ds: xarray.Dataset):
         conversion_path = root_path / f"conv_FAO_IPPCC2006_PRIMAP_{var}.csv"
         conv[var] = cc.Conversion.from_csv(
             conversion_path,
-            cats=cats,
+            cats=cats,  # type: ignore
         )
 
     # convert for each entity
@@ -385,7 +385,7 @@ def process(ds: xarray.Dataset):
         agg_info=agg_info_ipcc2006_primap_CH4
     )
 
-    return result_proc
+    return result_proc  # type: ignore
 
 
 def read_latest_data(
