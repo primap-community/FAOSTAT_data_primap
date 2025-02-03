@@ -20,11 +20,10 @@ from faostat_data_primap.helper.definitions import (
     config_to_if,
     read_config_all,
 )
-
-# todo replace with FAO climate categories once it's done
 from faostat_data_primap.helper.paths import (
     downloaded_data_path,
     extracted_data_path,
+    root_path,
 )
 
 
@@ -349,8 +348,9 @@ def process(ds: xarray.Dataset):
     gases = ["CO2", "CH4", "N2O"]
 
     for var in gases:
+        conversion_path = root_path / f"conversion_FAO_IPPCC2006_PRIMAP_{var}.csv"
         conv[var] = cc.Conversion.from_csv(
-            f"../../conversion_FAO_IPPCC2006_PRIMAP_{var}.csv",
+            conversion_path,
             cats=cats,
         )
 

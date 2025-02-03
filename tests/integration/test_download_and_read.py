@@ -47,8 +47,9 @@ def test_download_all_domains(tmp_path):
     assert release_folder[0].startswith("v")
 
     output_files = os.listdir(extracted_data_path / release_folder[0])
+
     # in the folder there should be three files
-    assert len(output_files) == 3
+    assert len(output_files) == 6
 
     # a .yaml, .csv, and .nc file
     required_extensions = {"nc", "csv", "yaml"}
