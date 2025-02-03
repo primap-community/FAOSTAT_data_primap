@@ -14,7 +14,7 @@ agg_info_fao = {
                 "1.A.1.a.i",
                 "1.A.1.a.ii",
             ],
-            "sel": {"variable": ["N2O"]},
+            "sel": {"variable": ["CO2"]},
         },
         "1.A.1": {
             "tolerance": 1,

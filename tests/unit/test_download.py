@@ -1,7 +1,7 @@
 import pytest
 import requests
 
-from src.faostat_data_primap.download import (
+from faostat_data_primap.download import (
     calculate_checksum,
     download_methodology,
     find_previous_release_path,

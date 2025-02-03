@@ -1,7 +1,7 @@
 import os
 
-from src.faostat_data_primap.download import download_all_domains
-from src.faostat_data_primap.read import read_latest_data
+from faostat_data_primap.download import download_all_domains
+from faostat_data_primap.read import read_latest_data
 
 
 # test the complete download and read process

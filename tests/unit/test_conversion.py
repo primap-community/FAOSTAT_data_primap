@@ -1,11 +1,11 @@
 import primap2 as pm2
 import pytest
 
-from src.faostat_data_primap.helper.paths import (
+from faostat_data_primap.helper.paths import (
     downloaded_data_path,
     extracted_data_path,
 )
-from src.faostat_data_primap.read import process, read_data
+from faostat_data_primap.read import process, read_data
 
 
 # For development work on process function only
