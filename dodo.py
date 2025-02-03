@@ -6,7 +6,7 @@ import datalad.api
 
 def task_download():
     """
-    test datalad target
+    Download latest data
     """
 
     def datalad_run_download():
