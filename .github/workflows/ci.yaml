@@ -60,6 +60,8 @@ jobs:
           venv-id: "tests-${{ runner.os }}"
           poetry-dependency-install-flags: "--all-extras"
       - name: Run tests
+        env:
+          PYTHONPATH: src
         run: |
           poetry run pytest -r a -v src tests --import-mode=importlib --doctest-modules --cov=src --cov-report=term-missing --cov-report=xml
           poetry run coverage report
