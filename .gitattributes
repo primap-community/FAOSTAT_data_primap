@@ -1,6 +1,6 @@
 * annex.backend=MD5E
 **/.git* annex.largefiles=nothing
 * annex.largefiles=((mimeencoding=binary)and(largerthan=0))
-*.csv annex.largefiles=anything
+*.csv annex.largefiles=nothing
 *.zip annex.largefiles=anything
 *.pdf annex.largefiles=anything
