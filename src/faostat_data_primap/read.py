@@ -306,7 +306,6 @@ def read_data(  # noqa: PLR0915 PLR0912
     result_proc.pr.to_netcdf(filepath, encoding=encoding)
 
 
-# TODO we don't need the year, the conversion should remain the same
 def process(ds: xarray.Dataset) -> xarray.Dataset:
     """
     Process dataset.
@@ -317,7 +316,7 @@ def process(ds: xarray.Dataset) -> xarray.Dataset:
     Parameters
     ----------
     ds
-        The data set to preocess.
+        The data set to process.
 
     Returns
     -------
@@ -343,7 +342,6 @@ def process(ds: xarray.Dataset) -> xarray.Dataset:
 
     # We need a conversion CSV file for each entity
     # That's a temporary workaround until the filter function in climate categories works
-    # TODO the "year" variable is not a great approach to handle configurations
     conv = {}
     gases = ["CO2", "CH4", "N2O"]
 
