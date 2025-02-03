@@ -1,7 +1,7 @@
 * annex.backend=MD5E
 **/.git* annex.largefiles=nothing
 * annex.largefiles=((mimeencoding=binary)and(largerthan=0))
-*.csv annex.largefiles=nothing
+*.csv annex.largefiles=anything
 *.zip annex.largefiles=anything
 *.pdf annex.largefiles=anything
 conv_FAO_IPPCC2006_PRIMAP_CH4.csv annex.largefiles=nothing
