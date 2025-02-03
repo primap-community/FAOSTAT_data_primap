@@ -6,3 +6,4 @@
 *.pdf annex.largefiles=anything
 conversion_FAO_IPPCC2006_PRIMAP_CH4.csv annex.largefiles=nothing
 conversion_FAO_IPPCC2006_PRIMAP_CH4_test.csv annex.largefiles=nothing
+conv_FAO_IPPCC2006_PRIMAP_CH4.csv annex.largefiles=nothing
