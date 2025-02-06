@@ -23,7 +23,6 @@ from faostat_data_primap.helper.definitions import (
 from faostat_data_primap.helper.paths import (
     downloaded_data_path,
     extracted_data_path,
-    root_path,
 )
 
 
@@ -324,15 +323,15 @@ def process(ds: xarray.Dataset) -> xarray.Dataset:
 
     """
     # make categorisation A from yaml
-    categorisation_a = cc.FAO
+    # categorisation_a = cc.FAO
     # make categorisation B from yaml
-    categorisation_b = cc.IPCC2006_PRIMAP
+    # categorisation_b = cc.IPCC2006_PRIMAP
 
     # category FAOSTAT not yet part of climate categories, so we need to add it manually
-    cats = {
-        "FAO": categorisation_a,
-        "IPCC2006_PRIMAP": categorisation_b,
-    }
+    # cats = {
+    #     "FAO": categorisation_a,
+    #     "IPCC2006_PRIMAP": categorisation_b,
+    # }
 
     # drop UNFCCC data
     ds = ds.drop_sel(source="UNFCCC")
@@ -342,22 +341,25 @@ def process(ds: xarray.Dataset) -> xarray.Dataset:
 
     # We need a conversion CSV file for each entity
     # That's a temporary workaround until the filter function in climate categories works
-    conv = {}
+    # conv_old = {}
     gases = ["CO2", "CH4", "N2O"]
-
-    for var in gases:
-        conversion_path = root_path / f"conv_FAO_IPPCC2006_PRIMAP_{var}.csv"
-        conv[var] = cc.Conversion.from_csv(
-            conversion_path,
-            cats=cats,  # type: ignore
-        )
-
+    #
+    # for var in gases:
+    #     conversion_path = root_path / f"conv_FAO_IPPCC2006_PRIMAP_{var}.csv"
+    #     conv_old[var] = cc.Conversion.from_csv(
+    #         conversion_path,
+    #         cats=cats,  # type: ignore
+    #     )
+    conv = cc.FAO.conversion_to(cc.IPCC2006_PRIMAP)
     # convert for each entity
     da_dict = {}
     for var in gases:
+        conv_for_gas = conv.filter(aux_dim="gas", values=[var])
+        # conv_for_gas_old = conv_old[var]
         da_dict[var] = ds[var].pr.convert(
             dim="category (FAO)",
-            conversion=conv[var],
+            # conversion=conv[var],
+            conversion=conv_for_gas,
         )
 
     result = xr.Dataset(da_dict)
