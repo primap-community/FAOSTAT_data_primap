@@ -445,8 +445,8 @@ read_config_all: Any = {
             "filename": "Emissions_livestock_E_All_Data_NOFLAG.csv",
             "areas_to_remove": [
                 *areas_to_remove_base,
-                "Belgium-Luxembourg",
-                "Serbia and Montenegro",
+                # "Belgium-Luxembourg",
+                # "Serbia and Montenegro",
                 "European Union (27)",
             ],
             "items_to_remove": [
@@ -584,8 +584,8 @@ read_config_all: Any = {
             "filename": "Emissions_livestock_E_All_Data_NOFLAG.csv",
             "areas_to_remove": [
                 *areas_to_remove_base,
-                "Belgium-Luxembourg",
-                "Serbia and Montenegro",
+                # "Belgium-Luxembourg",
+                # "Serbia and Montenegro",
                 "European Union (27)",
             ],
             "items_to_remove": [

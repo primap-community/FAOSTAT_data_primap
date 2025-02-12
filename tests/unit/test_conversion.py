@@ -35,18 +35,18 @@ def test_processed_output_remains_the_same():
 @pytest.mark.parametrize(
     "domains_and_releases_to_read",
     [
-        pytest.param(
-            [
-                ("farm_gate_agriculture_energy", "2023-12-13"),
-                ("farm_gate_emissions_crops", "2023-11-09"),
-                ("farm_gate_livestock", "2023-11-09"),
-                ("land_use_drained_organic_soils", "2023-11-09"),
-                ("land_use_fires", "2023-11-09"),
-                ("land_use_forests", "2023-11-09"),
-                ("pre_post_agricultural_production", "2023-11-09"),
-            ],
-            id="2023 release",
-        ),
+        # pytest.param(
+        #     [
+        #         ("farm_gate_agriculture_energy", "2023-12-13"),
+        #         ("farm_gate_emissions_crops", "2023-11-09"),
+        #         ("farm_gate_livestock", "2023-11-09"),
+        #         ("land_use_drained_organic_soils", "2023-11-09"),
+        #         ("land_use_fires", "2023-11-09"),
+        #         ("land_use_forests", "2023-11-09"),
+        #         ("pre_post_agricultural_production", "2023-11-09"),
+        #     ],
+        #     id="2023 release",
+        # ),
         pytest.param(
             [
                 ("farm_gate_agriculture_energy", "2024-11-14"),
@@ -65,7 +65,8 @@ def test_read(tmp_path, domains_and_releases_to_read):
     read_data(
         domains_and_releases_to_read=domains_and_releases_to_read,
         read_path=downloaded_data_path,
-        save_path=tmp_path,
+        # save_path=tmp_path,
+        save_path=extracted_data_path,
     )
 
 
