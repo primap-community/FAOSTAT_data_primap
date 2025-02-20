@@ -591,13 +591,13 @@ colorama = {version = "*", markers = "platform_system == \"Windows\""}
 
 [[package]]
 name = "climate-categories"
-version = "0.10.5"
+version = "0.10.6"
 description = "Commonly used codes, categories, terminologies, and nomenclatures used in climate policy analysis as a Python package."
 optional = false
 python-versions = "<3.14,>=3.11"
 files = [
-    {file = "climate_categories-0.10.5-py3-none-any.whl", hash = "sha256:8a887c912e51b8c92a54d45f840ec5a1f94a73b89e211c2e793021ea2593d0ea"},
-    {file = "climate_categories-0.10.5.tar.gz", hash = "sha256:c97cec39ed838952d147a93b973d82ab0f14dda60459d2852863dd0a1a2f3edf"},
+    {file = "climate_categories-0.10.6-py3-none-any.whl", hash = "sha256:b96fd50c9d484aacbbb2a9a94e14e47e950c0ae11de0604f355a8590e31f4005"},
+    {file = "climate_categories-0.10.6.tar.gz", hash = "sha256:4b12dac466691b977c9a7fc324663e38c37b3a2643a41543c1eecc2307c49ef0"},
 ]
 
 [package.dependencies]
@@ -5354,4 +5354,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.13"
-content-hash = "49ecf834cde076e33ff5fd9b3aff9a20d09b4f24e0bf2fdbe97fba1c3fb81b73"
+content-hash = "0e21dcd8b6ad03c346dc4be69f84c84dfc995f4e5bbdeb217f17527a06b9eb86"
