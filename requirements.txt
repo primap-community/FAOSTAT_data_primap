@@ -47,7 +47,7 @@ attrs==24.2.0 ; python_version >= "3.11" and python_version < "3.13" \
 babel==2.16.0 ; python_version >= "3.11" and python_version < "3.13" \
     --hash=sha256:368b5b98b37c06b7daf6696391c3240c938b37767d4584413e8438c5c435fa8b \
     --hash=sha256:d1f3554ca26605fe173f3de0c65f750f5a42f924499bf134de6423582298e316
-backports-tarfile==1.2.0 ; python_version >= "3.11" and python_version < "3.12" \
+backports-tarfile==1.2.0 ; python_version == "3.11" \
     --hash=sha256:77e284d754527b01fb1e6fa8a1afe577858ebe4e9dad8919e34c862cb399bc34 \
     --hash=sha256:d75e02c268746e1b8144c278978b6e98e85de6ad16f8e4b0844a154557eca991
 beautifulsoup4==4.12.3 ; python_version >= "3.11" and python_version < "3.13" \
@@ -1130,7 +1130,7 @@ pathspec==0.12.1 ; python_version >= "3.11" and python_version < "3.13" \
 patool==3.1.0 ; python_version >= "3.11" and python_version < "3.13" \
     --hash=sha256:401a918bdbf65434fd59c038bdb2c15ff7185675aedddb4494330c3e8e4fe80d \
     --hash=sha256:417ed1ff7b9c979ce8a10114ed9bc280b08e3af3df3072e761303a3e00aaba04
-pexpect==4.9.0 ; python_version >= "3.11" and python_version < "3.13" and (sys_platform != "win32" and sys_platform != "emscripten") \
+pexpect==4.9.0 ; python_version >= "3.11" and python_version < "3.13" and sys_platform != "win32" and sys_platform != "emscripten" \
     --hash=sha256:7236d1e080e4936be2dc3e326cec0af72acf9212a7e1d060210e70a47e253523 \
     --hash=sha256:ee7d41123f3c9911050ea2c2dac107568dc43b2d3b0c7557a33212c398ead30f
 pillow==11.1.0 ; python_version >= "3.11" and python_version < "3.13" \
