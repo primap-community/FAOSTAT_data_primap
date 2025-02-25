@@ -14,7 +14,7 @@ agg_info_fao = {
                 "1.A.1.a.i",
                 "1.A.1.a.ii",
             ],
-            "sel": {"variable": ["CO2"]},
+            "sel": {"variable": ["N2O"]},
         },
         "1.A.1": {
             "tolerance": 1,
@@ -205,7 +205,7 @@ agg_info_fao = {
         },
         "1.A": {
             # crops
-            "tolerance": 1,
+            "tolerance": 0.5,
             "sources": [
                 "1.A.1",
                 "1.A.2",
@@ -220,6 +220,7 @@ agg_info_fao = {
                 "1.A.11",
                 "1.A.12",
             ],
+            "sel": {"variable": ["N2O", "CH4"]},
         },
         "1.B.2": {
             "tolerance": 1,
