@@ -205,7 +205,7 @@ agg_info_fao = {
         },
         "1.A": {
             # crops
-            "tolerance": 0.5,
+            "tolerance": 1,
             "sources": [
                 "1.A.1",
                 "1.A.2",
@@ -520,10 +520,9 @@ agg_info_ipcc2006_primap_CO2 = {
         "M.LULUCF": {
             "sources": [
                 "3.B.1",  # Carbon stock change in forests (FAO 4, or 4.A and 4.B)
-                "3.B.2",  # Drained grassland
-                "3.B.3",  # Drained cropland
-                # "3.C.1.a",  # Biomass Burning In Forests
-                "3.C.1.b",  # Fires in organic soils
+                "M.3.B.2.DOS",  # crop land - drained organic soils
+                "M.3.B.2.FOS",  # crop land - fires in organic soils
+                "3.B.3",  # grass land
             ],
             "sel": {"variable": ["CO2"]},
         },

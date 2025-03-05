@@ -3,9 +3,9 @@
 FAO,IPCC2006_PRIMAP,comment
 4,3.B.1,Carbon stock change in forests
 4.B,M.NFC,Net Forest conversion
-5.A,3.B.3,Drained grassland
-5.B,3.B.2,Drained cropland
+5.A,3.B.3,FAO 5.A Drained grassland to IPCC 3.B.3 Grassland
+5.B,M.3.B.2.DOS,FAO 5.B Drained cropland to IPCC 3.B.2 Cropland (drained organic soils)
 6.A,3.C.1.a, FAO 6.A forest fires to IPCC 3.C.1.a Biomass burning in forest lands
 6.B, 3.C.1.c, FAO 6.B savanna fires to IPCC 3.C.1.c Biomass burning in grasslands
-6.C, 3.C.1.b, FAO 6.C Fires in organic soils to IPCC 3.C.1.b Biomass Burning In Croplands
+6.C, M.3.B.2.FOS, FAO 6.C Fires in organic soils to IPCC 3.B.3 cropland (fires in organic soils)
 7.M + 7.A, 2.G, Manufacturing fertlisers and pesticides
