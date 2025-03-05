@@ -489,7 +489,7 @@ agg_info_ipcc2006_primap_CO2 = {
         },
         "M.3.C.1.AG": {  # AG-related emissions from Biomass Burning
             "sources": [
-                "3.C.1.b",  # Biomass Burning In Croplands
+                # "3.C.1.b",  # Biomass Burning In Croplands
                 "3.C.1.c",  # Biomass Burning in Grasslands
             ],
             "sel": {"variable": ["CO2"]},
