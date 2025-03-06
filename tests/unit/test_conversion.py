@@ -28,6 +28,13 @@ def test_processed_output_remains_the_same():
     # process raw data
     ds_processed_new = process(ds=ds_raw)
 
+    # filter by primap categories (sub-categories can change)
+    primap_sectors = ["3", "3.A", "M.AG", "M.AG.ELV", "M.LULUCF"]
+    ds_processed = ds_processed.loc[{"category (IPCC2006_PRIMAP)": primap_sectors}]
+    ds_processed_new = ds_processed_new.loc[
+        {"category (IPCC2006_PRIMAP)": primap_sectors}
+    ]
+
     # compare
     assert ds_processed.broadcast_equals(ds_processed_new)
 

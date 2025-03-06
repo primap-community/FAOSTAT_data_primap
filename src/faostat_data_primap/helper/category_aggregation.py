@@ -482,15 +482,15 @@ agg_info_ipcc2006_primap_CO2 = {
         "3.C.1": {  # Emissions from Biomass Burning
             "sources": [
                 # "3.C.1.a",  # Biomass Burning In Forest Lands, because not there in 2023 release
-                "3.C.1.b",  # Biomass Burning In Croplands
-                "3.C.1.c",  # Biomass Burning in Grasslands
+                # "3.C.1.b",  # Biomass Burning In Croplands - empty
+                "M.3.C.1.c",  # Biomass Burning in Grasslands - all zero
             ],
             "sel": {"variable": ["CO2"]},
         },
         "M.3.C.1.AG": {  # AG-related emissions from Biomass Burning
             "sources": [
                 # "3.C.1.b",  # Biomass Burning In Croplands
-                "3.C.1.c",  # Biomass Burning in Grasslands
+                "M.3.C.1.c",  # Biomass Burning in Grasslands
             ],
             "sel": {"variable": ["CO2"]},
         },
@@ -520,9 +520,9 @@ agg_info_ipcc2006_primap_CO2 = {
         "M.LULUCF": {
             "sources": [
                 "3.B.1",  # Carbon stock change in forests (FAO 4, or 4.A and 4.B)
-                "M.3.B.2.DOS",  # crop land - drained organic soils
-                "M.3.B.2.FOS",  # crop land - fires in organic soils
-                "3.B.3",  # grass land
+                "M.3.B.2.DOS",  # crop land - drained organic soils (FAO 5.B Drained cropland)
+                "M.3.B.2.FOS",  # crop land - fires in organic soils (6.C Fires in organic soils)
+                "M.3.B.3.DOS",  # grass land - drained organic soils (5.A Drained grassland)
             ],
             "sel": {"variable": ["CO2"]},
         },
@@ -629,9 +629,10 @@ agg_info_ipcc2006_primap_CH4 = {
         "M.LULUCF": {
             "sources": [
                 "3.B.1",  # Carbon stock change in forests
-                "3.B.2",  # Drained grassland
-                "3.B.3",  # Drained cropland
+                "3.B.2",  # Drained cropland
+                "3.B.3",  # Drained grassland
                 "3.C.1.a",  # Biomass Burning In Forests
+                "M.3.B.2.FOS",  # cropland (fires in organic soils)
             ],
             "sel": {"variable": ["CH4"]},
         },
