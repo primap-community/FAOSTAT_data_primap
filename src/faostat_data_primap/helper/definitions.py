@@ -424,8 +424,8 @@ read_config_all: Any = {
             "items-elements_to_remove": [
                 "All Crops - Crop residues (Direct emissions N2O)",
                 "All Crops - Crop residues (Indirect emissions N2O)",
-                "All Crops - Burning crop residues (Emissions N2O)",
-                "All Crops - Burning crop residues (Emissions CH4)",
+                # "All Crops - Burning crop residues (Emissions N2O)",
+                # "All Crops - Burning crop residues (Emissions CH4)",
             ],
             "columns_to_drop": [
                 "Element",

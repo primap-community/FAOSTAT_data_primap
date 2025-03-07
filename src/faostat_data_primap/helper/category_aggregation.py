@@ -6,6 +6,15 @@ Definitions for category aggregation.
 # There are discrepancies of up to 100% due to rounding errors for small values,
 # for example, 0.0001 (rounded from 0.00006) + 0.0004 (rounded from 0.00036)
 # = 0.00042 which is then rounded to 0.0004, while the consistency check expects 0.0005
+# There are even more extreme example, where we need a tolerance of 100%:
+# Eswatini, 1976:
+# 1.A.1.a Crop residues (emissions N2O) = 0.0001
+# 1.A.1.a.i Crop residues (Indirect emissions N2O) = 0
+# 1.A.1.a.ii Crop residues (Direct emissions N2O) = 0
+# Our way to deal with it, was to set the tolerance to 1% and look at the
+# countries / sectors that yielded an error. If only a few countries and years
+# are affected, it is likely just a rounding error. If all years are affected
+# there may be something wrong with the data
 agg_info_fao = {
     "category (FAO)": {
         "1.A.1.a": {  # wheat
@@ -397,6 +406,9 @@ agg_info_ipcc2006_primap_N2O = {
                 "3.C.1.b",  # Biomass Burning In Croplands - looks good (CH4, N2O)
                 "3.C.1.c",  # Biomass Burning in Grasslands - looks good (CH4)
                 "3.C.4",  # Direct N2O Emissions from Managed Soils
+                # "M.3.C.MP",
+                # "M.3.C.MA",
+                # "M.3.C.CR",
                 "M.3.C.4.SF",  # synthetic fertilisers direct
                 # "3.C.5",  # Indirect N2O Emissions from Managed Soils, currently empty
                 "M.3.C.5.SF",  # synthetic fertilisers indirect
@@ -415,6 +427,9 @@ agg_info_ipcc2006_primap_N2O = {
             "sources": [
                 "M.3.C.1.AG",  # TODO 3.C.1 would be correct, but doesn't match 2023
                 "3.C.4",  # Direct N2O Emissions from Managed Soils
+                # "M.3.C.MP",
+                # "M.3.C.MA",
+                # "M.3.C.CR",
                 "M.3.C.4.SF",  # synthetic fertilisers direct
                 # "3.C.5",  # Indirect N2O Emissions from Managed Soils, empty
                 "M.3.C.5.SF",  # synthetic fertilisers indirect

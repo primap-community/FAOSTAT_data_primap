@@ -36,6 +36,8 @@ def test_processed_output_remains_the_same():
     ]
 
     # compare
+    # xr.testing.assert_allclose(ds_processed, ds_processed_new, rtol=1e-5, atol=1e-8)
+
     assert ds_processed.broadcast_equals(ds_processed_new)
 
 
