@@ -7,8 +7,8 @@ M.3.MP, M.3.C.MP, FAO Manure left on pasture to IPCC Direct and indirect emissio
 M.3.MA, M.3.C.MA, FAO Manure applied to soils to IPCC Direct and indirect emissions from manure applied to soils
 M.1.CR, M.3.C.CR, FAO Crop residues to IPCC Direct and indirect emissions from crop residues
 M.3.MP + M.3.MA + M.1.CR, 3.C.4
-1.B.1,M.3.C.4.SF,Better to map indivudually in case it covers different range of years
-1.B.2.a + 1.B.2.b,M.3.C.5.SF,Better to map individually in case it covers different range of years
+1.B.1,M.3.C.4.SF, FAO Synthetic fertilisers direct emissions to IPCC Synthetic fertiliser emissions from direct N2O Emissions from Managed Soils - Better to map indivudually in case it covers different range of years
+1.B.2.a + 1.B.2.b,M.3.C.5.SF, FAO Synthetic fertilisers direct emissions to IPCC Synthetic fertiliser emissions from direct N2O Emissions from Managed Soils - Better to map individually in case it covers different range of years
 5.A,3.B.3,FAO 5.A Drained grassland to IPCC 3.B.3 Grassland
 5.B,3.B.2,Drained cropland
 6.A,3.C.1.a, FAO 6.A forest fires to IPCC 3.C.1.a Biomass burning in forest lands

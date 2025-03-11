@@ -386,36 +386,28 @@ agg_info_fao = {
 # We can change it back to one dict once it's all organised
 agg_info_ipcc2006_primap_N2O = {
     "category (IPCC2006_PRIMAP)": {
-        "3.C.1": {  # Emissions from Biomass Burning
+        "M.3.C.1.AG": {  # AG-related emissions from Biomass Burning
             "sources": [
-                # "3.C.1.a",  # leaving out "Biomass Burning In Forest Lands", because not included in 2023 release
-                "3.C.1.b",  # Biomass Burning In Croplands
-                "3.C.1.c",  # Biomass Burning in Grasslands
+                "3.C.1.b",  # Biomass Burning In Croplands (FAO M.1.BCR All Crops - Burning crop residues)
+                "3.C.1.c",  # Biomass Burning in Grasslands (FAO 6.B savanna fires)
             ],
             "sel": {"variable": ["N2O"]},
         },
-        "M.3.C.1.AG": {  # AG-related emissions from Biomass Burning
-            "sources": [
-                "3.C.1.b",  # Biomass Burning In Croplands
-                "3.C.1.c",  # Biomass Burning in Grasslands
-            ],
+        "3.C.1": {  # Emissions from Biomass Burning (the same as M.3.C.1.AG)
+            "sources": ["M.3.C.1.AG"],
             "sel": {"variable": ["N2O"]},
         },
         "M.3.C.AG": {
             "sources": [
-                "3.C.1.b",  # Biomass Burning In Croplands - looks good (CH4, N2O)
-                "3.C.1.c",  # Biomass Burning in Grasslands - looks good (CH4)
-                "3.C.4",  # Direct N2O Emissions from Managed Soils
-                # "M.3.C.MP",
-                # "M.3.C.MA",
-                # "M.3.C.CR",
+                "M.3.C.1.AG",  # AG-related emissions from Biomass Burning
+                "M.3.C.MP",  # Direct and indirect emissions from manure left on pasture (FAO M.3.MP)
+                "M.3.C.MA",  # Direct and indirect emissions from manure applied to soils (FAO M.3.MA)
+                "M.3.C.CR",  # Direct and indirect emissions from crop residues (FAO M.1.CR)
                 "M.3.C.4.SF",  # synthetic fertilisers direct
-                # "3.C.5",  # Indirect N2O Emissions from Managed Soils, currently empty
                 "M.3.C.5.SF",  # synthetic fertilisers indirect
-                # "3.C.6",  # Indirect N2O Emissions from Manure Management, currently empty
                 "3.C.7",  # rice cultivation
-                "3.B.2",  # Drained grassland, was in LULUCF orginally
-                "3.B.3",  # Drained cropland, was in LULUCF originally
+                "3.B.2",  # Drained grassland
+                "3.B.3",  # Drained cropland
             ],
             "sel": {"variable": ["N2O"]},
         },
@@ -424,48 +416,13 @@ agg_info_ipcc2006_primap_N2O = {
             "sel": {"variable": ["N2O"]},  # "M.3.D.AG" is zero
         },
         "3.C": {
-            "sources": [
-                "M.3.C.1.AG",  # TODO 3.C.1 would be correct, but doesn't match 2023
-                "3.C.4",  # Direct N2O Emissions from Managed Soils
-                # "M.3.C.MP",
-                # "M.3.C.MA",
-                # "M.3.C.CR",
-                "M.3.C.4.SF",  # synthetic fertilisers direct
-                # "3.C.5",  # Indirect N2O Emissions from Managed Soils, empty
-                "M.3.C.5.SF",  # synthetic fertilisers indirect
-                # "3.C.6",  # Indirect N2O Emissions from Manure Management, empty
-                "3.C.7",  # rice cultivation
-                "3.B.2",  # Drained grassland, was in LULUCF orginally
-                "3.B.3",  # Drained cropland, was in LULUCF originally
-            ],
+            "sources": ["M.3.C.AG"],
             "sel": {"variable": ["N2O"]},
         },
-        # TODO 3.A.2.x are currently not read in
-        # "3.A.2.a": {  # decomposition of manure - CH4, N2O
-        #     "sources": [
-        #         "3.A.2.a.i",  # cattle (dairy)
-        #         "3.A.2.a.ii",  # cattle (non-dairy)
-        #     ],
-        #     "sel": {"variable": ["N2O"]},
-        # },
-        # # consistency check
-        # "3.A.2": {  # decomposition of manure - CH4, N2O
-        #     "sources": [
-        #         "3.A.2.a",
-        #         "3.A.2.b",
-        #         "3.A.2.c",
-        #         "3.A.2.d",
-        #         "3.A.2.e",
-        #         "3.A.2.f",
-        #         "3.A.2.g",
-        #         "3.A.2.h",
-        #         "3.A.2.i",
-        #         "3.A.2.j",
-        #     ],
-        #     "sel": {"variable": ["N2O"]},
-        # },
         "3.A": {
-            "sources": ["3.A.1", "3.A.2"],
+            "sources": [
+                "3.A.2"
+            ],  # Manure management (3.A.1 is enteric fermentation and CH4 only)
             "sel": {"variable": ["N2O"]},
         },
         "M.AG": {
@@ -478,9 +435,7 @@ agg_info_ipcc2006_primap_N2O = {
         "M.LULUCF": {
             "sources": [
                 "3.B.1",  # Carbon stock change in forests (FAO 4, or 4.A and 4.B)
-                "M.NFC",
-                # "3.B.2",  # Drained grassland
-                # "3.B.3",  # Drained cropland
+                "M.NFC",  # Net forest conversion
                 "3.C.1.a",  # Biomass Burning In Forests
             ],
             "sel": {"variable": ["N2O"]},
