@@ -426,13 +426,6 @@ agg_info_ipcc2006_primap_N2O = {
                 "M.3.C.1.AG",  # AG-related emissions from Biomass Burning, same as 3.C.1
                 "3.C.4",  # Direct N2O Emissions from Managed Soils
                 "3.C.5",  # Indirect N2O Emissions from Managed Soils
-                # "M.3.C.45.MP",  # Direct and indirect emissions from manure left on pasture (FAO M.3.MP)
-                # "M.3.C.45.MA",  # Direct and indirect emissions from manure applied to soils (FAO M.3.MA)
-                # "M.3.C.45.CR",  # Direct and indirect emissions from crop residues (FAO M.1.CR)
-                # "3.C.4.a",  # synthetic fertilisers direct
-                # "M.3.C.5.SF",  # synthetic fertilisers indirect - there is no IPCC sub-category for this
-                # "M.3.C.4.DOS.CL",  # Drained cropland (FAO 5.A drained cropland)
-                # "M.3.C.4.DOS.GL",  # Drained grassland (FAO 5.B drained grassland)
             ],
             "sel": {"variable": ["N2O"]},
         },
