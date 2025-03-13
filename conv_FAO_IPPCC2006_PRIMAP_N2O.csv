@@ -10,5 +10,5 @@ M.1.CR, M.3.C.45.CR, FAO Crop residues to IPCC Direct and indirect emissions N2O
 1.B.2.a + 1.B.2.b,M.3.C.5.SF, FAO Synthetic fertilisers direct emissions to IPCC Synthetic fertiliser emissions from direct N2O Emissions from Managed Soils
 5.A,M.3.C.4.DOS.GL,FAO 5.A Drained grassland to IPCC 3.C.4 share of drained organic soils in grass land
 5.B,M.3.C.4.DOS.CL,FAO 5.B Drained cropland to IPCC 3.C.4 share of drained organic soils in cropland
-6.A,3.C.1.a, FAO 6.A forest fires to IPCC 3.C.1.a Biomass burning in forest lands
+6.A,M.3.C.1.a, FAO 6.A forest fires to IPCC M.3.C.1.a Biomass burning in forest lands (M category because it is not contained in the 3.C.1 sum)
 6.B, 3.C.1.c, FAO 6.B savanna fires to IPCC 3.C.1.c Biomass burning in grasslands

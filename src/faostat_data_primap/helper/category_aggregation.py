@@ -212,6 +212,18 @@ agg_info_fao = {
             ],
             "sel": {"variable": ["N2O"]},
         },
+        # Only some crop types are burned on the field
+        # Rounding errors up to 100% (see explanation above)
+        "M.1.BCR": {
+            "tolerance": 1,
+            "sources": [
+                "1.A.1.b",  # wheat
+                "1.A.2.b",  # rice
+                "1.A.6.b",  # maize (corn)
+                "1.A.7.b",  # sugar cane
+            ],
+            "sel": {"variable": ["N2O", "CH4"]},
+        },
         "1.A": {
             # crops
             "tolerance": 1,
@@ -455,7 +467,10 @@ agg_info_ipcc2006_primap_N2O = {
         "M.LULUCF": {
             "sources": [
                 "3.B.1",  # Carbon stock change in forests (FAO 4, or 4.A and 4.B)
-                "3.C.1.a",  # Biomass Burning In Forests (FAO 6.A forest fires)
+                # Note that IPCC M.3.C.1.a biomass burning in forest goes to LULUCF and not to AG. According to the FAO
+                # mapping document it is part of forest land.
+                # M.3.C.1.a for CO2 is an exception, because it is already included in the carbon stock change (FAO 4)
+                "M.3.C.1.a",  # Biomass Burning In Forests (FAO 6.A forest fires)
             ],
             "sel": {"variable": ["N2O"]},
         },
@@ -511,75 +526,30 @@ agg_info_ipcc2006_primap_CO2 = {
 
 agg_info_ipcc2006_primap_CH4 = {
     "category (IPCC2006_PRIMAP)": {
-        "3.A.1.a": {  # enteric fermentation
+        "3.A": {  # Livestock
             "sources": [
-                "3.A.1.a.i",  # cattle (dairy)
-                "3.A.1.a.ii",  # cattle (non-dairy)
+                "3.A.1",  # enteric fermentation (FAO M.3.EF)
+                "3.A.2",  # manure management (FAO M.3.MM)
             ],
-            "sel": {"variable": ["CH4"]},
-        },
-        "3.A.1": {  # enteric fermentation
-            "sources": [
-                "3.A.1.a",
-                "3.A.1.b",
-                "3.A.1.c",
-                "3.A.1.d",
-                "3.A.1.e",
-                "3.A.1.f",
-                "3.A.1.g",
-                "3.A.1.h",
-                "3.A.1.j",
-            ],
-            "sel": {"variable": ["CH4"]},
-        },
-        # TODO 3.A.2.x are currently not read in
-        # "3.A.2.a": {  # decomposition of manure - CH4, N2O
-        #     "sources": [
-        #         "3.A.2.a.i",  # cattle (dairy)
-        #         "3.A.2.a.ii",  # cattle (non-dairy)
-        #     ],
-        #     "sel": {"variable": ["CH4"]},
-        # },
-        # # consistency check
-        # "3.A.2": {  # decomposition of manure - CH4, N2O
-        #     "sources": [
-        #         "3.A.2.a",
-        #         "3.A.2.b",
-        #         "3.A.2.c",
-        #         "3.A.2.d",
-        #         "3.A.2.e",
-        #         "3.A.2.f",
-        #         "3.A.2.g",
-        #         "3.A.2.h",
-        #         "3.A.2.i",
-        #         "3.A.2.j",
-        #     ],
-        #     "sel": {"variable": ["CH4"]},
-        # },
-        "3.A": {
-            "sources": ["3.A.1", "3.A.2"],
             "sel": {"variable": ["CH4"]},
         },
         "3.C.1": {  # Emissions from Biomass Burning
             "sources": [
-                # "3.C.1.a",  # Biomass Burning In Forest Lands, because not there in 2023 release
-                "3.C.1.b",  # Biomass Burning In Croplands
-                "3.C.1.c",  # Biomass Burning in Grasslands
+                "3.C.1.b",  # Biomass Burning In Croplands (FAO M.1.BCR))
+                "3.C.1.c",  # Biomass Burning in Grasslands (FAO 6.B savanna fires)
             ],
             "sel": {"variable": ["CH4"]},
         },
         "M.3.C.1.AG": {  # AG-related emissions from Biomass Burning
             "sources": [
-                "3.C.1.b",  # Biomass Burning In Croplands
-                "3.C.1.c",  # Biomass Burning in Grasslands
+                "3.C.1",  # Emissions from Biomass Burning
             ],
             "sel": {"variable": ["CH4"]},
         },
         "M.3.C.AG": {
             "sources": [
-                "3.C.1.b",  # Biomass Burning In Croplands - looks good (CH4, N2O)
-                "3.C.1.c",  # Biomass Burning in Grasslands - looks good (CH4)
-                "3.C.7",  # rice cultivation
+                "M.3.C.1.AG",  # AG-related emissions from Biomass Burning
+                "3.C.7",  # rice cultivation (FAO 1.A.2.c Rice cultivation)
             ],
             "sel": {"variable": ["CH4"]},
         },
@@ -597,18 +567,15 @@ agg_info_ipcc2006_primap_CH4 = {
         },
         "M.AG": {
             "sources": [
-                "3.A",
-                "M.AG.ELV",
+                "3.A",  # Livestock
+                "M.AG.ELV",  # Agriculture excluding livestock
             ],
             "sel": {"variable": ["CH4"]},
         },
         "M.LULUCF": {
             "sources": [
-                "3.B.1",  # Carbon stock change in forests
-                "3.B.2",  # Drained cropland
-                "3.B.3",  # Drained grassland
-                "3.C.1.a",  # Biomass Burning In Forests
-                "M.3.B.2.FOS",  # cropland (fires in organic soils)
+                "M.3.C.1.a",  # Biomass Burning In Forests (FAO 6.A forest fires)
+                "M.3.B.2.FOS",  # cropland - fires in organic soils (FAO 6.C fires in organic soils)
             ],
             "sel": {"variable": ["CH4"]},
         },
