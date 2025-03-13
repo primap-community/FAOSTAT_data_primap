@@ -406,7 +406,7 @@ agg_info_ipcc2006_primap_N2O = {
                 "M.3.C.45.MP",  # Direct and indirect emissions from manure left on pasture (FAO M.3.MP)
                 "M.3.C.45.MA",  # Direct and indirect emissions from manure applied to soils (FAO M.3.MA)
                 "M.3.C.45.CR",  # Direct and indirect emissions from crop residues (FAO M.1.CR)
-                "3.C.4.a",  # synthetic fertilisers direct
+                "3.C.4.a",  # synthetic fertilisers direct (FAO 1.B.1)
                 "M.3.C.4.DOS.CL",  # Drained cropland (FAO 5.A drained cropland)
                 "M.3.C.4.DOS.GL",  # Drained grassland (FAO 5.B drained grassland)
             ],
@@ -468,55 +468,42 @@ agg_info_ipcc2006_primap_N2O = {
 
 agg_info_ipcc2006_primap_CO2 = {
     "category (IPCC2006_PRIMAP)": {
-        "3.C.1": {  # Emissions from Biomass Burning
+        # CO2 is LULUCF only
+        # To see which CO2 categories are mapped to LULUCF, go to the FAOSTAT data explorer
+        # and select for item: IPCC aggregates -> LULUCF list, elements: Emissions (CO2), years: any, country: any
+        # There will be four items for each country: Forestland, Net Forest Conversion, Fires in Organic Soils,
+        # and Drained Organic Soils (CO2)
+        # The selection for IPCC Agriculture will be empty, that means CO2 is all LULUCF
+        "3.B.2": {
             "sources": [
-                # "3.C.1.a",  # Biomass Burning In Forest Lands, because not there in 2023 release
-                # "3.C.1.b",  # Biomass Burning In Croplands - empty
-                "M.3.C.1.c",  # Biomass Burning in Grasslands - all zero
+                "M.3.B.2.FOS",  # crop land - fires in organic soils (6.C Fires in organic soils)
+                "M.3.B.2.DOS",  # crop land - drained organic soils (FAO 5.B Drained cropland)
             ],
             "sel": {"variable": ["CO2"]},
         },
-        "M.3.C.1.AG": {  # AG-related emissions from Biomass Burning
+        "3.B.3": {
             "sources": [
-                # "3.C.1.b",  # Biomass Burning In Croplands
-                "M.3.C.1.c",  # Biomass Burning in Grasslands
-            ],
-            "sel": {"variable": ["CO2"]},
-        },
-        "M.3.C.AG": {
-            "sources": ["M.3.C.1.AG"],
-            "sel": {"variable": ["CO2"]},
-        },
-        "3.C": {
-            "sources": [
-                "M.3.C.1.AG",
-            ],
-            "sel": {"variable": ["CO2"]},
-        },
-        "M.AG.ELV": {
-            "sources": [
-                "M.3.C.AG",
-            ],
-            "sel": {"variable": ["CO2"]},
-        },
-        "M.AG": {
-            "sources": [
-                "3.A",
-                "M.AG.ELV",
+                "M.3.B.3.DOS",  # grass land - drained organic soils (FAO 5.A Drained grassland)
             ],
             "sel": {"variable": ["CO2"]},
         },
         "M.LULUCF": {
             "sources": [
+                # Note that IPCC 3.B.1 comes from FAO 4 Carbon stock change in forests,
+                # which is the sum of forestland and net forest conversion.
+                # Also note that the category M.3.C.1.a (or FAO 6.A) forest fires would theoretically go
+                # into LULUCF. However, according to https://files-faostat.fao.org/production/GT/GT_en.pdf
+                # "The estimates from Forest fires exclude CO2, since these are
+                # already covered in the carbon stock changes calculations carried out in the FAOSTAT
+                # Forests domain." -> meaning CO2 is computed but not added to the LULUCF totals
                 "3.B.1",  # Carbon stock change in forests (FAO 4, or 4.A and 4.B)
-                "M.3.B.2.DOS",  # crop land - drained organic soils (FAO 5.B Drained cropland)
-                "M.3.B.2.FOS",  # crop land - fires in organic soils (6.C Fires in organic soils)
-                "M.3.B.3.DOS",  # grass land - drained organic soils (5.A Drained grassland)
+                "3.B.2",  # crop land
+                "3.B.3",  # grass land
             ],
             "sel": {"variable": ["CO2"]},
         },
         "3": {
-            "sources": ["M.AG", "M.LULUCF"],
+            "sources": ["M.LULUCF"],
             "sel": {"variable": ["CO2"]},
         },
     }

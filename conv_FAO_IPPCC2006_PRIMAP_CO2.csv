@@ -6,6 +6,6 @@ FAO,IPCC2006_PRIMAP,comment
 5.A,M.3.B.3.DOS,FAO 5.A Drained grassland to IPCC 3.B.3 Grassland (drained organic soils)
 5.B,M.3.B.2.DOS,FAO 5.B Drained cropland to IPCC 3.B.2 Cropland (drained organic soils)
 6.A,M.3.C.1.a, FAO 6.A forest fires to IPCC M.3.C.1.a Biomass burning in forest lands (M category because it is not contained in the 3.C.1 sum)
-6.B, M.3.C.1.c, FAO 6.B savanna fires to IPCC M.3.C.1.c Biomass burning in grasslands (M category because it is not contained in the 3.C.1 sum)
+6.B, M.3.C.1.c, FAO 6.B savanna fires to IPCC M.3.C.1.c Biomass burning in grasslands (M category because it is not contained in the 3.C.1 sum) - This category is empty in FAOSTAT data explorer - we could consider deleting it
 6.C, M.3.B.2.FOS, FAO 6.C Fires in organic soils to IPCC 3.B.3 cropland (fires in organic soils)
-7.M + 7.A, 2.G, Manufacturing fertlisers and pesticides
+7.M + 7.A, 2.G, Manufacturing fertlisers and pesticides (not used for primap-hist)
