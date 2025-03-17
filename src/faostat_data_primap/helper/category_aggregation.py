@@ -224,6 +224,14 @@ agg_info_fao = {
             ],
             "sel": {"variable": ["N2O", "CH4"]},
         },
+        "M.1.CR": {  # N2O emissions from crop residues
+            "tolerance": 1,
+            "sources": [
+                "M.1.CR.direct",  # direct emissions from crop residues
+                "M.1.CR.indirect",  # indirect emissions from crop residues
+            ],
+            "sel": {"variable": ["N2O"]},
+        },
         "1.A": {
             # crops
             "tolerance": 1,
@@ -417,7 +425,7 @@ agg_info_ipcc2006_primap_N2O = {
             "sources": [
                 "M.3.C.45.MP",  # Direct and indirect emissions from manure left on pasture (FAO M.3.MP)
                 "M.3.C.45.MA",  # Direct and indirect emissions from manure applied to soils (FAO M.3.MA)
-                "M.3.C.45.CR",  # Direct and indirect emissions from crop residues (FAO M.1.CR)
+                "M.3.C.4.CR",  # Direct emissions from crop residues (FAO M.1.CR.direct),
                 "3.C.4.a",  # synthetic fertilisers direct (FAO 1.B.1)
                 "M.3.C.4.DOS.CL",  # Drained cropland (FAO 5.A drained cropland)
                 "M.3.C.4.DOS.GL",  # Drained grassland (FAO 5.B drained grassland)
@@ -428,8 +436,9 @@ agg_info_ipcc2006_primap_N2O = {
             "sources": [
                 # Similarly to 3.C.4, 3.C.5 does not accurately represent the IPCC categories
                 # There should be only indirect emissions in this category, but we only have direct and indirect combined,
-                # except for "M.3.C.5.SF" which is only indirect
+                # except for "M.3.C.5.SF", "M.3.C.5.CR" which are only indirect
                 "M.3.C.5.SF",  # synthetic fertilisers indirect - there is no IPCC sub-category for this
+                "M.3.C.5.CR",  # Indirect emissions from crop residues (FAO M.1.CR.indirect)
             ],
             "sel": {"variable": ["N2O"]},
         },
