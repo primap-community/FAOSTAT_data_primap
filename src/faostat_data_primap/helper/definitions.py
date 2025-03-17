@@ -492,6 +492,10 @@ read_config_all: Any = {
                 "All Animals - Manure management (Emissions N2O)": "M.3.MM",
                 "All Animals - Manure left on pasture (Emissions N2O)": "M.3.MP",
                 "All Animals - Emissions (N2O) (Manure applied)": "M.3.MA",
+                "All Animals - Manure left on pasture (Direct emissions N2O)": "M.3.MP.direct",
+                "All Animals - Manure left on pasture (Indirect emissions N2O)": "M.3.MP.indirect",
+                "All Animals - Manure applied to soils (Direct emissions N2O)": "M.3.MA.direct",
+                "All Animals - Manure applied to soils (Indirect emissions N2O)": "M.3.MA.indirect",
             },
             "category_mapping_item": {
                 "All Animals": "3",
@@ -537,7 +541,7 @@ read_config_all: Any = {
                 "Manure applied to soils (Indirect emissions N2O)": ".3.b",
             },
             "items-elements_to_remove": [
-                "All Animals - Manure left on pasture (Direct emissions N2O)",
+                # "All Animals - Manure left on pasture (Direct emissions N2O)",
                 (
                     "All Animals - Indirect emissions (N2O that leaches) "
                     "(Manure on pasture)"
@@ -546,21 +550,16 @@ read_config_all: Any = {
                     "All Animals - Indirect emissions (N2O that volatilises) "
                     "(Manure on pasture)"
                 ),
-                "All Animals - Manure left on pasture (Indirect emissions N2O)",
-                "All Animals - Manure applied to soils (Direct emissions N2O)",
+                # "All Animals - Manure left on pasture (Indirect emissions N2O)",
+                # "All Animals - Manure applied to soils (Direct emissions N2O)",
                 "All Animals - Indirect emissions (N2O that leaches) (Manure applied)",
                 (
                     "All Animals - Indirect emissions (N2O that volatilises) "
                     "(Manure applied)"
                 ),
-                "All Animals - Manure applied to soils (Indirect emissions N2O)",
+                # "All Animals - Manure applied to soils (Indirect emissions N2O)",
                 "All Animals - Manure management (Direct emissions N2O)",
                 "All Animals - Manure management (Indirect emissions N2O)",
-                # "All Animals - Enteric fermentation (Emissions CH4)",
-                # "All Animals - Manure management (Emissions CH4)",
-                # "All Animals - Manure management (Emissions N2O)",
-                # "All Animals - Manure left on pasture (Emissions N2O)",
-                # "All Animals - Emissions (N2O) (Manure applied)",
             ],
             "columns_to_drop": [
                 "Element",
@@ -631,6 +630,10 @@ read_config_all: Any = {
                 "All Animals - Manure management (Emissions N2O)": "M.3.MM",
                 "All Animals - Manure left on pasture (Emissions N2O)": "M.3.MP",
                 "All Animals - Emissions (N2O) (Manure applied)": "M.3.MA",
+                "All Animals - Manure left on pasture (Direct emissions N2O)": "M.3.MP.direct",
+                "All Animals - Manure left on pasture (Indirect emissions N2O)": "M.3.MP.indirect",
+                "All Animals - Manure applied to soils (Direct emissions N2O)": "M.3.MA.direct",
+                "All Animals - Manure applied to soils (Indirect emissions N2O)": "M.3.MA.indirect",
             },
             "category_mapping_item": {
                 "All Animals": "3",
@@ -676,7 +679,7 @@ read_config_all: Any = {
                 "Manure applied to soils (Indirect emissions N2O)": ".3.b",
             },
             "items-elements_to_remove": [
-                "All Animals - Manure left on pasture (Direct emissions N2O)",
+                # "All Animals - Manure left on pasture (Direct emissions N2O)",
                 (
                     "All Animals - Indirect emissions (N2O that leaches) "
                     "(Manure on pasture)"
@@ -685,21 +688,16 @@ read_config_all: Any = {
                     "All Animals - Indirect emissions (N2O that volatilises) "
                     "(Manure on pasture)"
                 ),
-                "All Animals - Manure left on pasture (Indirect emissions N2O)",
-                "All Animals - Manure applied to soils (Direct emissions N2O)",
+                # "All Animals - Manure left on pasture (Indirect emissions N2O)",
+                # "All Animals - Manure applied to soils (Direct emissions N2O)",
                 "All Animals - Indirect emissions (N2O that leaches) (Manure applied)",
                 (
                     "All Animals - Indirect emissions (N2O that volatilises) "
                     "(Manure applied)"
                 ),
-                "All Animals - Manure applied to soils (Indirect emissions N2O)",
+                # "All Animals - Manure applied to soils (Indirect emissions N2O)",
                 "All Animals - Manure management (Direct emissions N2O)",
                 "All Animals - Manure management (Indirect emissions N2O)",
-                # "All Animals - Enteric fermentation (Emissions CH4)",
-                # "All Animals - Manure management (Emissions CH4)",
-                # "All Animals - Manure management (Emissions N2O)",
-                # "All Animals - Manure left on pasture (Emissions N2O)",
-                # "All Animals - Emissions (N2O) (Manure applied)",
             ],
             "columns_to_drop": [
                 "Element",
@@ -858,8 +856,6 @@ read_config_all: Any = {
             "filename": "Emissions_Drained_Organic_Soils_E_All_Data_NOFLAG.csv",
             "areas_to_remove": [
                 *areas_to_remove_base,
-                # "Belgium-Luxembourg",
-                # "Serbia and Montenegro",
                 "European Union (27)",
             ],
             "elements_to_remove": [
@@ -893,8 +889,6 @@ read_config_all: Any = {
             "filename": "Emissions_Drained_Organic_Soils_E_All_Data_NOFLAG.csv",
             "areas_to_remove": [
                 *areas_to_remove_base,
-                # "Belgium-Luxembourg",
-                # "Serbia and Montenegro",
                 "European Union (27)",
             ],
             "elements_to_remove": [
