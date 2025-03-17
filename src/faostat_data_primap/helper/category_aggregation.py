@@ -434,10 +434,6 @@ agg_info_ipcc2006_primap_N2O = {
             "sel": {"variable": ["N2O"]},
         },
         "3.C.4": {  # Direct N2O Emissions from Managed Soils
-            # We currently only have direct and indirect emissions combined in one category.
-            # Therefore, we need to make a decision how to classify it. We decided to map it all to
-            # direct emissions. In does not make a difference for the primap-hist sectors,
-            # but TODO direct / indirect should be mapped individually
             "sources": [
                 "M.3.C.4.CR",  # Direct emissions from crop residues (FAO M.1.CR.direct),
                 "M.3.C.4.MP",  # Direct emissions from manure left on pasture (FAO M.3.MP.direct)
