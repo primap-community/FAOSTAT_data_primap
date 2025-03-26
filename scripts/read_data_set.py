@@ -5,6 +5,7 @@ import click
 
 from faostat_data_primap.helper.definitions import domains_and_releases_to_read
 from faostat_data_primap.helper.paths import (
+    downloaded_data_path,
     extracted_data_path,
 )
 from faostat_data_primap.read import (
@@ -22,6 +23,7 @@ def run(run_id, save_path):
     else:
         save_path = Path(save_path)
     read_data(
+        read_path=downloaded_data_path,
         domains_and_releases_to_read=domains_and_releases_to_read[run_id],
         save_path=save_path,
     )

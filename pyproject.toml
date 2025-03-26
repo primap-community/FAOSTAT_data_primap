@@ -9,7 +9,7 @@ license = "TBD"
 include = ["LICENCE"]  # poetry uses US English so assumes it will be spelt LICENSE
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.13"
+python = ">=3.11,<3.13"
 selenium = "^4.26.1"
 webdriver-manager = "^4.0.2"
 beautifulsoup4 = "^4.12.3"
@@ -17,10 +17,14 @@ types-beautifulsoup4 = "^4.12.0.20241020"
 types-requests = "^2.32.0.20241016"
 pandas = "^2.2.3"
 pycountry = "^24.6.1"
-primap2 = "^0.11.2"
 pandas-stubs = "^2.2.3.241009"
 datalad = "^1.1.4"
 doit = "^0.36.0"
+xarray = "^2024.11.0"
+jupytext = "^1.16.5"
+jupyter = "^1.1.1"
+primap2 = "^0.12.1"
+climate-categories = "^0.10.6"
 
 
 [tool.poetry.group.tests.dependencies]
@@ -45,6 +49,7 @@ liccheck = "^0.9.1"
 # Required here so that liccheck will install
 # liccheck's installation isn't setup correctly
 setuptools = "^70.1.1"
+plotly = "^5.24.1"
 
 [build-system]
 requires = ["poetry-core"]
@@ -109,6 +114,7 @@ unfixable = [
 ignore = [
     "D200",  # One-line docstring should fit on one line with quotes
     "D400",  # First line should end with a period
+    "E501", # TODO: enable when categorisation spec is in cc
 ]
 line-length = 88
 
@@ -128,6 +134,9 @@ docstring-code-format = true
 ]
 "scripts/*" = [
     "S101" # S101 Use of `assert` detected
+]
+"notebooks/*" = [
+"D100" # D100 Missing docstring at the top of file
 ]
 
 [tool.ruff.isort]

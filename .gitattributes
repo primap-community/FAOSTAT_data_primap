@@ -4,3 +4,6 @@
 *.csv annex.largefiles=anything
 *.zip annex.largefiles=anything
 *.pdf annex.largefiles=anything
+conv_FAO_IPPCC2006_PRIMAP_CH4.csv annex.largefiles=nothing
+conv_FAO_IPPCC2006_PRIMAP_CO2.csv annex.largefiles=nothing
+conv_FAO_IPPCC2006_PRIMAP_N2O.csv annex.largefiles=nothing

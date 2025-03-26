@@ -83,6 +83,52 @@ areas_to_remove_base = [
 # TODO would be a nice to have a type hint here
 read_config_all: Any = {
     "farm_gate_agriculture_energy": {
+        "2023-12-13": {
+            "filename": "Emissions_Agriculture_Energy_E_All_Data_NOFLAG.csv",
+            "areas_to_remove": [
+                *areas_to_remove_base,
+            ],
+            "elements_to_remove": ["Energy use in agriculture"],
+            "entity_mapping": {
+                "Emissions (CO2)": "CO2",
+                "Emissions (CH4)": "CH4",
+                "Emissions (N2O)": "N2O",
+            },
+            "category_mapping_item_element": {
+                "Electricity - Emissions (CO2)": "2.B",
+                "Electricity - Emissions (CH4)": "2.B",
+                "Electricity - Emissions (N2O)": "2.B",
+                "Total Energy - Emissions (CO2)": "2",
+                "Total Energy - Emissions (CH4)": "2",
+                "Total Energy - Emissions (N2O)": "2",
+                "Petroleum products - Emissions (CO2)": "2.E",
+                "Petroleum products - Emissions (CH4)": "2.E",
+                "Petroleum products - Emissions (N2O)": "2.E",
+                "Natural gas - Emissions (CO2)": "2.A",
+                "Natural gas - Emissions (CH4)": "2.A",
+                "Natural gas - Emissions (N2O)": "2.A",
+                "Coal - Emissions (CO2)": "2.C",
+                "Coal - Emissions (CH4)": "2.C",
+                "Coal - Emissions (N2O)": "2.C",
+                "Heat - Emissions (CO2)": "2.D",
+                "Heat - Emissions (CH4)": "2.D",
+                "Heat - Emissions (N2O)": "2.D",
+            },
+            "items-elements_to_remove": [
+                "Total Energy (excl.eletricity & heat) - Emissions (CO2)",
+                "Total Energy (excl.eletricity & heat) - Emissions (CH4)",
+                "Total Energy (excl.eletricity & heat) - Emissions (N2O)",
+            ],
+            "columns_to_drop": [
+                "Element",
+                "Element Code",
+                "Item",
+                "Item Code",
+                "Area Code (M49)",
+                "Area",
+                "Area Code",
+            ],
+        },
         "2024-11-14": {
             "filename": "Emissions_Agriculture_Energy_E_All_Data_NOFLAG.csv",
             "areas_to_remove": [
@@ -94,6 +140,31 @@ read_config_all: Any = {
                 "Emissions (CH4)": "CH4",
                 "Emissions (N2O)": "N2O",
             },
+            "category_mapping_item_element": {
+                "Electricity - Emissions (CO2)": "2.B",
+                "Electricity - Emissions (CH4)": "2.B",
+                "Electricity - Emissions (N2O)": "2.B",
+                "Total Energy - Emissions (CO2)": "2",
+                "Total Energy - Emissions (CH4)": "2",
+                "Total Energy - Emissions (N2O)": "2",
+                "Petroleum products - Emissions (CO2)": "2.E",
+                "Petroleum products - Emissions (CH4)": "2.E",
+                "Petroleum products - Emissions (N2O)": "2.E",
+                "Natural gas - Emissions (CO2)": "2.A",
+                "Natural gas - Emissions (CH4)": "2.A",
+                "Natural gas - Emissions (N2O)": "2.A",
+                "Coal - Emissions (CO2)": "2.C",
+                "Coal - Emissions (CH4)": "2.C",
+                "Coal - Emissions (N2O)": "2.C",
+                "Heat - Emissions (CO2)": "2.D",
+                "Heat - Emissions (CH4)": "2.D",
+                "Heat - Emissions (N2O)": "2.D",
+            },
+            "items-elements_to_remove": [
+                "Total Energy (excl.eletricity & heat) - Emissions (CO2)",
+                "Total Energy (excl.eletricity & heat) - Emissions (CH4)",
+                "Total Energy (excl.eletricity & heat) - Emissions (N2O)",
+            ],
             "columns_to_drop": [
                 "Element",
                 "Element Code",
@@ -103,9 +174,144 @@ read_config_all: Any = {
                 "Area",
                 "Area Code",
             ],
-        }
+        },
     },
     "farm_gate_emissions_crops": {
+        "2023-11-09": {
+            "filename": "Emissions_crops_E_All_Data_NOFLAG.csv",
+            "areas_to_remove": [
+                *areas_to_remove_base,
+                "European Union (27)",
+            ],
+            "elements_to_remove": [
+                "Crop residues (N content)",
+                "Burning crop residues (Biomass burned, dry matter)",
+                "Area harvested",
+                "Nitrogen fertilizer content applied that leaches",
+                "Nitrogen fertilizer content applied that volatilises",
+                "Synthetic fertilizers (Agricultural use)",
+            ],
+            "entity_mapping": {
+                "Crop residues (Emissions N2O)": "N2O",
+                "Crop residues (Direct emissions N2O)": "N2O",
+                "Crop residues (Indirect emissions N2O)": "N2O",
+                "Burning crop residues (Emissions N2O)": "N2O",
+                "Burning crop residues (Emissions CH4)": "CH4",
+                "Rice cultivation (Emissions CH4)": "CH4",
+                "Crops total (Emissions N2O)": "N2O",
+                "Crops total (Emissions CH4)": "CH4",
+                "Synthetic fertilizers (Emissions N2O)": "N2O",
+                "Synthetic fertilizers (Direct emissions N2O)": "N2O",
+                "Synthetic fertilizers (Indirect emissions N2O)": "N2O",
+                "Indirect emissions (N2O that leaches) (Synthetic fertilizers)": "N2O",
+                (
+                    "Indirect emissions (N2O that volatilises) "
+                    "(Synthetic fertilizers)"
+                ): "N2O",
+            },
+            "category_mapping_item_element": {
+                "Barley - Crop residues (Emissions N2O)": "1.A.5.a",
+                "Barley - Crop residues (Direct emissions N2O)": "1.A.5.a.i",
+                "Barley - Crop residues (Indirect emissions N2O)": "1.A.5.a.ii",
+                "Maize (corn) - Crop residues (Emissions N2O)": "1.A.6.a",
+                "Maize (corn) - Crop residues (Direct emissions N2O)": "1.A.6.a.i",
+                "Maize (corn) - Crop residues (Indirect emissions N2O)": "1.A.6.a.ii",
+                "Maize (corn) - Burning crop residues (Emissions N2O)": "1.A.6.b",
+                "Maize (corn) - Burning crop residues (Emissions CH4)": "1.A.6.b",
+                "Sugar cane - Crop residues (Emissions N2O)": "1.A.7.a",
+                "Sugar cane - Burning crop residues (Emissions N2O)": "1.A.7.b",
+                "Sugar cane - Burning crop residues (Emissions CH4)": "1.A.7.b",
+                "Millet - Crop residues (Emissions N2O)": "1.A.4.a",
+                "Millet - Crop residues (Direct emissions N2O)": "1.A.4.a.i",
+                "Millet - Crop residues (Indirect emissions N2O)": "1.A.4.a.ii",
+                "Potatoes - Crop residues (Emissions N2O)": "1.A.3.a",
+                "Potatoes - Crop residues (Direct emissions N2O)": "1.A.3.a.i",
+                "Potatoes - Crop residues (Indirect emissions N2O)": "1.A.3.a.ii",
+                "Rice - Crop residues (Emissions N2O)": "1.A.2.a",
+                "Rice - Crop residues (Direct emissions N2O)": "1.A.2.a.i",
+                "Rice - Crop residues (Indirect emissions N2O)": "1.A.2.a.ii",
+                "Rice - Burning crop residues (Emissions N2O)": "1.A.2.b",
+                "Rice - Burning crop residues (Emissions CH4)": "1.A.2.b",
+                "Rice - Rice cultivation (Emissions CH4)": "1.A.2.c",
+                "Wheat - Crop residues (Emissions N2O)": "1.A.1.a",
+                "Wheat - Crop residues (Direct emissions N2O)": "1.A.1.a.i",
+                "Wheat - Crop residues (Indirect emissions N2O)": "1.A.1.a.ii",
+                "Wheat - Burning crop residues (Emissions N2O)": "1.A.1.b",
+                "Wheat - Burning crop residues (Emissions CH4)": "1.A.1.b",
+                "All Crops - Crops total (Emissions N2O)": "1.A",
+                "All Crops - Crops total (Emissions CH4)": "1.A",
+                (
+                    "Nutrient nitrogen N (total) - Synthetic "
+                    "fertilizers (Emissions N2O)"
+                ): "1.B",
+                (
+                    "Nutrient nitrogen N (total) - "
+                    "Synthetic fertilizers (Direct emissions N2O)"
+                ): "1.B.1",
+                (
+                    "Nutrient nitrogen N (total) - "
+                    "Synthetic fertilizers (Indirect emissions N2O)"
+                ): "1.B.2",
+                (
+                    "Nutrient nitrogen N (total) - "
+                    "Indirect emissions (N2O that leaches) "
+                    "(Synthetic fertilizers)"
+                ): "1.B.2.b",
+                (
+                    "Nutrient nitrogen N (total) - "
+                    "Indirect emissions (N2O that volatilises) "
+                    "(Synthetic fertilizers)"
+                ): "1.B.2.a",
+                "Beans, dry - Crop residues (Emissions N2O)": "1.A.8.a",
+                "Beans, dry - Crop residues (Direct emissions N2O)": "1.A.8.a.i",
+                "Beans, dry - Crop residues (Indirect emissions N2O)": "1.A.8.a.ii",
+                "Oats - Crop residues (Emissions N2O)": "1.A.9.a",
+                "Oats - Crop residues (Direct emissions N2O)": "1.A.9.a.i",
+                "Oats - Crop residues (Indirect emissions N2O)": "1.A.9.a.ii",
+                "Rye - Crop residues (Emissions N2O)": "1.A.10.a",
+                "Rye - Crop residues (Direct emissions N2O)": "1.A.10.a.i",
+                "Rye - Crop residues (Indirect emissions N2O)": "1.A.10.a.ii",
+                "Sorghum - Crop residues (Emissions N2O)": "1.A.11.a",
+                "Sorghum - Crop residues (Direct emissions N2O)": "1.A.11.a.i",
+                "Sorghum - Crop residues (Indirect emissions N2O)": "1.A.11.a.ii",
+                "Soya beans - Crop residues (Emissions N2O)": "1.A.12.a",
+                "Soya beans - Crop residues (Direct emissions N2O)": "1.A.12.a.i",
+                "Soya beans - Crop residues (Indirect emissions N2O)": "1.A.12.a.ii",
+                "Maize (corn) - Crops total (Emissions N2O)": "1.A.6",
+                "Maize (corn) - Crops total (Emissions CH4)": "1.A.6",
+                "Sugar cane - Crops total (Emissions N2O)": "1.A.7",
+                "Sugar cane - Crops total (Emissions CH4)": "1.A.7",
+                "Rice - Crops total (Emissions N2O)": "1.A.2",
+                "Rice - Crops total (Emissions CH4)": "1.A.2",
+                "Wheat - Crops total (Emissions N2O)": "1.A.1",
+                "Wheat - Crops total (Emissions CH4)": "1.A.1",
+                # these extra categories are NOT in the 2024 release
+                "Barley - Crops total (Emissions N2O)": "1.A.5",
+                "Millet - Crops total (Emissions N2O)": "1.A.4",
+                "Potatoes - Crops total (Emissions N2O)": "1.A.3",
+                "Beans, dry - Crops total (Emissions N2O)": "1.A.8",
+                "Oats - Crops total (Emissions N2O)": "1.A.9",
+                "Rye - Crops total (Emissions N2O)": "1.A.10",
+                "Sorghum - Crops total (Emissions N2O)": "1.A.11",
+                "Soya beans - Crops total (Emissions N2O)": "1.A.12",
+                "All Crops - Crop residues (Emissions N2O)": "M.1.CR",
+                "All Crops - Crop residues (Direct emissions N2O)": "M.1.CR.direct",
+                "All Crops - Crop residues (Indirect emissions N2O)": "M.1.CR.indirect",
+                "All Crops - Burning crop residues (Emissions N2O)": "M.1.BCR",
+                "All Crops - Burning crop residues (Emissions CH4)": "M.1.BCR",
+            },
+            "columns_to_drop": [
+                "Element",
+                "Element Code",
+                "Item",
+                "Item Code",
+                "Area Code (M49)",
+                "Area",
+                "Area Code",
+                "Item Code (CPC)",
+                "Source Code",
+            ],
+        },
         "2024-11-14": {
             "filename": "Emissions_crops_E_All_Data_NOFLAG.csv",
             "areas_to_remove": [
@@ -137,6 +343,84 @@ read_config_all: Any = {
                     "(Synthetic fertilizers)"
                 ): "N2O",
             },
+            "category_mapping_item_element": {
+                "Barley - Crop residues (Emissions N2O)": "1.A.5.a",
+                "Barley - Crop residues (Direct emissions N2O)": "1.A.5.a.i",
+                "Barley - Crop residues (Indirect emissions N2O)": "1.A.5.a.ii",
+                "Maize (corn) - Crop residues (Emissions N2O)": "1.A.6.a",
+                "Maize (corn) - Crop residues (Direct emissions N2O)": "1.A.6.a.i",
+                "Maize (corn) - Crop residues (Indirect emissions N2O)": "1.A.6.a.ii",
+                "Maize (corn) - Burning crop residues (Emissions N2O)": "1.A.6.b",
+                "Maize (corn) - Burning crop residues (Emissions CH4)": "1.A.6.b",
+                "Sugar cane - Crop residues (Emissions N2O)": "1.A.7.a",
+                "Sugar cane - Burning crop residues (Emissions N2O)": "1.A.7.b",
+                "Sugar cane - Burning crop residues (Emissions CH4)": "1.A.7.b",
+                "Millet - Crop residues (Emissions N2O)": "1.A.4.a",
+                "Millet - Crop residues (Direct emissions N2O)": "1.A.4.a.i",
+                "Millet - Crop residues (Indirect emissions N2O)": "1.A.4.a.ii",
+                "Potatoes - Crop residues (Emissions N2O)": "1.A.3.a",
+                "Potatoes - Crop residues (Direct emissions N2O)": "1.A.3.a.i",
+                "Potatoes - Crop residues (Indirect emissions N2O)": "1.A.3.a.ii",
+                "Rice - Crop residues (Emissions N2O)": "1.A.2.a",
+                "Rice - Crop residues (Direct emissions N2O)": "1.A.2.a.i",
+                "Rice - Crop residues (Indirect emissions N2O)": "1.A.2.a.ii",
+                "Rice - Burning crop residues (Emissions N2O)": "1.A.2.b",
+                "Rice - Burning crop residues (Emissions CH4)": "1.A.2.b",
+                "Rice - Rice cultivation (Emissions CH4)": "1.A.2.c",
+                "Wheat - Crop residues (Emissions N2O)": "1.A.1.a",
+                "Wheat - Crop residues (Direct emissions N2O)": "1.A.1.a.i",
+                "Wheat - Crop residues (Indirect emissions N2O)": "1.A.1.a.ii",
+                "Wheat - Burning crop residues (Emissions N2O)": "1.A.1.b",
+                "Wheat - Burning crop residues (Emissions CH4)": "1.A.1.b",
+                "All Crops - Crops total (Emissions N2O)": "1.A",
+                "All Crops - Crops total (Emissions CH4)": "1.A",
+                (
+                    "Nutrient nitrogen N (total) - Synthetic "
+                    "fertilizers (Emissions N2O)"
+                ): "1.B",
+                (
+                    "Nutrient nitrogen N (total) - "
+                    "Synthetic fertilizers (Direct emissions N2O)"
+                ): "1.B.1",
+                (
+                    "Nutrient nitrogen N (total) - "
+                    "Indirect emissions (N2O that leaches) "
+                    "(Synthetic fertilizers)"
+                ): "1.B.2.b",
+                (
+                    "Nutrient nitrogen N (total) - "
+                    "Indirect emissions (N2O that volatilises) "
+                    "(Synthetic fertilizers)"
+                ): "1.B.2.a",
+                "Beans, dry - Crop residues (Emissions N2O)": "1.A.8.a",
+                "Beans, dry - Crop residues (Direct emissions N2O)": "1.A.8.a.i",
+                "Beans, dry - Crop residues (Indirect emissions N2O)": "1.A.8.a.ii",
+                "Oats - Crop residues (Emissions N2O)": "1.A.9.a",
+                "Oats - Crop residues (Direct emissions N2O)": "1.A.9.a.i",
+                "Oats - Crop residues (Indirect emissions N2O)": "1.A.9.a.ii",
+                "Rye - Crop residues (Emissions N2O)": "1.A.10.a",
+                "Rye - Crop residues (Direct emissions N2O)": "1.A.10.a.i",
+                "Rye - Crop residues (Indirect emissions N2O)": "1.A.10.a.ii",
+                "Sorghum - Crop residues (Emissions N2O)": "1.A.11.a",
+                "Sorghum - Crop residues (Direct emissions N2O)": "1.A.11.a.i",
+                "Sorghum - Crop residues (Indirect emissions N2O)": "1.A.11.a.ii",
+                "Soya beans - Crop residues (Emissions N2O)": "1.A.12.a",
+                "Soya beans - Crop residues (Direct emissions N2O)": "1.A.12.a.i",
+                "Soya beans - Crop residues (Indirect emissions N2O)": "1.A.12.a.ii",
+                "Maize (corn) - Crops total (Emissions N2O)": "1.A.6",
+                "Maize (corn) - Crops total (Emissions CH4)": "1.A.6",
+                "Sugar cane - Crops total (Emissions N2O)": "1.A.7",
+                "Sugar cane - Crops total (Emissions CH4)": "1.A.7",
+                "Rice - Crops total (Emissions N2O)": "1.A.2",
+                "Rice - Crops total (Emissions CH4)": "1.A.2",
+                "Wheat - Crops total (Emissions N2O)": "1.A.1",
+                "Wheat - Crops total (Emissions CH4)": "1.A.1",
+                "All Crops - Burning crop residues (Emissions N2O)": "M.1.BCR",
+                "All Crops - Burning crop residues (Emissions CH4)": "M.1.BCR",
+                "All Crops - Crop residues (Emissions N2O)": "M.1.CR",
+                "All Crops - Crop residues (Direct emissions N2O)": "M.1.CR.direct",
+                "All Crops - Crop residues (Indirect emissions N2O)": "M.1.CR.indirect",
+            },
             "columns_to_drop": [
                 "Element",
                 "Element Code",
@@ -148,16 +432,25 @@ read_config_all: Any = {
                 "Item Code (CPC)",
                 "Source Code",
             ],
-        }
+        },
     },
     "farm_gate_livestock": {
-        "2024-11-14": {
+        "2023-11-09": {
             "filename": "Emissions_livestock_E_All_Data_NOFLAG.csv",
             "areas_to_remove": [
                 *areas_to_remove_base,
-                "Belgium-Luxembourg",
-                "Serbia and Montenegro",
+                # "Belgium-Luxembourg",
+                # "Serbia and Montenegro",
                 "European Union (27)",
+            ],
+            "items_to_remove": [
+                # we don't need aggregates
+                "Camels and Llamas",
+                "Cattle",  # dairy and non-dairy
+                # mistake by FAO, should be "Mules, hinnies, and asses"
+                "Mules and Asses",
+                "Sheep and Goats",
+                "Swine",  # breeding and market
             ],
             "elements_to_remove": [
                 "Stocks",  # number of animals
@@ -168,6 +461,11 @@ read_config_all: Any = {
                 "Manure applied to soils (N content)",
                 "Manure applied to soils that leaches (N content)",
                 "Manure applied to soils that volatilises (N content)",
+                # TODO ?
+                # sum of direct and direct manure management emissions
+                # would add another level in the category tree, but
+                # is not needed (see miro)
+                # "Manure management (Emissions N2O)",
             ],
             "entity_mapping": {
                 "Livestock total (Emissions N2O)": "N2O",
@@ -188,6 +486,81 @@ read_config_all: Any = {
                 "Indirect emissions (N2O that volatilises) (Manure applied)": "N2O",
                 "Manure applied to soils (Indirect emissions N2O)": "N2O",
             },
+            "category_mapping_item_element": {
+                "All Animals - Enteric fermentation (Emissions CH4)": "M.3.EF",
+                "All Animals - Manure management (Emissions CH4)": "M.3.MM",
+                "All Animals - Manure management (Emissions N2O)": "M.3.MM",
+                "All Animals - Manure left on pasture (Emissions N2O)": "M.3.MP",
+                "All Animals - Emissions (N2O) (Manure applied)": "M.3.MA",
+                "All Animals - Manure left on pasture (Direct emissions N2O)": "M.3.MP.direct",
+                "All Animals - Manure left on pasture (Indirect emissions N2O)": "M.3.MP.indirect",
+                "All Animals - Manure applied to soils (Direct emissions N2O)": "M.3.MA.direct",
+                "All Animals - Manure applied to soils (Indirect emissions N2O)": "M.3.MA.indirect",
+            },
+            "category_mapping_item": {
+                "All Animals": "3",
+                "Asses": "3.A",
+                "Camels": "3.B",
+                "Cattle, dairy": "3.C",
+                "Cattle, non-dairy": "3.D",
+                "Chickens, broilers": "3.E",
+                "Chickens, layers": "3.F",
+                "Goats": "3.G",
+                "Horses": "3.H",
+                "Mules and hinnies": "3.I",
+                "Sheep": "3.J",
+                "Llamas": "3.K",
+                "Chickens": "3.L",
+                "Poultry Birds": "3.M",
+                "Buffalo": "3.N",
+                "Ducks": "3.O",
+                "Swine, breeding": "3.P",
+                "Swine, market": "3.Q",
+                "Turkeys": "3.R",
+            },
+            "category_mapping_element": {
+                "Livestock total (Emissions N2O)": "",
+                "Livestock total (Emissions CH4)": "",
+                "Enteric fermentation (Emissions CH4)": ".4",
+                "Manure management (Emissions CH4)": ".1.a",
+                # TODO we need to aggregate 3.X.1 for CH4
+                "Manure management (Emissions N2O)": ".1",
+                "Manure management (Direct emissions N2O)": ".1.b",
+                "Manure management (Indirect emissions N2O)": ".1.c",
+                "Manure left on pasture (Emissions N2O)": ".2",
+                "Manure left on pasture (Direct emissions N2O)": ".2.a",
+                "Indirect emissions (N2O that leaches) (Manure on pasture)": ".2.b.i",
+                (
+                    "Indirect emissions (N2O that volatilises) " "(Manure on pasture)"
+                ): ".2.b.ii",
+                "Manure left on pasture (Indirect emissions N2O)": ".2.b",
+                "Emissions (N2O) (Manure applied)": ".3",
+                "Manure applied to soils (Direct emissions N2O)": ".3.a",
+                ("Indirect emissions (N2O that leaches) " "(Manure applied)"): ".3.b.i",
+                "Indirect emissions (N2O that volatilises) (Manure applied)": ".3.b.ii",
+                "Manure applied to soils (Indirect emissions N2O)": ".3.b",
+            },
+            "items-elements_to_remove": [
+                # "All Animals - Manure left on pasture (Direct emissions N2O)",
+                (
+                    "All Animals - Indirect emissions (N2O that leaches) "
+                    "(Manure on pasture)"
+                ),
+                (
+                    "All Animals - Indirect emissions (N2O that volatilises) "
+                    "(Manure on pasture)"
+                ),
+                # "All Animals - Manure left on pasture (Indirect emissions N2O)",
+                # "All Animals - Manure applied to soils (Direct emissions N2O)",
+                "All Animals - Indirect emissions (N2O that leaches) (Manure applied)",
+                (
+                    "All Animals - Indirect emissions (N2O that volatilises) "
+                    "(Manure applied)"
+                ),
+                # "All Animals - Manure applied to soils (Indirect emissions N2O)",
+                "All Animals - Manure management (Direct emissions N2O)",
+                "All Animals - Manure management (Indirect emissions N2O)",
+            ],
             "columns_to_drop": [
                 "Element",
                 "Element Code",
@@ -199,7 +572,423 @@ read_config_all: Any = {
                 "Item Code (CPC)",
                 "Source Code",
             ],
-        }
+        },
+        "2024-11-14": {
+            "filename": "Emissions_livestock_E_All_Data_NOFLAG.csv",
+            "areas_to_remove": [
+                *areas_to_remove_base,
+                # "Belgium-Luxembourg",
+                # "Serbia and Montenegro",
+                "European Union (27)",
+            ],
+            "items_to_remove": [
+                # we don't need aggregates
+                "Camels and Llamas",
+                "Cattle",  # dairy and non-dairy
+                # mistake by FAO, should be "Mules, hinnies, and asses"
+                "Mules and Asses",
+                "Sheep and Goats",
+                "Swine",  # breeding and market
+            ],
+            "elements_to_remove": [
+                "Stocks",  # number of animals
+                "Manure management (manure treated, N content)",
+                "Manure left on pasture (N content)",
+                "Manure left on pasture that leaches (N content)",
+                "Manure left on pasture that volatilises (N content)",
+                "Manure applied to soils (N content)",
+                "Manure applied to soils that leaches (N content)",
+                "Manure applied to soils that volatilises (N content)",
+                # TODO ?
+                # sum of direct and direct manure management emissions
+                # would add another level in the category tree, but
+                # is not needed (see miro)
+                # "Manure management (Emissions N2O)",
+            ],
+            "entity_mapping": {
+                "Livestock total (Emissions N2O)": "N2O",
+                "Livestock total (Emissions CH4)": "CH4",
+                "Enteric fermentation (Emissions CH4)": "CH4",
+                "Manure management (Emissions CH4)": "CH4",
+                "Manure management (Emissions N2O)": "N2O",
+                "Manure management (Direct emissions N2O)": "N2O",
+                "Manure management (Indirect emissions N2O)": "N2O",
+                "Manure left on pasture (Emissions N2O)": "N2O",
+                "Manure left on pasture (Direct emissions N2O)": "N2O",
+                "Indirect emissions (N2O that leaches) (Manure on pasture)": "N2O",
+                "Indirect emissions (N2O that volatilises) (Manure on pasture)": "N2O",
+                "Manure left on pasture (Indirect emissions N2O)": "N2O",
+                "Emissions (N2O) (Manure applied)": "N2O",
+                "Manure applied to soils (Direct emissions N2O)": "N2O",
+                "Indirect emissions (N2O that leaches) (Manure applied)": "N2O",
+                "Indirect emissions (N2O that volatilises) (Manure applied)": "N2O",
+                "Manure applied to soils (Indirect emissions N2O)": "N2O",
+            },
+            "category_mapping_item_element": {
+                "All Animals - Enteric fermentation (Emissions CH4)": "M.3.EF",
+                "All Animals - Manure management (Emissions CH4)": "M.3.MM",
+                "All Animals - Manure management (Emissions N2O)": "M.3.MM",
+                "All Animals - Manure left on pasture (Emissions N2O)": "M.3.MP",
+                "All Animals - Emissions (N2O) (Manure applied)": "M.3.MA",
+                "All Animals - Manure left on pasture (Direct emissions N2O)": "M.3.MP.direct",
+                "All Animals - Manure left on pasture (Indirect emissions N2O)": "M.3.MP.indirect",
+                "All Animals - Manure applied to soils (Direct emissions N2O)": "M.3.MA.direct",
+                "All Animals - Manure applied to soils (Indirect emissions N2O)": "M.3.MA.indirect",
+            },
+            "category_mapping_item": {
+                "All Animals": "3",
+                "Asses": "3.A",
+                "Camels": "3.B",
+                "Cattle, dairy": "3.C",
+                "Cattle, non-dairy": "3.D",
+                "Chickens, broilers": "3.E",
+                "Chickens, layers": "3.F",
+                "Goats": "3.G",
+                "Horses": "3.H",
+                "Mules and hinnies": "3.I",
+                "Sheep": "3.J",
+                "Llamas": "3.K",
+                "Chickens": "3.L",
+                "Poultry Birds": "3.M",
+                "Buffalo": "3.N",
+                "Ducks": "3.O",
+                "Swine, breeding": "3.P",
+                "Swine, market": "3.Q",
+                "Turkeys": "3.R",
+            },
+            "category_mapping_element": {
+                "Livestock total (Emissions N2O)": "",
+                "Livestock total (Emissions CH4)": "",
+                "Enteric fermentation (Emissions CH4)": ".4",
+                "Manure management (Emissions CH4)": ".1.a",
+                # TODO we need to aggregate 3.X.1 for CH4
+                "Manure management (Emissions N2O)": ".1",
+                "Manure management (Direct emissions N2O)": ".1.b",
+                "Manure management (Indirect emissions N2O)": ".1.c",
+                "Manure left on pasture (Emissions N2O)": ".2",
+                "Manure left on pasture (Direct emissions N2O)": ".2.a",
+                "Indirect emissions (N2O that leaches) (Manure on pasture)": ".2.b.i",
+                (
+                    "Indirect emissions (N2O that volatilises) " "(Manure on pasture)"
+                ): ".2.b.ii",
+                "Manure left on pasture (Indirect emissions N2O)": ".2.b",
+                "Emissions (N2O) (Manure applied)": ".3",
+                "Manure applied to soils (Direct emissions N2O)": ".3.a",
+                ("Indirect emissions (N2O that leaches) " "(Manure applied)"): ".3.b.i",
+                "Indirect emissions (N2O that volatilises) (Manure applied)": ".3.b.ii",
+                "Manure applied to soils (Indirect emissions N2O)": ".3.b",
+            },
+            "items-elements_to_remove": [
+                # "All Animals - Manure left on pasture (Direct emissions N2O)",
+                (
+                    "All Animals - Indirect emissions (N2O that leaches) "
+                    "(Manure on pasture)"
+                ),
+                (
+                    "All Animals - Indirect emissions (N2O that volatilises) "
+                    "(Manure on pasture)"
+                ),
+                # "All Animals - Manure left on pasture (Indirect emissions N2O)",
+                # "All Animals - Manure applied to soils (Direct emissions N2O)",
+                "All Animals - Indirect emissions (N2O that leaches) (Manure applied)",
+                (
+                    "All Animals - Indirect emissions (N2O that volatilises) "
+                    "(Manure applied)"
+                ),
+                # "All Animals - Manure applied to soils (Indirect emissions N2O)",
+                "All Animals - Manure management (Direct emissions N2O)",
+                "All Animals - Manure management (Indirect emissions N2O)",
+            ],
+            "columns_to_drop": [
+                "Element",
+                "Element Code",
+                "Item",
+                "Item Code",
+                "Area Code (M49)",
+                "Area",
+                "Area Code",
+                "Item Code (CPC)",
+                "Source Code",
+            ],
+        },
+        "2025-02-12": {
+            "filename": "Emissions_livestock_E_All_Data_NOFLAG.csv",
+            "areas_to_remove": [
+                *areas_to_remove_base,
+                "Belgium-Luxembourg",
+                "Serbia and Montenegro",
+                "European Union (27)",
+            ],
+            "items_to_remove": [
+                # we don't need aggregates
+                "Camels and Llamas",
+                "Cattle",  # dairy and non-dairy
+                # mistake by FAO, should be "Mules, hinnies, and asses"
+                "Mules and Asses",
+                "Sheep and Goats",
+                "Swine",  # breeding and market
+            ],
+            "elements_to_remove": [
+                "Stocks",  # number of animals
+                "Manure management (manure treated, N content)",
+                "Manure left on pasture (N content)",
+                "Manure left on pasture that leaches (N content)",
+                "Manure left on pasture that volatilises (N content)",
+                "Manure applied to soils (N content)",
+                "Manure applied to soils that leaches (N content)",
+                "Manure applied to soils that volatilises (N content)",
+                # TODO ?
+                # sum of direct and direct manure management emissions
+                # would add another level in the category tree, but
+                # is not needed (see miro)
+                # "Manure management (Emissions N2O)",
+            ],
+            "entity_mapping": {
+                "Livestock total (Emissions N2O)": "N2O",
+                "Livestock total (Emissions CH4)": "CH4",
+                "Enteric fermentation (Emissions CH4)": "CH4",
+                "Manure management (Emissions CH4)": "CH4",
+                "Manure management (Emissions N2O)": "N2O",
+                "Manure management (Direct emissions N2O)": "N2O",
+                "Manure management (Indirect emissions N2O)": "N2O",
+                "Manure left on pasture (Emissions N2O)": "N2O",
+                "Manure left on pasture (Direct emissions N2O)": "N2O",
+                "Indirect emissions (N2O that leaches) (Manure on pasture)": "N2O",
+                "Indirect emissions (N2O that volatilises) (Manure on pasture)": "N2O",
+                "Manure left on pasture (Indirect emissions N2O)": "N2O",
+                "Emissions (N2O) (Manure applied)": "N2O",
+                "Manure applied to soils (Direct emissions N2O)": "N2O",
+                "Indirect emissions (N2O that leaches) (Manure applied)": "N2O",
+                "Indirect emissions (N2O that volatilises) (Manure applied)": "N2O",
+                "Manure applied to soils (Indirect emissions N2O)": "N2O",
+            },
+            "category_mapping_item_element": {
+                "All Animals - Enteric fermentation (Emissions CH4)": "M.3.EF",
+                "All Animals - Manure management (Emissions CH4)": "M.3.MM",
+                "All Animals - Manure management (Emissions N2O)": "M.3.MM",
+                "All Animals - Manure left on pasture (Emissions N2O)": "M.3.MP",
+                "All Animals - Emissions (N2O) (Manure applied)": "M.3.MA",
+            },
+            "category_mapping_item": {
+                "All Animals": "3",
+                "Asses": "3.A",
+                "Camels": "3.B",
+                "Cattle, dairy": "3.C",
+                "Cattle, non-dairy": "3.D",
+                "Chickens, broilers": "3.E",
+                "Chickens, layers": "3.F",
+                "Goats": "3.G",
+                "Horses": "3.H",
+                "Mules and hinnies": "3.I",
+                "Sheep": "3.J",
+                "Llamas": "3.K",
+                "Chickens": "3.L",
+                "Poultry Birds": "3.M",
+                "Buffalo": "3.N",
+                "Ducks": "3.O",
+                "Swine, breeding": "3.P",
+                "Swine, market": "3.Q",
+                "Turkeys": "3.R",
+            },
+            "category_mapping_element": {
+                "Livestock total (Emissions N2O)": "",
+                "Livestock total (Emissions CH4)": "",
+                "Enteric fermentation (Emissions CH4)": ".4",
+                "Manure management (Emissions CH4)": ".1.a",
+                # TODO we need to aggregate 3.X.1 for CH4
+                "Manure management (Emissions N2O)": ".1",
+                "Manure management (Direct emissions N2O)": ".1.b",
+                "Manure management (Indirect emissions N2O)": ".1.c",
+                "Manure left on pasture (Emissions N2O)": ".2",
+                "Manure left on pasture (Direct emissions N2O)": ".2.a",
+                "Indirect emissions (N2O that leaches) (Manure on pasture)": ".2.b.i",
+                (
+                    "Indirect emissions (N2O that volatilises) " "(Manure on pasture)"
+                ): ".2.b.ii",
+                "Manure left on pasture (Indirect emissions N2O)": ".2.b",
+                "Emissions (N2O) (Manure applied)": ".3",
+                "Manure applied to soils (Direct emissions N2O)": ".3.a",
+                ("Indirect emissions (N2O that leaches) " "(Manure applied)"): ".3.b.i",
+                "Indirect emissions (N2O that volatilises) (Manure applied)": ".3.b.ii",
+                "Manure applied to soils (Indirect emissions N2O)": ".3.b",
+            },
+            "items-elements_to_remove": [
+                "All Animals - Manure left on pasture (Direct emissions N2O)",
+                (
+                    "All Animals - Indirect emissions (N2O that leaches) "
+                    "(Manure on pasture)"
+                ),
+                (
+                    "All Animals - Indirect emissions (N2O that volatilises) "
+                    "(Manure on pasture)"
+                ),
+                "All Animals - Manure left on pasture (Indirect emissions N2O)",
+                "All Animals - Manure applied to soils (Direct emissions N2O)",
+                "All Animals - Indirect emissions (N2O that leaches) (Manure applied)",
+                (
+                    "All Animals - Indirect emissions (N2O that volatilises) "
+                    "(Manure applied)"
+                ),
+                "All Animals - Manure applied to soils (Indirect emissions N2O)",
+                "All Animals - Manure management (Direct emissions N2O)",
+                "All Animals - Manure management (Indirect emissions N2O)",
+                # "All Animals - Enteric fermentation (Emissions CH4)",
+                # "All Animals - Manure management (Emissions CH4)",
+                # "All Animals - Manure management (Emissions N2O)",
+                # "All Animals - Manure left on pasture (Emissions N2O)",
+                # "All Animals - Emissions (N2O) (Manure applied)",
+            ],
+            "columns_to_drop": [
+                "Element",
+                "Element Code",
+                "Item",
+                "Item Code",
+                "Area Code (M49)",
+                "Area",
+                "Area Code",
+                "Item Code (CPC)",
+                "Source Code",
+            ],
+        },
+        "2025-02-12": {
+            "filename": "Emissions_livestock_E_All_Data_NOFLAG.csv",
+            "areas_to_remove": [
+                *areas_to_remove_base,
+                "Belgium-Luxembourg",
+                "Serbia and Montenegro",
+                "European Union (27)",
+            ],
+            "items_to_remove": [
+                # we don't need aggregates
+                "Camels and Llamas",
+                "Cattle",  # dairy and non-dairy
+                # mistake by FAO, should be "Mules, hinnies, and asses"
+                "Mules and Asses",
+                "Sheep and Goats",
+                "Swine",  # breeding and market
+            ],
+            "elements_to_remove": [
+                "Stocks",  # number of animals
+                "Manure management (manure treated, N content)",
+                "Manure left on pasture (N content)",
+                "Manure left on pasture that leaches (N content)",
+                "Manure left on pasture that volatilises (N content)",
+                "Manure applied to soils (N content)",
+                "Manure applied to soils that leaches (N content)",
+                "Manure applied to soils that volatilises (N content)",
+                # TODO ?
+                # sum of direct and direct manure management emissions
+                # would add another level in the category tree, but
+                # is not needed (see miro)
+                # "Manure management (Emissions N2O)",
+            ],
+            "entity_mapping": {
+                "Livestock total (Emissions N2O)": "N2O",
+                "Livestock total (Emissions CH4)": "CH4",
+                "Enteric fermentation (Emissions CH4)": "CH4",
+                "Manure management (Emissions CH4)": "CH4",
+                "Manure management (Emissions N2O)": "N2O",
+                "Manure management (Direct emissions N2O)": "N2O",
+                "Manure management (Indirect emissions N2O)": "N2O",
+                "Manure left on pasture (Emissions N2O)": "N2O",
+                "Manure left on pasture (Direct emissions N2O)": "N2O",
+                "Indirect emissions (N2O that leaches) (Manure on pasture)": "N2O",
+                "Indirect emissions (N2O that volatilises) (Manure on pasture)": "N2O",
+                "Manure left on pasture (Indirect emissions N2O)": "N2O",
+                "Emissions (N2O) (Manure applied)": "N2O",
+                "Manure applied to soils (Direct emissions N2O)": "N2O",
+                "Indirect emissions (N2O that leaches) (Manure applied)": "N2O",
+                "Indirect emissions (N2O that volatilises) (Manure applied)": "N2O",
+                "Manure applied to soils (Indirect emissions N2O)": "N2O",
+            },
+            "category_mapping_item_element": {
+                "All Animals - Enteric fermentation (Emissions CH4)": "M.3.EF",
+                "All Animals - Manure management (Emissions CH4)": "M.3.MM",
+                "All Animals - Manure management (Emissions N2O)": "M.3.MM",
+                "All Animals - Manure left on pasture (Emissions N2O)": "M.3.MP",
+                "All Animals - Emissions (N2O) (Manure applied)": "M.3.MA",
+            },
+            "category_mapping_item": {
+                "All Animals": "3",
+                "Asses": "3.A",
+                "Camels": "3.B",
+                "Cattle, dairy": "3.C",
+                "Cattle, non-dairy": "3.D",
+                "Chickens, broilers": "3.E",
+                "Chickens, layers": "3.F",
+                "Goats": "3.G",
+                "Horses": "3.H",
+                "Mules and hinnies": "3.I",
+                "Sheep": "3.J",
+                "Llamas": "3.K",
+                "Chickens": "3.L",
+                "Poultry Birds": "3.M",
+                "Buffalo": "3.N",
+                "Ducks": "3.O",
+                "Swine, breeding": "3.P",
+                "Swine, market": "3.Q",
+                "Turkeys": "3.R",
+            },
+            "category_mapping_element": {
+                "Livestock total (Emissions N2O)": "",
+                "Livestock total (Emissions CH4)": "",
+                "Enteric fermentation (Emissions CH4)": ".4",
+                "Manure management (Emissions CH4)": ".1.a",
+                # TODO we need to aggregate 3.X.1 for CH4
+                "Manure management (Emissions N2O)": ".1",
+                "Manure management (Direct emissions N2O)": ".1.b",
+                "Manure management (Indirect emissions N2O)": ".1.c",
+                "Manure left on pasture (Emissions N2O)": ".2",
+                "Manure left on pasture (Direct emissions N2O)": ".2.a",
+                "Indirect emissions (N2O that leaches) (Manure on pasture)": ".2.b.i",
+                (
+                    "Indirect emissions (N2O that volatilises) " "(Manure on pasture)"
+                ): ".2.b.ii",
+                "Manure left on pasture (Indirect emissions N2O)": ".2.b",
+                "Emissions (N2O) (Manure applied)": ".3",
+                "Manure applied to soils (Direct emissions N2O)": ".3.a",
+                ("Indirect emissions (N2O that leaches) " "(Manure applied)"): ".3.b.i",
+                "Indirect emissions (N2O that volatilises) (Manure applied)": ".3.b.ii",
+                "Manure applied to soils (Indirect emissions N2O)": ".3.b",
+            },
+            "items-elements_to_remove": [
+                "All Animals - Manure left on pasture (Direct emissions N2O)",
+                (
+                    "All Animals - Indirect emissions (N2O that leaches) "
+                    "(Manure on pasture)"
+                ),
+                (
+                    "All Animals - Indirect emissions (N2O that volatilises) "
+                    "(Manure on pasture)"
+                ),
+                "All Animals - Manure left on pasture (Indirect emissions N2O)",
+                "All Animals - Manure applied to soils (Direct emissions N2O)",
+                "All Animals - Indirect emissions (N2O that leaches) (Manure applied)",
+                (
+                    "All Animals - Indirect emissions (N2O that volatilises) "
+                    "(Manure applied)"
+                ),
+                "All Animals - Manure applied to soils (Indirect emissions N2O)",
+                "All Animals - Manure management (Direct emissions N2O)",
+                "All Animals - Manure management (Indirect emissions N2O)",
+                # "All Animals - Enteric fermentation (Emissions CH4)",
+                # "All Animals - Manure management (Emissions CH4)",
+                # "All Animals - Manure management (Emissions N2O)",
+                # "All Animals - Manure left on pasture (Emissions N2O)",
+                # "All Animals - Emissions (N2O) (Manure applied)",
+            ],
+            "columns_to_drop": [
+                "Element",
+                "Element Code",
+                "Item",
+                "Item Code",
+                "Area Code (M49)",
+                "Area",
+                "Area Code",
+                "Item Code (CPC)",
+                "Source Code",
+            ],
+        },
     },
     "land_use_drained_organic_soils": {
         "2023-11-09": {
@@ -226,13 +1015,19 @@ read_config_all: Any = {
                 "Area Code",
                 "Source Code",
             ],
+            "category_mapping_item_element": {
+                "Cropland organic soils - Emissions (N2O)": "5.B",
+                "Cropland organic soils - Emissions (CO2)": "5.B",
+                "Grassland organic soils - Emissions (N2O)": "5.A",
+                "Grassland organic soils - Emissions (CO2)": "5.A",
+                "Drained organic soils - Emissions (N2O)": "5",
+                "Drained organic soils - Emissions (CO2)": "5",
+            },
         },
         "2024-11-14": {
             "filename": "Emissions_Drained_Organic_Soils_E_All_Data_NOFLAG.csv",
             "areas_to_remove": [
                 *areas_to_remove_base,
-                # "Belgium-Luxembourg",
-                # "Serbia and Montenegro",
                 "European Union (27)",
             ],
             "elements_to_remove": [
@@ -253,6 +1048,14 @@ read_config_all: Any = {
                 "Area Code",
                 "Source Code",
             ],
+            "category_mapping_item_element": {
+                "Cropland organic soils - Emissions (N2O)": "5.B",
+                "Cropland organic soils - Emissions (CO2)": "5.B",
+                "Grassland organic soils - Emissions (N2O)": "5.A",
+                "Grassland organic soils - Emissions (CO2)": "5.A",
+                "Drained organic soils - Emissions (N2O)": "5",
+                "Drained organic soils - Emissions (CO2)": "5",
+            },
         },
     },
     "land_use_fires": {
@@ -262,11 +1065,42 @@ read_config_all: Any = {
                 *areas_to_remove_base,
                 "European Union (27)",
             ],
-            "elements_to_remove": ["Biomass burned (dry matter)", "Burned Area"],
+            "elements_to_remove": [
+                "Burning crop residues (Biomass burned, dry matter)",
+                "Burned Area",
+                # Not in 2024 data set
+                "Biomass burned (dry matter)",
+            ],
             "entity_mapping": {
                 "Emissions (CH4)": "CH4",
                 "Emissions (N2O)": "N2O",
                 "Emissions (CO2)": "CO2",
+            },
+            "category_mapping_item_element": {
+                "Forest fires - Emissions (CH4)": "6.A",
+                "Forest fires - Emissions (N2O)": "6.A",
+                "Forest fires - Emissions (CO2)": "6.A",
+                "Humid tropical forest - Emissions (CH4)": "6.A.1",
+                "Humid tropical forest - Emissions (N2O)": "6.A.1",
+                "Other forest - Emissions (CH4)": "6.A.2",
+                "Other forest - Emissions (N2O)": "6.A.2",
+                "Other forest - Emissions (CO2)": "6.A.2",
+                "Savanna fires - Emissions (CH4)": "6.B",
+                "Savanna fires - Emissions (N2O)": "6.B",
+                "Closed shrubland - Emissions (CH4)": "6.B.1",
+                "Closed shrubland - Emissions (N2O)": "6.B.1",
+                "Grassland - Emissions (CH4)": "6.B.2",
+                "Grassland - Emissions (N2O)": "6.B.2",
+                "Open shrubland - Emissions (CH4)": "6.B.3",
+                "Open shrubland - Emissions (N2O)": "6.B.3",
+                "Savanna - Emissions (CH4)": "6.B.4",
+                "Savanna - Emissions (N2O)": "6.B.4",
+                "Woody savanna - Emissions (CH4)": "6.B.5",
+                "Woody savanna - Emissions (N2O)": "6.B.5",
+                "Fires in organic soils - Emissions (CH4)": "6.C",
+                "Fires in organic soils - Emissions (CO2)": "6.C",
+                "Humid tropical forest - Emissions (CO2)": "6.A.1",
+                "Savanna fires - Emissions (CO2)": "6.B",
             },
             "columns_to_drop": [
                 "Element",
@@ -294,6 +1128,32 @@ read_config_all: Any = {
                 "Emissions (N2O)": "N2O",
                 "Emissions (CO2)": "CO2",
             },
+            "category_mapping_item_element": {
+                "Forest fires - Emissions (CH4)": "6.A",
+                "Forest fires - Emissions (N2O)": "6.A",
+                "Forest fires - Emissions (CO2)": "6.A",
+                "Humid tropical forest - Emissions (CH4)": "6.A.1",
+                "Humid tropical forest - Emissions (N2O)": "6.A.1",
+                "Other forest - Emissions (CH4)": "6.A.2",
+                "Other forest - Emissions (N2O)": "6.A.2",
+                "Other forest - Emissions (CO2)": "6.A.2",
+                "Savanna fires - Emissions (CH4)": "6.B",
+                "Savanna fires - Emissions (N2O)": "6.B",
+                "Closed shrubland - Emissions (CH4)": "6.B.1",
+                "Closed shrubland - Emissions (N2O)": "6.B.1",
+                "Grassland - Emissions (CH4)": "6.B.2",
+                "Grassland - Emissions (N2O)": "6.B.2",
+                "Open shrubland - Emissions (CH4)": "6.B.3",
+                "Open shrubland - Emissions (N2O)": "6.B.3",
+                "Savanna - Emissions (CH4)": "6.B.4",
+                "Savanna - Emissions (N2O)": "6.B.4",
+                "Woody savanna - Emissions (CH4)": "6.B.5",
+                "Woody savanna - Emissions (N2O)": "6.B.5",
+                "Fires in organic soils - Emissions (CH4)": "6.C",
+                "Fires in organic soils - Emissions (CO2)": "6.C",
+                "Humid tropical forest - Emissions (CO2)": "6.A.1",
+                "Savanna fires - Emissions (CO2)": "6.B",
+            },
             "columns_to_drop": [
                 "Element",
                 "Element Code",
@@ -307,7 +1167,7 @@ read_config_all: Any = {
         },
     },
     "land_use_forests": {
-        "2024-11-14": {
+        "2023-11-09": {
             "filename": "Emissions_Land_Use_Forests_E_All_Data_NOFLAG.csv",
             "areas_to_remove": [
                 *areas_to_remove_base,
@@ -317,6 +1177,11 @@ read_config_all: Any = {
                 "Area",
             ],
             "entity_mapping": {"Net emissions/removals (CO2) (Forest land)": "CO2"},
+            "category_mapping_item_element": {
+                "Forestland - Net emissions/removals (CO2) (Forest land)": "4.A",
+                "Net Forest conversion - Net emissions/removals (CO2) (Forest land)": "4.B",
+                "Carbon stock change in forests - Net emissions/removals (CO2) (Forest land)": "4",
+            },
             "columns_to_drop": [
                 "Element",
                 "Element Code",
@@ -327,7 +1192,33 @@ read_config_all: Any = {
                 "Area Code",
                 "Source Code",
             ],
-        }
+        },
+        "2024-11-14": {
+            "filename": "Emissions_Land_Use_Forests_E_All_Data_NOFLAG.csv",
+            "areas_to_remove": [
+                *areas_to_remove_base,
+                "European Union (27)",
+            ],
+            "elements_to_remove": [
+                "Area",
+            ],
+            "entity_mapping": {"Net emissions/removals (CO2) (Forest land)": "CO2"},
+            "category_mapping_item_element": {
+                "Forestland - Net emissions/removals (CO2) (Forest land)": "4.A",
+                "Net Forest conversion - Net emissions/removals (CO2) (Forest land)": "4.B",
+                "Carbon stock change in forests - Net emissions/removals (CO2) (Forest land)": "4",
+            },
+            "columns_to_drop": [
+                "Element",
+                "Element Code",
+                "Item",
+                "Item Code",
+                "Area Code (M49)",
+                "Area",
+                "Area Code",
+                "Source Code",
+            ],
+        },
     },
     "pre_post_agricultural_production": {
         "2023-11-09": {
@@ -349,6 +1240,63 @@ read_config_all: Any = {
                 "Emissions (CH4)": "CH4",
                 "Emissions (N2O)": "N2O",
                 "Emissions (CO2eq) from F-gases (AR5)": "FGASES (AR5GWP100)",
+            },
+            "category_mapping_item_element": {
+                "Fertilizers Manufacturing - Emissions (CO2)": "7.A",
+                "Fertilizers Manufacturing - Emissions (CO2eq) (AR5)": "7.A",
+                "Food Transport - Emissions (CO2)": "7.B",
+                "Food Transport - Emissions (CH4)": "7.B",
+                "Food Transport - Emissions (N2O)": "7.B",
+                "Food Transport - Emissions (CO2eq) (AR5)": "7.B",
+                "Food Retail - Emissions (CO2)": "7.C",
+                "Food Retail - Emissions (CH4)": "7.C",
+                "Food Retail - Emissions (N2O)": "7.C",
+                "Food Retail - Emissions (CO2eq) from F-gases (AR5)": "7.C",
+                "Food Retail - Emissions (CO2eq) (AR5)": "7.C",
+                "Food Household Consumption - Emissions (CO2)": "7.D",
+                "Food Household Consumption - Emissions (CH4)": "7.D",
+                "Food Household Consumption - Emissions (N2O)": "7.D",
+                "Food Household Consumption - Emissions (CO2eq) (AR5)": "7.D",
+                "Solid Food Waste - Emissions (CH4)": "7.E",
+                "Solid Food Waste - Emissions (CO2eq) (AR5)": "7.E",
+                "Domestic Wastewater - Emissions (CH4)": "7.F",
+                "Domestic Wastewater - Emissions (N2O)": "7.F",
+                "Domestic Wastewater - Emissions (CO2eq) (AR5)": "7.F",
+                "Industrial Wastewater - Emissions (CH4)": "7.G",
+                "Industrial Wastewater - Emissions (N2O)": "7.G",
+                "Industrial Wastewater - Emissions (CO2eq) (AR5)": "7.G",
+                "Incineration - Emissions (CO2)": "7.H",
+                "Incineration - Emissions (CO2eq) (AR5)": "7.H",
+                "Pre- and Post- Production - Emissions (CO2)": "7.I",
+                "Pre- and Post- Production - Emissions (CH4)": "7.I",
+                "Pre- and Post- Production - Emissions (N2O)": "7.I",
+                "Pre- and Post- Production - Emissions (CO2eq) from F-gases (AR5)": "7.I",
+                "Pre- and Post- Production - Emissions (CO2eq) (AR5)": "7.I",
+                "Energy Use (Pre- and Post-Production) - Emissions (CO2)": "7.J",
+                "Energy Use (Pre- and Post-Production) - Emissions (CH4)": "7.J",
+                "Energy Use (Pre- and Post-Production) - Emissions (N2O)": "7.J",
+                "Energy Use (Pre- and Post-Production) - Emissions (CO2eq) (AR5)": "7.J",
+                "Agrifood Systems Waste Disposal - Emissions (CO2)": "7.K",
+                "Agrifood Systems Waste Disposal - Emissions (CH4)": "7.K",
+                "Agrifood Systems Waste Disposal - Emissions (N2O)": "7.K",
+                "Agrifood Systems Waste Disposal - Emissions (CO2eq) (AR5)": "7.K",
+                "Cold Chain F-Gas - Emissions (CO2eq) from F-gases (AR5)": "7.L",
+                "Pesticides Manufacturing - Emissions (CO2)": "7.M",
+                "Pesticides Manufacturing - Emissions (CH4)": "7.M",
+                "Pesticides Manufacturing - Emissions (N2O)": "7.M",
+                "Pesticides Manufacturing - Emissions (CO2eq) (AR5)": "7.M",
+                "Food Processing - Emissions (CO2)": "7.N",
+                "Food Processing - Emissions (CH4)": "7.N",
+                "Food Processing - Emissions (N2O)": "7.N",
+                "Food Processing - Emissions (CO2eq) from F-gases (AR5)": "7.N",
+                "Food Processing - Emissions (CO2eq) (AR5)": "7.N",
+                "Food Transport - Emissions (CO2eq) from F-gases (AR5)": "7.B",
+                "Food Packaging - Emissions (CO2)": "7.O",
+                "Food Packaging - Emissions (CH4)": "7.O",
+                "Food Packaging - Emissions (N2O)": "7.O",
+                "Food Packaging - Emissions (CO2eq) (AR5)": "7.O",
+                "Food Household Consumption - Emissions (CO2eq) from F-gases (AR5)": "7.D",
+                "Fertilizers Manufacturing - Emissions (N2O)": "7.A",
             },
             "columns_to_drop": [
                 "Element",
@@ -379,6 +1327,63 @@ read_config_all: Any = {
                 "Emissions (CH4)": "CH4",
                 "Emissions (N2O)": "N2O",
                 "Emissions (CO2eq) from F-gases (AR5)": "FGASES (AR5GWP100)",
+            },
+            "category_mapping_item_element": {
+                "Fertilizers Manufacturing - Emissions (CO2)": "7.A",
+                "Fertilizers Manufacturing - Emissions (CO2eq) (AR5)": "7.A",
+                "Food Transport - Emissions (CO2)": "7.B",
+                "Food Transport - Emissions (CH4)": "7.B",
+                "Food Transport - Emissions (N2O)": "7.B",
+                "Food Transport - Emissions (CO2eq) (AR5)": "7.B",
+                "Food Retail - Emissions (CO2)": "7.C",
+                "Food Retail - Emissions (CH4)": "7.C",
+                "Food Retail - Emissions (N2O)": "7.C",
+                "Food Retail - Emissions (CO2eq) from F-gases (AR5)": "7.C",
+                "Food Retail - Emissions (CO2eq) (AR5)": "7.C",
+                "Food Household Consumption - Emissions (CO2)": "7.D",
+                "Food Household Consumption - Emissions (CH4)": "7.D",
+                "Food Household Consumption - Emissions (N2O)": "7.D",
+                "Food Household Consumption - Emissions (CO2eq) (AR5)": "7.D",
+                "Solid Food Waste - Emissions (CH4)": "7.E",
+                "Solid Food Waste - Emissions (CO2eq) (AR5)": "7.E",
+                "Domestic Wastewater - Emissions (CH4)": "7.F",
+                "Domestic Wastewater - Emissions (N2O)": "7.F",
+                "Domestic Wastewater - Emissions (CO2eq) (AR5)": "7.F",
+                "Industrial Wastewater - Emissions (CH4)": "7.G",
+                "Industrial Wastewater - Emissions (N2O)": "7.G",
+                "Industrial Wastewater - Emissions (CO2eq) (AR5)": "7.G",
+                "Incineration - Emissions (CO2)": "7.H",
+                "Incineration - Emissions (CO2eq) (AR5)": "7.H",
+                "Pre- and Post- Production - Emissions (CO2)": "7.I",
+                "Pre- and Post- Production - Emissions (CH4)": "7.I",
+                "Pre- and Post- Production - Emissions (N2O)": "7.I",
+                "Pre- and Post- Production - Emissions (CO2eq) from F-gases (AR5)": "7.I",
+                "Pre- and Post- Production - Emissions (CO2eq) (AR5)": "7.I",
+                "Energy Use (Pre- and Post-Production) - Emissions (CO2)": "7.J",
+                "Energy Use (Pre- and Post-Production) - Emissions (CH4)": "7.J",
+                "Energy Use (Pre- and Post-Production) - Emissions (N2O)": "7.J",
+                "Energy Use (Pre- and Post-Production) - Emissions (CO2eq) (AR5)": "7.J",
+                "Agrifood Systems Waste Disposal - Emissions (CO2)": "7.K",
+                "Agrifood Systems Waste Disposal - Emissions (CH4)": "7.K",
+                "Agrifood Systems Waste Disposal - Emissions (N2O)": "7.K",
+                "Agrifood Systems Waste Disposal - Emissions (CO2eq) (AR5)": "7.K",
+                "Cold Chain F-Gas - Emissions (CO2eq) from F-gases (AR5)": "7.L",
+                "Pesticides Manufacturing - Emissions (CO2)": "7.M",
+                "Pesticides Manufacturing - Emissions (CH4)": "7.M",
+                "Pesticides Manufacturing - Emissions (N2O)": "7.M",
+                "Pesticides Manufacturing - Emissions (CO2eq) (AR5)": "7.M",
+                "Food Processing - Emissions (CO2)": "7.N",
+                "Food Processing - Emissions (CH4)": "7.N",
+                "Food Processing - Emissions (N2O)": "7.N",
+                "Food Processing - Emissions (CO2eq) from F-gases (AR5)": "7.N",
+                "Food Processing - Emissions (CO2eq) (AR5)": "7.N",
+                "Food Transport - Emissions (CO2eq) from F-gases (AR5)": "7.B",
+                "Food Packaging - Emissions (CO2)": "7.O",
+                "Food Packaging - Emissions (CH4)": "7.O",
+                "Food Packaging - Emissions (N2O)": "7.O",
+                "Food Packaging - Emissions (CO2eq) (AR5)": "7.O",
+                "Food Household Consumption - Emissions (CO2eq) from F-gases (AR5)": "7.D",
+                "Fertilizers Manufacturing - Emissions (N2O)": "7.A",
             },
             "columns_to_drop": [
                 "Element",
@@ -405,7 +1410,7 @@ config_to_if = {
         "source": "Source",
         "category": "category",
     },
-    "coords_terminologies": {"area": "ISO3", "category": "FAOSTAT", "scenario": "FAO"},
+    "coords_terminologies": {"area": "ISO3", "category": "FAO", "scenario": "FAO"},
     "coords_value_mapping": {},
     "filter_keep": {},
     "filter_remove": {},
