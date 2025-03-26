@@ -24,6 +24,7 @@ xarray = "^2024.11.0"
 jupytext = "^1.16.5"
 jupyter = "^1.1.1"
 primap2 = "^0.12.1"
+climate-categories = "^0.10.6"
 
 
 [tool.poetry.group.tests.dependencies]

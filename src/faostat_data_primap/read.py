@@ -286,7 +286,6 @@ def read_data(  # noqa: PLR0915 PLR0912
     result_proc_if = result_proc.pr.to_interchange_format()
 
     output_filename = f"FAOSTAT_Agrifood_system_emissions_{release_name}"
-    # output_folder = extracted_data_path / release_name
 
     if not output_folder.exists():
         output_folder.mkdir()

@@ -850,6 +850,145 @@ read_config_all: Any = {
                 "Source Code",
             ],
         },
+        "2025-02-12": {
+            "filename": "Emissions_livestock_E_All_Data_NOFLAG.csv",
+            "areas_to_remove": [
+                *areas_to_remove_base,
+                "Belgium-Luxembourg",
+                "Serbia and Montenegro",
+                "European Union (27)",
+            ],
+            "items_to_remove": [
+                # we don't need aggregates
+                "Camels and Llamas",
+                "Cattle",  # dairy and non-dairy
+                # mistake by FAO, should be "Mules, hinnies, and asses"
+                "Mules and Asses",
+                "Sheep and Goats",
+                "Swine",  # breeding and market
+            ],
+            "elements_to_remove": [
+                "Stocks",  # number of animals
+                "Manure management (manure treated, N content)",
+                "Manure left on pasture (N content)",
+                "Manure left on pasture that leaches (N content)",
+                "Manure left on pasture that volatilises (N content)",
+                "Manure applied to soils (N content)",
+                "Manure applied to soils that leaches (N content)",
+                "Manure applied to soils that volatilises (N content)",
+                # TODO ?
+                # sum of direct and direct manure management emissions
+                # would add another level in the category tree, but
+                # is not needed (see miro)
+                # "Manure management (Emissions N2O)",
+            ],
+            "entity_mapping": {
+                "Livestock total (Emissions N2O)": "N2O",
+                "Livestock total (Emissions CH4)": "CH4",
+                "Enteric fermentation (Emissions CH4)": "CH4",
+                "Manure management (Emissions CH4)": "CH4",
+                "Manure management (Emissions N2O)": "N2O",
+                "Manure management (Direct emissions N2O)": "N2O",
+                "Manure management (Indirect emissions N2O)": "N2O",
+                "Manure left on pasture (Emissions N2O)": "N2O",
+                "Manure left on pasture (Direct emissions N2O)": "N2O",
+                "Indirect emissions (N2O that leaches) (Manure on pasture)": "N2O",
+                "Indirect emissions (N2O that volatilises) (Manure on pasture)": "N2O",
+                "Manure left on pasture (Indirect emissions N2O)": "N2O",
+                "Emissions (N2O) (Manure applied)": "N2O",
+                "Manure applied to soils (Direct emissions N2O)": "N2O",
+                "Indirect emissions (N2O that leaches) (Manure applied)": "N2O",
+                "Indirect emissions (N2O that volatilises) (Manure applied)": "N2O",
+                "Manure applied to soils (Indirect emissions N2O)": "N2O",
+            },
+            "category_mapping_item_element": {
+                "All Animals - Enteric fermentation (Emissions CH4)": "M.3.EF",
+                "All Animals - Manure management (Emissions CH4)": "M.3.MM",
+                "All Animals - Manure management (Emissions N2O)": "M.3.MM",
+                "All Animals - Manure left on pasture (Emissions N2O)": "M.3.MP",
+                "All Animals - Emissions (N2O) (Manure applied)": "M.3.MA",
+            },
+            "category_mapping_item": {
+                "All Animals": "3",
+                "Asses": "3.A",
+                "Camels": "3.B",
+                "Cattle, dairy": "3.C",
+                "Cattle, non-dairy": "3.D",
+                "Chickens, broilers": "3.E",
+                "Chickens, layers": "3.F",
+                "Goats": "3.G",
+                "Horses": "3.H",
+                "Mules and hinnies": "3.I",
+                "Sheep": "3.J",
+                "Llamas": "3.K",
+                "Chickens": "3.L",
+                "Poultry Birds": "3.M",
+                "Buffalo": "3.N",
+                "Ducks": "3.O",
+                "Swine, breeding": "3.P",
+                "Swine, market": "3.Q",
+                "Turkeys": "3.R",
+            },
+            "category_mapping_element": {
+                "Livestock total (Emissions N2O)": "",
+                "Livestock total (Emissions CH4)": "",
+                "Enteric fermentation (Emissions CH4)": ".4",
+                "Manure management (Emissions CH4)": ".1.a",
+                # TODO we need to aggregate 3.X.1 for CH4
+                "Manure management (Emissions N2O)": ".1",
+                "Manure management (Direct emissions N2O)": ".1.b",
+                "Manure management (Indirect emissions N2O)": ".1.c",
+                "Manure left on pasture (Emissions N2O)": ".2",
+                "Manure left on pasture (Direct emissions N2O)": ".2.a",
+                "Indirect emissions (N2O that leaches) (Manure on pasture)": ".2.b.i",
+                (
+                    "Indirect emissions (N2O that volatilises) " "(Manure on pasture)"
+                ): ".2.b.ii",
+                "Manure left on pasture (Indirect emissions N2O)": ".2.b",
+                "Emissions (N2O) (Manure applied)": ".3",
+                "Manure applied to soils (Direct emissions N2O)": ".3.a",
+                ("Indirect emissions (N2O that leaches) " "(Manure applied)"): ".3.b.i",
+                "Indirect emissions (N2O that volatilises) (Manure applied)": ".3.b.ii",
+                "Manure applied to soils (Indirect emissions N2O)": ".3.b",
+            },
+            "items-elements_to_remove": [
+                "All Animals - Manure left on pasture (Direct emissions N2O)",
+                (
+                    "All Animals - Indirect emissions (N2O that leaches) "
+                    "(Manure on pasture)"
+                ),
+                (
+                    "All Animals - Indirect emissions (N2O that volatilises) "
+                    "(Manure on pasture)"
+                ),
+                "All Animals - Manure left on pasture (Indirect emissions N2O)",
+                "All Animals - Manure applied to soils (Direct emissions N2O)",
+                "All Animals - Indirect emissions (N2O that leaches) (Manure applied)",
+                (
+                    "All Animals - Indirect emissions (N2O that volatilises) "
+                    "(Manure applied)"
+                ),
+                "All Animals - Manure applied to soils (Indirect emissions N2O)",
+                "All Animals - Manure management (Direct emissions N2O)",
+                "All Animals - Manure management (Indirect emissions N2O)",
+                # "All Animals - Enteric fermentation (Emissions CH4)",
+                # "All Animals - Manure management (Emissions CH4)",
+                # "All Animals - Manure management (Emissions N2O)",
+                # "All Animals - Manure left on pasture (Emissions N2O)",
+                # "All Animals - Emissions (N2O) (Manure applied)",
+            ],
+            "columns_to_drop": [
+                "Element",
+                "Element Code",
+                "Item",
+                "Item Code",
+                "Area Code (M49)",
+                "Area",
+                "Area Code",
+                "Item Code (CPC)",
+                "Source Code",
+            ],
+        },
     },
     "land_use_drained_organic_soils": {
         "2023-11-09": {
