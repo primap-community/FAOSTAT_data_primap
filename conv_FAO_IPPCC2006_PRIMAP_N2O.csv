@@ -1,0 +1,14 @@
+# references: N2O emissions only
+# last_update: 2024-10-14
+FAO,IPCC2006_PRIMAP,comment
+M.3.MM, 3.A.2, FAO All animals manure management to IPCC 3.A.2 Manure Management
+M.1.BCR, 3.C.1.b, All Crops - Burning crop residues (Emissions N2O) (or the sum of FAO 1.A.X.b) to IPCC 3.C.1.b Biomass Burning In Croplands
+M.3.MP, M.3.C.45.MP, FAO Manure left on pasture to IPCC Direct and indirect N2O emissions from manure left on pasture
+M.3.MA, M.3.C.45.MA, FAO Manure applied to soils to IPCC Direct and indirect N2O emissions from manure applied to soils
+M.1.CR, M.3.C.45.CR, FAO Crop residues to IPCC Direct and indirect emissions N2O from crop residues
+1.B.1,3.C.4.a, FAO Synthetic fertilisers direct emissions to IPCC Synthetic fertiliser emissions from direct N2O Emissions from Managed Soils
+1.B.2.a + 1.B.2.b,M.3.C.5.SF, FAO Synthetic fertilisers direct emissions to IPCC Synthetic fertiliser emissions from direct N2O Emissions from Managed Soils
+5.A,M.3.C.4.DOS.GL,FAO 5.A Drained grassland to IPCC 3.C.4 share of drained organic soils in grass land
+5.B,M.3.C.4.DOS.CL,FAO 5.B Drained cropland to IPCC 3.C.4 share of drained organic soils in cropland
+6.A,M.3.C.1.a, FAO 6.A forest fires to IPCC M.3.C.1.a Biomass burning in forest lands (M category because it is not contained in the 3.C.1 sum)
+6.B, 3.C.1.c, FAO 6.B savanna fires to IPCC 3.C.1.c Biomass burning in grasslands
