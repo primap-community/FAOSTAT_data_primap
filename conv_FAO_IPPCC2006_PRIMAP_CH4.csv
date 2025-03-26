@@ -1,0 +1,10 @@
+# references: CH4 emissions only
+# last_update: 2024-10-14
+FAO,IPCC2006_PRIMAP,comment
+1.A.2.c,3.C.7, FAO 1.A.2.c Rice cultivation to IPCC 3.C.7 Rice Cultivation
+M.1.BCR, 3.C.1.b, FAO M.1.BCR (or 1.A.1.b + 1.A.2.b + 1.A.6.b + 1.A.7.b) Burning of crop residues to IPCC 3.C.1.b Biomass Burning In Croplands
+M.3.EF, 3.A.1, Enteric fermentation
+M.3.MM, 3.A.2, Manure Management
+6.A,M.3.C.1.a, FAO 6.A forest fires to IPCC M.3.C.1.a Biomass burning in forest lands (M category because it is not contained in the 3.C.1 sum)
+6.B,3.C.1.c, FAO 6.B savanna fires to IPCC 3.C.1.c Biomass burning in grasslands
+6.C, M.3.B.2.FOS, FAO 6.C Fires in organic soils to IPCC 3.B.3 cropland (fires in organic soils)

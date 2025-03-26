@@ -3,9 +3,18 @@
 import os
 import pathlib
 
+import climate_categories as cc
 import pandas as pd
 import primap2 as pm2  # type: ignore
+import xarray
+import xarray as xr
 
+from faostat_data_primap.helper.category_aggregation import (
+    agg_info_fao,
+    agg_info_ipcc2006_primap_CH4,
+    agg_info_ipcc2006_primap_CO2,
+    agg_info_ipcc2006_primap_N2O,
+)
 from faostat_data_primap.helper.country_mapping import country_to_iso3_mapping
 from faostat_data_primap.helper.definitions import (
     config_to_if,
@@ -60,7 +69,8 @@ def get_latest_release(domain_path: pathlib.Path) -> str:
     return sorted(all_releases, reverse=True)[0]
 
 
-def read_data(
+# TODO split out functions to avoid PLR0915
+def read_data(  # noqa: PLR0915 PLR0912
     read_path: pathlib.Path,
     domains_and_releases_to_read: list[tuple[str, str]],
     save_path: pathlib.Path,
@@ -87,6 +97,11 @@ def read_data(
 
         # There are some non-utf8 characters
         df_domain = pd.read_csv(dataset_path, encoding="ISO-8859-1")
+
+        if "items_to_remove" in read_config.keys():
+            df_domain = df_domain[
+                ~df_domain["Item"].isin(read_config["items_to_remove"])
+            ]
 
         # remove rows by element
         if "elements_to_remove" in read_config.keys():
@@ -117,7 +132,79 @@ def read_data(
             raise ValueError(msg)
 
         # create category column (combination of Item and Element works best)
-        df_domain["category"] = df_domain["Item"] + "-" + df_domain["Element"]
+        df_domain["Item - Element"] = df_domain["Item"] + " - " + df_domain["Element"]
+
+        if "category_mapping_item_element" in read_config.keys():
+            df_domain["category"] = df_domain["Item - Element"].map(
+                read_config["category_mapping_item_element"]
+            )
+
+        # sometimes there are too many categories per domain to write
+        # everything in the config file
+        # TODO we could do this for crops as well, but it's not necessary
+        if ("category_mapping_element" in read_config.keys()) and (
+            "category_mapping_item" in read_config.keys()
+        ):
+            # split steps for easier debugging
+            df_domain["mapped_item"] = df_domain["Item"].map(
+                read_config["category_mapping_item"]
+            )
+            df_domain["mapped_element"] = df_domain["Element"].map(
+                read_config["category_mapping_element"]
+            )
+            if "category" in df_domain.columns:
+                df_domain["category_1"] = (
+                    df_domain["mapped_item"] + df_domain["mapped_element"]
+                )
+                df_domain["category"] = df_domain["category"].fillna(
+                    df_domain["category_1"]
+                )
+                df_domain = df_domain.drop(
+                    labels=["category_1"],
+                    axis=1,
+                )
+            else:
+                df_domain["category"] = (
+                    df_domain["mapped_item"] + df_domain["mapped_element"]
+                )
+            df_domain = df_domain.drop(
+                labels=[
+                    "mapped_item",
+                    "mapped_element",
+                ],
+                axis=1,
+            )
+
+        # some rows can only be removed by Item - Element column
+        if "items-elements_to_remove" in read_config.keys():
+            df_domain = df_domain[
+                ~df_domain["Item - Element"].isin(
+                    read_config["items-elements_to_remove"]
+                )
+            ]
+        # else:
+        #     msg = f"Could not find mapping for {domain=}."
+        #     raise ValueError(msg)
+
+        # drop combined item - element columns
+        df_domain = df_domain.drop(
+            labels=[
+                "Item - Element",
+            ],
+            axis=1,
+        )
+
+        # check if all Item-Element combinations are now converted to category codes
+        fao_categories = list(cc.FAO.df.index)
+        unknown_categories = [
+            i for i in df_domain.category.unique() if i not in fao_categories
+        ]
+        if unknown_categories:
+            msg = (
+                f"Not all categories are part of FAO categorisation. "
+                f"Check mapping for {unknown_categories} in domain {domain}"
+            )
+            raise ValueError(msg)
 
         # drop columns we don't need
         df_domain = df_domain.drop(
@@ -130,10 +217,12 @@ def read_data(
     df_all = pd.concat(df_list, axis=0, join="outer", ignore_index=True)
 
     # some domains don't have Source column or values are empty
+    # we assume these values come from FAO
+    # TODO Better not to hard-code this in case the label changes
     if "Source" not in df_all.columns:
-        df_all["Source"] = "unknown"
+        df_all["Source"] = "FAO TIER 1"
     else:
-        df_all["Source"] = df_all["Source"].fillna("unknown")
+        df_all["Source"] = df_all["Source"].fillna("FAO TIER 1")
 
     # Remove the "Y" prefix for the years columns
     df_all = df_all.rename(columns=lambda x: x.lstrip("Y") if x.startswith("Y") else x)
@@ -167,7 +256,7 @@ def read_data(
     data_if = data_pm2.pr.to_interchange_format()
 
     # save raw data
-    output_filename = f"FAOSTAT_Agrifood_system_emissions_{release_name}"
+    output_filename = f"FAOSTAT_Agrifood_system_emissions_{release_name}_raw"
 
     if not save_path.exists():
         save_path.mkdir()
@@ -177,7 +266,7 @@ def read_data(
         output_folder.mkdir()
 
     filepath = output_folder / (output_filename + ".csv")
-    print(f"Writing primap2 file to {filepath}")
+    print(f"Writing raw primap2 file to {filepath}")
     pm2.pm2io.write_interchange_format(
         filepath,
         data_if,
@@ -189,9 +278,92 @@ def read_data(
     print(f"Writing netcdf file to {filepath}")
     data_pm2.pr.to_netcdf(filepath, encoding=encoding)
 
-    # next steps
-    # convert to IPCC2006_PRIMAP categories
-    # save final version
+    # process data - conversion and category aggregation
+    # todo variable naming
+    result_proc = process(data_pm2)
+
+    # save processed data
+    result_proc_if = result_proc.pr.to_interchange_format()
+
+    output_filename = f"FAOSTAT_Agrifood_system_emissions_{release_name}"
+
+    if not output_folder.exists():
+        output_folder.mkdir()
+
+    filepath = output_folder / (output_filename + ".csv")
+    print(f"Writing processed primap2 file to {filepath}")
+    pm2.pm2io.write_interchange_format(
+        filepath,
+        result_proc_if,
+    )
+
+    compression = dict(zlib=True, complevel=9)
+    encoding = {var: compression for var in result_proc.data_vars}
+    filepath = output_folder / (output_filename + ".nc")
+    print(f"Writing netcdf file to {filepath}")
+    result_proc.pr.to_netcdf(filepath, encoding=encoding)
+
+
+def process(ds: xarray.Dataset) -> xarray.Dataset:
+    """
+    Process dataset.
+
+    Perform the conversion from FAO to IPCC2006_PRIMAP categories
+    and aggregate categories.
+
+    Parameters
+    ----------
+    ds
+        The data set to process.
+
+    Returns
+    -------
+        The processed dataset
+
+    """
+    # drop UNFCCC data
+    ds = ds.drop_sel(source="UNFCCC")
+
+    # consistency check in original categorisation
+    ds_checked = ds.pr.add_aggregates_coordinates(agg_info=agg_info_fao)  # noqa: F841
+
+    gases = ["CO2", "CH4", "N2O"]
+
+    conv = cc.FAO.conversion_to(cc.IPCC2006_PRIMAP)
+
+    # convert for each entity
+    da_dict = {}
+    for var in gases:
+        conv_for_gas = conv.filter(aux_dim="gas", values=[var])
+        da_dict[var] = ds[var].pr.convert(
+            dim="category (FAO)",
+            conversion=conv_for_gas,
+        )
+
+    result = xr.Dataset(da_dict)
+    result.attrs = ds.attrs
+    result.attrs["cat"] = "category (IPCC2006_PRIMAP)"
+
+    # convert to interchange format and back to get rid of empty categories
+    # TODO there may be a better way to do this
+    result_if = result.pr.to_interchange_format()
+    result = pm2.pm2io.from_interchange_format(result_if)
+
+    # aggregation for each gas for better understanding
+    # TODO creates some duplicate code, we can combine again later
+    result_proc = result.pr.add_aggregates_coordinates(
+        agg_info=agg_info_ipcc2006_primap_N2O
+    )
+
+    result_proc = result_proc.pr.add_aggregates_coordinates(
+        agg_info=agg_info_ipcc2006_primap_CO2
+    )
+
+    result_proc = result_proc.pr.add_aggregates_coordinates(
+        agg_info=agg_info_ipcc2006_primap_CH4
+    )
+
+    return result_proc  # type: ignore
 
 
 def read_latest_data(

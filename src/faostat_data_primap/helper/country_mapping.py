@@ -260,6 +260,7 @@ country_to_iso3_mapping = {
     "Rwanda": "RWA",
     "Saint Barthélemy": "BLM",
     "Saint Helena, Ascension and Tristan da Cunha": "SHN",
+    "Ascension, Saint Helena and Tristan da Cunha": "SHN",
     "Saint Kitts and Nevis": "KNA",
     "Saint Lucia": "LCA",
     "Saint Martin (French part)": "MAF",

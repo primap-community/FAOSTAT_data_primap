@@ -1,10 +1,12 @@
 import os
 
-from src.faostat_data_primap.download import download_all_domains
-from src.faostat_data_primap.read import read_latest_data
+from faostat_data_primap.download import download_all_domains
+from faostat_data_primap.read import read_latest_data
 
 
 # test the complete download and read process
+# This will fail when there is a new release that does
+# not have a corresponding configuration
 def test_download_all_domains(tmp_path):
     downloaded_data_path = tmp_path / "downloaded_data"
     download_all_domains(downloaded_data_path=downloaded_data_path)
@@ -47,8 +49,9 @@ def test_download_all_domains(tmp_path):
     assert release_folder[0].startswith("v")
 
     output_files = os.listdir(extracted_data_path / release_folder[0])
+
     # in the folder there should be three files
-    assert len(output_files) == 3
+    assert len(output_files) == 6
 
     # a .yaml, .csv, and .nc file
     required_extensions = {"nc", "csv", "yaml"}
