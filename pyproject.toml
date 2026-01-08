@@ -24,7 +24,13 @@ xarray = "^2024.11.0"
 jupytext = "^1.16.5"
 jupyter = "^1.1.1"
 primap2 = "^0.12.1"
-
+h11 = ">=0.16.0"
+urllib3 = ">=2.6.3"
+tornado = ">=6.5"
+fonttools = ">=4.60.2"
+filelock = ">=3.20.1"
+jinja2 = ">=3.1.6"
+requests = ">=2.32.4"
 
 [tool.poetry.group.tests.dependencies]
 pytest = "^7.3.1"
@@ -47,7 +53,7 @@ towncrier = "^23.6.0"
 liccheck = "^0.9.1"
 # Required here so that liccheck will install
 # liccheck's installation isn't setup correctly
-setuptools = "^70.1.1"
+setuptools = ">=78.1.1"
 plotly = "^5.24.1"
 
 [build-system]
