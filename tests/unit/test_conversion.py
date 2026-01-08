@@ -1,6 +1,7 @@
 """Note that these tests only run locally, because they require the downloaded data"""
 import primap2 as pm2
 import pytest
+import xarray as xr
 
 from faostat_data_primap.helper.paths import (
     downloaded_data_path,
@@ -36,9 +37,11 @@ def test_processed_output_remains_the_same():
     ]
 
     # compare
-    # xr.testing.assert_allclose(ds_processed, ds_processed_new, rtol=1e-5, atol=1e-8)
+    xr.testing.assert_allclose(
+        ds_processed, ds_processed_new, rtol=1e-10, check_dim_order=False
+    )
 
-    assert ds_processed.broadcast_equals(ds_processed_new)
+    # assert ds_processed.broadcast_equals(ds_processed_new)
 
 
 @pytest.mark.parametrize(

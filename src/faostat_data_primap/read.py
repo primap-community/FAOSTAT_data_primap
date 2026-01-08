@@ -23,7 +23,6 @@ from faostat_data_primap.helper.definitions import (
 from faostat_data_primap.helper.paths import (
     downloaded_data_path,
     extracted_data_path,
-    root_path,
 )
 
 
@@ -287,7 +286,6 @@ def read_data(  # noqa: PLR0915 PLR0912
     result_proc_if = result_proc.pr.to_interchange_format()
 
     output_filename = f"FAOSTAT_Agrifood_system_emissions_{release_name}"
-    # output_folder = extracted_data_path / release_name
 
     if not output_folder.exists():
         output_folder.mkdir()
@@ -323,41 +321,23 @@ def process(ds: xarray.Dataset) -> xarray.Dataset:
         The processed dataset
 
     """
-    # make categorisation A from yaml
-    categorisation_a = cc.FAO
-    # make categorisation B from yaml
-    categorisation_b = cc.IPCC2006_PRIMAP
-
-    # category FAOSTAT not yet part of climate categories, so we need to add it manually
-    cats = {
-        "FAO": categorisation_a,
-        "IPCC2006_PRIMAP": categorisation_b,
-    }
-
     # drop UNFCCC data
     ds = ds.drop_sel(source="UNFCCC")
 
     # consistency check in original categorisation
     ds_checked = ds.pr.add_aggregates_coordinates(agg_info=agg_info_fao, min_count=1)  # noqa: F841
 
-    # We need a conversion CSV file for each entity
-    # That's a temporary workaround until the filter function in climate categories works
-    conv = {}
     gases = ["CO2", "CH4", "N2O"]
 
-    for var in gases:
-        conversion_path = root_path / f"conv_FAO_IPPCC2006_PRIMAP_{var}.csv"
-        conv[var] = cc.Conversion.from_csv(
-            conversion_path,
-            cats=cats,  # type: ignore
-        )
+    conv = cc.FAO.conversion_to(cc.IPCC2006_PRIMAP)
 
     # convert for each entity
     da_dict = {}
     for var in gases:
+        conv_for_gas = conv.filter(aux_dim="gas", values=[var])
         da_dict[var] = ds[var].pr.convert(
             dim="category (FAO)",
-            conversion=conv[var],
+            conversion=conv_for_gas,
         )
 
     result = xr.Dataset(da_dict)
