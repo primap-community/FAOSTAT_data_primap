@@ -485,9 +485,9 @@ fqdn==1.5.1 ; python_version >= "3.11" and python_version < "3.13" \
 globalwarmingpotentials==0.11.1 ; python_version >= "3.11" and python_version < "3.13" \
     --hash=sha256:0f208afdaea1e464b1d2f760f06ab09e3870876c48a322252536809a5087ed11 \
     --hash=sha256:c0d98d6fe7fb7d21bc2c17d7b41dfdf5a08b3a80778943e1f0d2f7f29372038b
-h11==0.14.0 ; python_version >= "3.11" and python_version < "3.13" \
-    --hash=sha256:8f19fbbe99e72420ff35c00b27a34cb9937e902a8b810e2c88300c6f0a3b699d \
-    --hash=sha256:e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761
+h11==0.16.0 ; python_version >= "3.11" and python_version < "3.13" \
+    --hash=sha256:4e35b956cf45792e4caa5885e69fba00bdbc6ffafbfa020300e549b208ee5ff1 \
+    --hash=sha256:63cf8bbe7522de3bf65932fda1d9c2772064ffb3dae62d55932da54b31cb6c86
 h5netcdf==1.5.0 ; python_version >= "3.11" and python_version < "3.13" \
     --hash=sha256:1baca17d395e14cd06899d0334385c9a27e86baa4c6ff2fc51ac44fd210fd843 \
     --hash=sha256:9d6c28147677bd075787881aadb24d2fdb0bc0319481bcb5d2a54dc4b94c4ba9
