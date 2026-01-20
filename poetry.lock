@@ -591,13 +591,13 @@ colorama = {version = "*", markers = "platform_system == \"Windows\""}
 
 [[package]]
 name = "climate-categories"
-version = "0.10.6"
+version = "0.10.9"
 description = "Commonly used codes, categories, terminologies, and nomenclatures used in climate policy analysis as a Python package."
 optional = false
 python-versions = "<3.14,>=3.11"
 files = [
-    {file = "climate_categories-0.10.6-py3-none-any.whl", hash = "sha256:b96fd50c9d484aacbbb2a9a94e14e47e950c0ae11de0604f355a8590e31f4005"},
-    {file = "climate_categories-0.10.6.tar.gz", hash = "sha256:4b12dac466691b977c9a7fc324663e38c37b3a2643a41543c1eecc2307c49ef0"},
+    {file = "climate_categories-0.10.9-py3-none-any.whl", hash = "sha256:89109054333ab824bd0327303d92abd33c19ee0e004614134ad25c7e3ba55c80"},
+    {file = "climate_categories-0.10.9.tar.gz", hash = "sha256:c9a8cb95c49112e2a12537f8574d9a693d8e7e38e7324dcba4e406ff33e7f324"},
 ]
 
 [package.dependencies]
@@ -612,7 +612,7 @@ pyparsing = ">=3.1"
 strictyaml = ">=1.6"
 
 [package.extras]
-dev = ["Sphinx", "build", "coverage", "ipykernel", "lxml", "nbsphinx", "networkx", "numpy (<2)", "openscm-units", "pip", "pre-commit", "pycountry", "pypdf-table-extraction", "pytest", "ruff", "sphinx_rtd_theme", "tbump", "tox", "tox-uv (>=1.11.3)", "tqdm", "twine", "unfccc_di_api (>=3.0.1)", "wheel", "xdoctest"]
+dev = ["Sphinx (<8.2.0)", "build", "coverage", "ipykernel", "lxml", "nbsphinx", "networkx", "numpy", "openscm-units", "pip", "pre-commit", "pycountry", "pypdf-table-extraction", "pytest", "ruff", "sphinx_rtd_theme", "tbump", "tox", "tox-uv (>=1.11.3)", "tqdm", "twine", "unfccc_di_api (>=3.0.1)", "wheel", "xdoctest"]
 test = ["pytest (>=8.3.3)", "pytest-cov (>=5)", "xdoctest (>=1.2)"]
 
 [[package]]
@@ -5357,4 +5357,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.13"
-content-hash = "0e21dcd8b6ad03c346dc4be69f84c84dfc995f4e5bbdeb217f17527a06b9eb86"
+content-hash = "f62b82342f2a426c9356d4fd91527e9547a3bc8d24eb65be860dd041223c8640"
