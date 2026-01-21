@@ -14,7 +14,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 
 from faostat_data_primap.exceptions import DateTagNotFoundError
-from faostat_data_primap.helper.definitions import domains, downloaded_data_path
+from faostat_data_primap.helper.definitions import domains
+from faostat_data_primap.helper.paths import downloaded_data_path
 
 
 def find_previous_release_path(
@@ -117,8 +118,11 @@ def download_methodology(url_download: str, save_path: pathlib.Path) -> None:
         save_path.mkdir()
 
     if download_path.exists():
-        print(f"Skipping download of {download_path} because it already exists.")
-        return
+        if download_path.is_symlink():
+            os.remove(download_path)
+        else:
+            print(f"Skipping download of {download_path} because it already exists.")
+            return
 
     previous_release = find_previous_release_path(save_path)
     # Attempt to find a file to compare in the previous release
@@ -146,7 +150,7 @@ def download_methodology(url_download: str, save_path: pathlib.Path) -> None:
             print(f"File '{filename}' not found in previous release. Downloading file.")
             response = requests.get(url_download, stream=True, timeout=30)
             response.raise_for_status()
-        print(download_path)
+
         # Save downloaded file to current release
         with open(download_path, "wb") as f:
             f.write(response.content)
@@ -155,7 +159,6 @@ def download_methodology(url_download: str, save_path: pathlib.Path) -> None:
         print(f"No previous release found. Downloading file '{filename}'.")
         response = requests.get(url_download, stream=True, timeout=30)
         response.raise_for_status()
-
         with open(download_path, "wb") as f:
             f.write(response.content)
 
@@ -184,7 +187,7 @@ def get_html_content(url: str) -> BeautifulSoup:
     driver.get(url)
 
     # give time to load javascript
-    time.sleep(3)
+    time.sleep(5)
 
     html_content = driver.page_source
 
@@ -244,17 +247,18 @@ def download_file(url_download: str, save_path: pathlib.Path) -> bool:
     -------
         True if the file was downloaded, False if a cached file was found
     """
-    if not save_path.exists():
-        with requests.get(url_download, stream=True, timeout=30) as response:
-            response.raise_for_status()
+    if save_path.exists():
+        if not save_path.is_symlink():
+            print(f"Skipping download of {save_path} because it already exists.")
+            return False
+        os.remove(save_path)
 
-            with open(save_path, mode="wb") as file:
-                file.write(response.content)
+    with requests.get(url_download, stream=True, timeout=30) as response:
+        response.raise_for_status()
+        with open(save_path, mode="wb") as file:
+            file.write(response.content)
 
-        return True
-    else:
-        print(f"Skipping download of {save_path}" " because it already exists.")
-    return False
+    return True
 
 
 def unzip_file(local_filename: pathlib.Path) -> list[str]:
@@ -278,14 +282,21 @@ def unzip_file(local_filename: pathlib.Path) -> list[str]:
                     extracted_file_path = local_filename.parent / file_info.filename
 
                     if extracted_file_path.exists():
-                        print(
-                            f"File '{file_info.filename}' already exists. "
-                            f"Skipping extraction."
-                        )
-                    else:
-                        print(f"Extracting '{file_info.filename}'...")
-                        zip_file.extract(file_info, local_filename.parent)
-                        unzipped_files.append(local_filename.name)
+                        if not extracted_file_path.is_symlink():
+                            print(
+                                f"File '{file_info.filename}' already exists. "
+                                f"Skipping extraction."
+                            )
+                            continue
+                        else:
+                            file_to_unzip_path = (
+                                local_filename.parent / file_info.filename
+                            )
+                            os.remove(file_to_unzip_path)
+
+                    print(f"Extracting '{file_info.filename}'...")
+                    zip_file.extract(file_info, local_filename.parent)
+                    unzipped_files.append(local_filename.name)
 
         # TODO Better error logging/visibilty
         except zipfile.BadZipFile:

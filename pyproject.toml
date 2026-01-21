@@ -9,16 +9,33 @@ license = "TBD"
 include = ["LICENCE"]  # poetry uses US English so assumes it will be spelt LICENSE
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = ">=3.11,<3.13"
 selenium = "^4.26.1"
 webdriver-manager = "^4.0.2"
 beautifulsoup4 = "^4.12.3"
 types-beautifulsoup4 = "^4.12.0.20241020"
 types-requests = "^2.32.0.20241016"
+pandas = "^2.2.3"
+pycountry = "^24.6.1"
+pandas-stubs = "^2.2.3.241009"
+datalad = "^1.1.4"
+doit = "^0.36.0"
+xarray = "^2024.11.0"
+jupytext = "^1.16.5"
+jupyter = "^1.1.1"
+primap2 = "^0.12.1"
+h11 = "^0.16.0"
+urllib3 = "^2.6.3"
+tornado = "^6.5"
+fonttools = "^4.60.2"
+filelock = "^3.20.1"
+jinja2 = "^3.1.6"
+requests = "^2.32.4"
+climate-categories = "^0.10.9"
 
 
 [tool.poetry.group.tests.dependencies]
-pytest = "^7.3.1"
+pytest = "^9.0.2"
 
 [tool.poetry.group.docs.dependencies]
 myst-nb = "^0.17.0"
@@ -38,7 +55,8 @@ towncrier = "^23.6.0"
 liccheck = "^0.9.1"
 # Required here so that liccheck will install
 # liccheck's installation isn't setup correctly
-setuptools = "^70.1.1"
+setuptools = "^78.1.1"
+plotly = "^5.24.1"
 
 [build-system]
 requires = ["poetry-core"]
@@ -103,6 +121,7 @@ unfixable = [
 ignore = [
     "D200",  # One-line docstring should fit on one line with quotes
     "D400",  # First line should end with a period
+    "E501", # TODO: enable when categorisation spec is in cc
 ]
 line-length = 88
 
@@ -122,6 +141,9 @@ docstring-code-format = true
 ]
 "scripts/*" = [
     "S101" # S101 Use of `assert` detected
+]
+"notebooks/*" = [
+"D100" # D100 Missing docstring at the top of file
 ]
 
 [tool.ruff.isort]
@@ -199,6 +221,10 @@ authorized_licenses = [
     "python software foundation",
     "python software foundation license",
     "zpl 2.1",
+    'CMU License (MIT-CMU)',
+    'GNU General Public License v3 (GPLv3)',
+    'GNU Lesser General Public License v3 (LGPLv3)',
+
 ]
 # This starting list is relatively conservative. Depending on the project, it
 # may make sense to move some of these into the authorized list
@@ -212,3 +238,6 @@ unauthorized_licenses = [
     "gpl v1",
     "gplv1",
 ]
+
+[tool.liccheck.authorized_packages]
+numbagg = "0.8.2"

@@ -9,4 +9,8 @@ API Reference
 .. autosummary::
   :toctree: ./
 
-  faostat_data_primap.operations
+  download
+  exceptions
+  helper
+  operations
+  read
