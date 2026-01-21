@@ -328,7 +328,7 @@ def process(ds: xarray.Dataset) -> xarray.Dataset:
     ds = ds.drop_sel(source="UNFCCC")
 
     # consistency check in original categorisation
-    ds_checked = ds.pr.add_aggregates_coordinates(agg_info=agg_info_fao)  # noqa: F841
+    ds_checked = ds.pr.add_aggregates_coordinates(agg_info=agg_info_fao, min_count=1)  # noqa: F841
 
     gases = ["CO2", "CH4", "N2O"]
 
@@ -355,15 +355,15 @@ def process(ds: xarray.Dataset) -> xarray.Dataset:
     # aggregation for each gas for better understanding
     # TODO creates some duplicate code, we can combine again later
     result_proc = result.pr.add_aggregates_coordinates(
-        agg_info=agg_info_ipcc2006_primap_N2O
+        agg_info=agg_info_ipcc2006_primap_N2O, min_count=1
     )
 
     result_proc = result_proc.pr.add_aggregates_coordinates(
-        agg_info=agg_info_ipcc2006_primap_CO2
+        agg_info=agg_info_ipcc2006_primap_CO2, min_count=1
     )
 
     result_proc = result_proc.pr.add_aggregates_coordinates(
-        agg_info=agg_info_ipcc2006_primap_CH4
+        agg_info=agg_info_ipcc2006_primap_CH4, min_count=1
     )
 
     return result_proc  # type: ignore
