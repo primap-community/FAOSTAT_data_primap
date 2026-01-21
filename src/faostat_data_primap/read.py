@@ -120,7 +120,10 @@ def read_data(  # noqa: PLR0915 PLR0912
 
         # check all countries are converted into iso3 codes
         if any(df_domain["country (ISO3)"].isna()):
-            msg = f"Not all countries are converted into ISO3 codes for {domain}"
+            countries_not_mapped = df_domain["Area"][
+                df_domain["country (ISO3)"].isna()
+            ].unique()
+            msg = f"Not all countries are converted into ISO3 codes for {domain}: {countries_not_mapped}"
             raise ValueError(msg)
 
         # create entity column
