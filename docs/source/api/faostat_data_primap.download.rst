@@ -7,18 +7,6 @@ faostat\_data\_primap.download
 
 
 
-find\_previous\_release\_path
-=============================
-
-.. autofunction:: find_previous_release_path
-
-
-calculate\_checksum
-===================
-
-.. autofunction:: calculate_checksum
-
-
 download\_methodology
 =====================
 
