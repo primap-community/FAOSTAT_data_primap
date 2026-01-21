@@ -1,8 +1,8 @@
 attrs:
   area: area (ISO3)
   cat: category (IPCC2006_PRIMAP)
-  comment: Published by Food and Agriculture Organization of the United Nations (FAO),
-    converted to PRIMAP2 format by Daniel Busch
+  comment: Published by Food and Agriculture Organization of the United Nations
+    (FAO), converted to PRIMAP2 format by Daniel Busch
   contact: daniel.busch@climate-resource.com
   entity: N2O
   institution: Food and Agriculture Organization of the United Nations
