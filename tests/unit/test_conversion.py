@@ -77,8 +77,8 @@ def test_read(tmp_path, domains_and_releases_to_read):
     read_data(
         domains_and_releases_to_read=domains_and_releases_to_read,
         read_path=downloaded_data_path,
-        # save_path=tmp_path,
-        save_path=extracted_data_path,
+        save_path=tmp_path,
+        # save_path=extracted_data_path,
     )
 
 
