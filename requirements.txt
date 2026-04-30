@@ -1233,9 +1233,9 @@ networkx==3.6.1 ; python_version >= "3.11" and python_version < "3.13" \
 notebook-shim==0.2.4 ; python_version >= "3.11" and python_version < "3.13" \
     --hash=sha256:411a5be4e9dc882a074ccbcae671eda64cceb068767e9a3419096986560e1cef \
     --hash=sha256:b4b2cfa1b65d98307ca24361f5b30fe785b53c3fd07b7a47e89acb5e6ac638cb
-notebook==7.5.2 ; python_version >= "3.11" and python_version < "3.13" \
-    --hash=sha256:17d078a98603d70d62b6b4b3fcb67e87d7a68c398a7ae9b447eb2d7d9aec9979 \
-    --hash=sha256:83e82f93c199ca730313bea1bb24bc279ea96f74816d038a92d26b6b9d5f3e4a
+notebook==7.5.6 ; python_version >= "3.11" and python_version < "3.13" \
+    --hash=sha256:4dde3f8fb55fa8fb7946d58c6e869ce9baf46d00fc070664f62604569d0faca0 \
+    --hash=sha256:621174aade80108f0020b0f00738000b215f75fa3cd90771ad7aa0f24536a4e1
 numba==0.63.1 ; python_version >= "3.11" and python_version < "3.13" \
     --hash=sha256:08653d0dfc9cc9c4c9a8fba29ceb1f2d5340c3b86c4a7e5e07e42b643bc6a2f4 \
     --hash=sha256:0bd4fd820ef7442dcc07da184c3f54bb41d2bdb7b35bacf3448e73d081f730dc \
