@@ -55,7 +55,7 @@ towncrier = "^23.6.0"
 liccheck = "^0.9.1"
 # Required here so that liccheck will install
 # liccheck's installation isn't setup correctly
-setuptools = "^78.1.1"
+setuptools = "^83.0.0"
 plotly = "^5.24.1"
 
 [build-system]
