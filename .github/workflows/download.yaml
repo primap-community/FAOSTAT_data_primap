@@ -1,0 +1,53 @@
+name: download
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ['v*']
+
+jobs:
+  download:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: install datalad
+        uses: awalsh128/cache-apt-pkgs-action@v1.4.2
+        with:
+          packages: datalad
+          version: 1.0
+      - name: Install poetry
+        shell: bash
+        run: |
+          pipx install poetry
+          which poetry
+          poetry --version  # Check poetry installation
+      - name: configure git email
+        run: git config --global user.email "daniel.busch@climate-resource.com"
+      - name: configure git user
+        run: git config --global user.name "Daniel Busch (via github actions)"
+      - name: clone repo
+        run: datalad clone https://github.com/primap-community/FAOSTAT_data_primap.git
+      - name: setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Set Poetry environment
+        shell: bash
+        run: |
+         cd FAOSTAT_data_primap/
+         poetry config virtualenvs.create true
+         poetry config virtualenvs.in-project true
+         poetry install --no-interaction --all-extras --only 'main,dev'
+         poetry run python --version  # Check python version just in case
+      - name: download data
+        run: |
+         cd FAOSTAT_data_primap/
+         datalad run \
+         -o 'downloaded_data/farm_gate_emissions_crops/2024-11-14/*' \
+         -o 'downloaded_data/farm_gate_agriculture_energy/2024-11-14/*' \
+         -o 'downloaded_data/farm_gate_livestock/2024-11-14/*' \
+         -o 'downloaded_data/land_use_drained_organic_soils/2024-11-14/*' \
+         -o 'downloaded_data/land_use_fires/2024-11-14/*' \
+         -o 'downloaded_data/land_use_forests/2024-11-14/*' \
+         -o 'downloaded_data/pre_post_agricultural_production/2024-11-14/*' \
+         poetry run python3 scripts/download_all_domains.py
